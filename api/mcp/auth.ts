@@ -119,12 +119,26 @@ export async function buildAuthHeaders(
   url: string,
   body: BodyInit | null | undefined,
 ): Promise<Record<string, string>> {
+  // Worldmonitor-FAII (LOCAL_API_TOKEN sidecar mode): every route on this
+  // single process -- including an RPC tool's internal re-fetch of another
+  // /api/* route on itself -- sits behind the outer LOCAL_API_TOKEN gate in
+  // src-tauri/sidecar/local-api-server.mjs. That gate predates this
+  // internal-fetch pattern (it exists to keep the local port safe from
+  // *other* local processes, not to block the server's own tool code) and
+  // doesn't recognize the env_key/HMAC headers below, so every internal
+  // tool fetch was rejected 401 before reaching the target handler.
+  // Carrying the same bearer the outer gate expects fixes every call site
+  // that goes through this one function. LOCAL_API_TOKEN is unset in the
+  // original hosted multi-service deployment, so this is a no-op there.
+  const localToken = process.env.LOCAL_API_TOKEN;
+  const localHeader: Record<string, string> = localToken ? { Authorization: `Bearer ${localToken}` } : {};
+
   if (context.kind === 'env_key' || context.kind === 'user_key') {
     // user_key (#4859): the downstream REST gateway validates the raw key
     // itself (Convex hash lookup + the #4611 apiAccess gate + per-account
     // limits), so usage attributes to the key owner exactly like a direct
-    // REST call — no internal-HMAC identity smuggling needed.
-    return { 'X-WorldMonitor-Key': context.apiKey };
+    // REST call -- no internal-HMAC identity smuggling needed.
+    return { ...localHeader, 'X-WorldMonitor-Key': context.apiKey };
   }
   if (context.kind === 'free') {
     // U7: a free-tier context has no principal to authenticate as, so there is
@@ -151,7 +165,7 @@ export async function buildAuthHeaders(
     userId: context.userId,
     secret,
   });
-  return buildInternalMcpHeaders(signed);
+  return { ...localHeader, ...buildInternalMcpHeaders(signed) };
 }
 
 export const PRODUCTION_DEPS: McpHandlerDeps = {
