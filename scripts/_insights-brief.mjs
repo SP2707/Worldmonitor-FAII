@@ -112,7 +112,7 @@ You are compiling the WORLD BRIEF from the numbered stories below. Respond with 
 {"lead": "...", "lines": [{"n": 1, "text": "..."}, ...]}
 
 Rules:
-- "lead": 2-3 sentences, under 80 words, synthesizing the most consequential 2-3 threads. Cite every claim with the bracket number of its story, e.g. [1] or [3].
+- "lead": 2-3 sentences, under 80 words, synthesizing the most consequential 2-3 threads. Cite every claim with the bracket number of its story, e.g. [1] or [3]. CRITICAL: every SINGLE sentence in the lead must end with its own citation bracket(s) immediately before its period — never save all citations for the last sentence. A sentence with no bracket is rejected outright, so if the lead has 2 sentences, BOTH need a bracket, even if that means repeating a citation.
 - "lines": exactly one entry per numbered story, in order. Each "text" is ONE sentence under 30 words restating that story, ending with its citation [n].
 - Use ONLY facts present in the numbered story text. Do not add names, places, dates, numbers, or context that are not explicitly there.
 - Do not invent proper nouns (people, organizations, countries) that are not in the story text.

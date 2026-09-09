@@ -722,6 +722,13 @@
       "removal_issue": "TBD"
     },
     {
+      "path": "api/brief/v1/public/[hash].ts",
+      "category": "deferred",
+      "reason": "JSON RPC-shaped counterpart to api/brief/public/[hash].ts, hand-written because buf/Go sebuf tooling isn't available in this environment to run make generate for a real brief/v1 proto service. Resolves a share hash to public-safe brief JSON for internal FAII callers (no HTML rendering) so share-url.ts's shareUrl points at a back-connection instead of a client-display page. Migrate to a proper generated brief/v1 service alongside api/brief/public/[hash].ts once the sebuf toolchain is available.",
+      "owner": "@SebastienMelki",
+      "removal_issue": "TBD"
+    },
+    {
       "path": "api/brief/[userId]/[issueDate].ts",
       "category": "deferred",
       "reason": "Fetches a specific brief by user + frozen issue slot. Part of the brief/v1 service work.",

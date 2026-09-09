@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { readFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { XMLParser } from 'fast-xml-parser';
@@ -42,6 +42,13 @@ const CONFIG_DRIFT_REASONS = Object.freeze({
 //   3. Refuse to follow cross-host redirects (manual redirect handling per
 //      hop with allowlist re-check)
 const CI_MODE = process.argv.includes('--ci');
+// #unlazy-catalog-verify: optional machine-readable report, purely additive —
+// does not change console output, exit-code policy, or the Redis publish path.
+// Lets a caller consume full per-feed results (status/detail/name/url/catalog)
+// as JSON instead of screen-scraping the console tables, which is unreliable
+// at catalog sizes in the hundreds of feeds.
+const OUT_ARG = process.argv.find((a) => a.startsWith('--out='));
+const OUT_PATH = OUT_ARG ? OUT_ARG.slice('--out='.length) : null;
 
 function extractFeeds() {
   const src = readFileSync(FEEDS_PATH, 'utf8');
@@ -326,6 +333,22 @@ async function main() {
   console.log(`Validating ${feeds.length} RSS feeds (${clientFeeds.length} client, ${serverFeeds.length} server) [${mode}] (${CONCURRENCY} concurrent, ${FETCH_TIMEOUT / 1000}s timeout)...\n`);
 
   const results = await runBatch(feeds, validateFeed, CONCURRENCY);
+
+  if (OUT_PATH) {
+    writeFileSync(OUT_PATH, JSON.stringify({
+      checkedAt: new Date().toISOString(),
+      mode,
+      feedCount: results.length,
+      results: results.map((r) => ({
+        name: r.name,
+        url: r.url,
+        catalog: r.catalog,
+        status: r.status,
+        detail: r.detail ?? null,
+      })),
+    }, null, 2));
+    console.log(`JSON report written to ${OUT_PATH}\n`);
+  }
 
   const ok = results.filter(r => r.status === 'OK');
   const stale = results.filter(r => r.status === 'STALE');

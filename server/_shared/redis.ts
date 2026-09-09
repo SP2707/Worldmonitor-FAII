@@ -504,23 +504,8 @@ function readLocalPositiveFallback(key: string): unknown | undefined {
  * Batch GET using Upstash pipeline API — single HTTP round-trip for N keys.
  * Returns a Map of key → parsed JSON value (missing/failed/sentinel keys omitted).
  */
-export async function getCachedJsonBatch(keys: string[], raw = false): Promise<Map<string, unknown>> {
+async function fetchCachedJsonBatchFromUpstash(keys: string[], raw: boolean): Promise<Map<string, unknown>> {
   const result = new Map<string, unknown>();
-  if (keys.length === 0) return result;
-
-  if (process.env.LOCAL_API_MODE === 'tauri-sidecar') {
-    try {
-      const { sidecarCacheGet } = await import('./sidecar-cache');
-      for (const key of keys) {
-        const value = sidecarCacheGet(key);
-        if (value != null) result.set(key, value);
-      }
-    } catch (error) {
-      console.warn('[redis] getCachedJsonBatch failed:', errMsg(error));
-    }
-    return result;
-  }
-
   const url = process.env.UPSTASH_REDIS_REST_URL;
   const token = process.env.UPSTASH_REDIS_REST_TOKEN;
   if (!url || !token) return result;
@@ -565,6 +550,61 @@ export async function getCachedJsonBatch(keys: string[], raw = false): Promise<M
     }
   }
   return result;
+}
+
+// A locally-run seed script (scripts/seed-insights.mjs and its ~150
+// siblings) has no idea the sidecar exists — it only knows how to write to
+// Upstash's REST API. The sidecar's own in-memory cache (sidecar-cache.ts,
+// scoped to this process, empty on every launch) can never see those writes
+// on its own. Rather than teach every seed script about sidecar-cache (a
+// much larger, riskier change touching ~150 call sites across
+// scripts/_seed-utils.mjs), bridge the two on the READ side instead: when
+// the operator has ALSO pointed UPSTASH_REDIS_REST_URL/TOKEN at a real
+// Upstash-compatible endpoint (their own Upstash project, or the repo's own
+// docker/redis-rest-proxy.mjs in front of a local Redis), an in-memory miss
+// falls through to it, mirroring any hit back into memory so the rest of
+// this process's reads stay fast. Silent no-op — identical to the prior
+// behavior — when those vars are unset; this changes nothing for an
+// operator who hasn't configured them.
+const SIDECAR_UPSTASH_MIRROR_TTL_S = 300;
+
+export async function getCachedJsonBatch(keys: string[], raw = false): Promise<Map<string, unknown>> {
+  const result = new Map<string, unknown>();
+  if (keys.length === 0) return result;
+
+  if (process.env.LOCAL_API_MODE === 'tauri-sidecar') {
+    const missingKeys: string[] = [];
+    try {
+      const { sidecarCacheGet } = await import('./sidecar-cache');
+      for (const key of keys) {
+        const value = sidecarCacheGet(key);
+        if (value != null) result.set(key, value);
+        else missingKeys.push(key);
+      }
+    } catch (error) {
+      console.warn('[redis] getCachedJsonBatch failed:', errMsg(error));
+      missingKeys.push(...keys.filter((k) => !result.has(k)));
+    }
+
+    if (missingKeys.length > 0 && process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
+      const fallback = await fetchCachedJsonBatchFromUpstash(missingKeys, raw);
+      if (fallback.size > 0) {
+        try {
+          const { sidecarCacheSet } = await import('./sidecar-cache');
+          for (const [key, value] of fallback) {
+            result.set(key, value);
+            sidecarCacheSet(key, value, SIDECAR_UPSTASH_MIRROR_TTL_S);
+          }
+        } catch (error) {
+          console.warn('[redis] getCachedJsonBatch mirror-to-sidecar failed:', errMsg(error));
+          for (const [key, value] of fallback) result.set(key, value);
+        }
+      }
+    }
+    return result;
+  }
+
+  return fetchCachedJsonBatchFromUpstash(keys, raw);
 }
 
 /**

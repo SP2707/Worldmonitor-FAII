@@ -6509,6 +6509,12 @@ async function fetchRedditHotListing(subreddit, { limit = 25, legacyUserAgent } 
     }
   }
   if (!url) {
+    // 4. Free, no-key fallback: Reddit's own /.rss feed (official platform
+    // feature, not a scrape). Degraded data -- see the block comment above
+    // this function's fallthrough for exactly what's lost (no score/upvote_ratio/
+    // num_comments) and why that's an honest tradeoff, not full parity.
+    const rssResult = await _fetchRedditRssListing(subreddit, limit, legacyUserAgent);
+    if (rssResult) return rssResult;
     url = `https://www.reddit.com/r/${subreddit}/hot.json?limit=${limit}&raw_json=1`;
     headers = { Accept: 'application/json', 'User-Agent': legacyUserAgent || REDDIT_USER_AGENT };
     source = 'public';
@@ -6517,6 +6523,68 @@ async function fetchRedditHotListing(subreddit, { limit = 25, legacyUserAgent } 
   if (!resp.ok) return { ok: false, status: resp.status, posts: [], source };
   const data = await resp.json();
   return { ok: true, status: resp.status, posts: (data?.data?.children || []).map(c => c.data).filter(Boolean), source };
+}
+
+// Parses Reddit's Atom /.rss feed into the same per-post shape the OAuth/
+// public/ScrapeCreators paths return (score, upvote_ratio, num_comments,
+// created_utc, id, title, permalink, url) so downstream consumers
+// (fetchRedditHot's normalization in the SocialVelocity/WSB sections) don't
+// need to know which path served them. score/upvote_ratio/num_comments are
+// left undefined (not present in Atom) -- every consumer already guards with
+// `p.score || 0` / `p.upvote_ratio || 0.5` / `p.num_comments || 0`, so this
+// degrades ranking to recency + mention-count rather than crashing or silently
+// inventing fake engagement numbers.
+// Returns null (falls through to the public .json path) on any non-2xx,
+// network error, or a feed with zero parseable <entry> blocks -- same
+// "don't swallow a real outage as false success" contract as the other paths.
+async function _fetchRedditRssListing(subreddit, limit, legacyUserAgent) {
+  try {
+    const resp = await fetch(`https://www.reddit.com/r/${subreddit}/.rss?limit=${limit}`, {
+      headers: { Accept: 'application/atom+xml, application/xml, text/xml', 'User-Agent': legacyUserAgent || REDDIT_USER_AGENT },
+      signal: AbortSignal.timeout(10000),
+    });
+    if (!resp.ok) {
+      console.warn(`[Reddit] RSS HTTP ${resp.status} for r/${subreddit} — falling back to public .json`);
+      return null;
+    }
+    const xml = await resp.text();
+    const posts = [];
+    for (const m of xml.matchAll(/<entry>([\s\S]*?)<\/entry>/g)) {
+      const entry = m[1];
+      const titleMatch = entry.match(/<title>(?:<!\[CDATA\[([\s\S]*?)\]\]>|([\s\S]*?))<\/title>/);
+      const linkMatch = entry.match(/<link[^>]*href="([^"]*)"/);
+      const idMatch = entry.match(/<id>([\s\S]*?)<\/id>/);
+      const publishedMatch = entry.match(/<published>([\s\S]*?)<\/published>/) || entry.match(/<updated>([\s\S]*?)<\/updated>/);
+      const title = titleMatch ? _decodeRedditEntities((titleMatch[1] ?? titleMatch[2] ?? '').trim()) : '';
+      const link = linkMatch ? linkMatch[1] : '';
+      if (!title || !link) continue;
+      let permalink = link;
+      try { permalink = new URL(link).pathname; } catch {}
+      const rawId = idMatch ? idMatch[1].trim() : '';
+      const id = rawId.startsWith('t3_') ? rawId.slice(3) : (rawId || permalink);
+      const publishedIso = publishedMatch ? publishedMatch[1].trim() : '';
+      const publishedMs = publishedIso ? Date.parse(publishedIso) : NaN;
+      posts.push({
+        id,
+        title,
+        permalink,
+        url: link,
+        created_utc: Number.isFinite(publishedMs) ? Math.floor(publishedMs / 1000) : undefined,
+        score: undefined,
+        upvote_ratio: undefined,
+        num_comments: undefined,
+        selftext: '',
+      });
+    }
+    if (posts.length === 0) {
+      console.warn(`[Reddit] RSS returned 0 parseable entries for r/${subreddit} — falling back to public .json`);
+      return null;
+    }
+    return { ok: true, status: resp.status, posts: posts.slice(0, limit), source: 'rss' };
+  } catch (e) {
+    console.warn(`[Reddit] RSS fetch error for r/${subreddit}: ${e?.message || e} — falling back to public .json`);
+    return null;
+  }
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -12154,7 +12222,6 @@ const WIDGET_AGENT_KEY = (process.env.WIDGET_AGENT_KEY || '').trim();
 const PRO_WIDGET_KEY = (process.env.PRO_WIDGET_KEY || '').trim();
 const WIDGET_ANTHROPIC_KEY = (process.env.ANTHROPIC_API_KEY || '').trim();
 const WIDGET_EXA_KEY = (process.env.EXA_API_KEYS || '').split(/[\n,]+/).map(k => k.trim()).filter(Boolean)[0] || '';
-const WIDGET_BRAVE_KEY = (process.env.BRAVE_API_KEYS || '').split(/[\n,]+/).map(k => k.trim()).filter(Boolean)[0] || '';
 
 async function performWidgetWebSearch(query) {
   if (WIDGET_EXA_KEY) {
@@ -12186,31 +12253,37 @@ async function performWidgetWebSearch(query) {
     }
   }
 
-  if (WIDGET_BRAVE_KEY) {
-    try {
-      const url = new URL('https://api.search.brave.com/res/v1/web/search');
-      url.searchParams.set('q', query);
-      url.searchParams.set('count', '8');
-      url.searchParams.set('freshness', 'pw');
-      url.searchParams.set('search_lang', 'en');
-      url.searchParams.set('safesearch', 'moderate');
-      const res = await fetch(url.toString(), {
-        headers: { Accept: 'application/json', 'X-Subscription-Token': WIDGET_BRAVE_KEY },
-        signal: AbortSignal.timeout(12_000),
-      });
-      if (res.ok) {
-        const payload = await res.json();
-        const results = (payload.web?.results || []).map(r => ({
-          title: r.title || '',
-          url: r.url || '',
-          snippet: (r.description || '').slice(0, 400).trim(),
-          publishedDate: r.age || '',
-        })).filter(r => r.title && r.url);
-        if (results.length > 0) return { source: 'brave', results };
+  // Brave removed: its Search API free tier ended Feb 2026. Replaced with
+  // Google News RSS -- permanently free, no key, no account, same technique
+  // this repo's server/worldmonitor/market/v1/stock-news-search.ts already
+  // uses as its own no-key last resort. News-skewed rather than general web
+  // search, which is a real narrowing versus what Brave covered, but it is a
+  // strictly better zero-cost fallback than nothing, and Exa (checked first,
+  // above) is still the primary path whenever a key is configured.
+  try {
+    const url = `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=en-US&gl=US&ceid=US:en`;
+    const res = await fetch(url, {
+      headers: { Accept: 'application/rss+xml, application/xml, text/xml' },
+      signal: AbortSignal.timeout(12_000),
+    });
+    if (res.ok) {
+      const xml = await res.text();
+      const results = [];
+      for (const m of xml.matchAll(/<item>([\s\S]*?)<\/item>/g)) {
+        const item = m[1];
+        const titleMatch = item.match(/<title>(?:<!\[CDATA\[([\s\S]*?)\]\]>|([\s\S]*?))<\/title>/);
+        const linkMatch = item.match(/<link>([\s\S]*?)<\/link>/);
+        const pubDateMatch = item.match(/<pubDate>([\s\S]*?)<\/pubDate>/);
+        const title = titleMatch ? (titleMatch[1] ?? titleMatch[2] ?? '').trim() : '';
+        const url_ = linkMatch ? linkMatch[1].trim() : '';
+        if (!title || !url_) continue;
+        results.push({ title, url: url_, snippet: '', publishedDate: pubDateMatch ? pubDateMatch[1].trim() : '' });
+        if (results.length >= 8) break;
       }
-    } catch (err) {
-      console.warn('[widget-search] Brave failed:', err.message);
+      if (results.length > 0) return { source: 'google-news-rss', results };
     }
+  } catch (err) {
+    console.warn('[widget-search] Google News RSS failed:', err.message);
   }
 
   return null;

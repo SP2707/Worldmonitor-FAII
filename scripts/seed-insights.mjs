@@ -75,7 +75,8 @@ const BRIEF_VALIDATOR_MODE =
 // True only when run directly as a cron entry (node seed-insights.mjs), false
 // when imported by tests — so importing the module doesn't load .env or fire a
 // live seed. Mirrors seed-forecasts.mjs.
-const _isDirectRun = process.argv[1] && import.meta.url.endsWith(process.argv[1].replace(/\\/g, '/'));
+import { pathToFileURL } from 'node:url';
+const _isDirectRun = Boolean(process.argv[1]) && import.meta.url === pathToFileURL(process.argv[1]).href;
 
 if (_isDirectRun) loadEnvFile(import.meta.url);
 
@@ -89,6 +90,18 @@ const CHINA_NEWS_DIGEST_LANGUAGE = 'zh';
 // Vercel's WORLDMONITOR_VALID_KEYS). Origin alone is no longer reliable
 // because CF/Vercel intermediaries may strip it and CF can cache the 401.
 const RELAY_API_KEY = process.env.WORLDMONITOR_RELAY_KEY || '';
+
+// FAII-only addition: /api/news/v1/list-feed-digest is NOT in gateway.ts's
+// RELAY_WARM_PING_PATHS allowlist, so WORLDMONITOR_RELAY_KEY (RELAY_API_KEY
+// above) never authorizes it -- that path is reserved for a small set of
+// cacheable RPCs the hosted Railway relay warm-pings. list-feed-digest
+// carries a non-null getRequiredTier() ('slow'), which makes gateway.ts's
+// isTierGated true and forces validateApiKey() to require a real
+// WORLDMONITOR_VALID_KEYS entry (wm_... key) as X-WorldMonitor-Key or
+// X-Api-Key instead. Fall back to the first configured valid key so a
+// local FAII install (which sets WORLDMONITOR_VALID_KEYS but not the
+// dedicated relay secret) can still warm this cache.
+const LOCAL_ENTERPRISE_KEY = (process.env.WORLDMONITOR_VALID_KEYS || '').split(',')[0]?.trim() || '';
 
 // Digest items store proto enum strings (THREAT_LEVEL_HIGH etc.) from toProtoItem().
 // Normalize to client-side lowercase values before propagating into insights output.
@@ -412,6 +425,10 @@ const LLM_PROVIDERS = [
     apiUrl: 'https://api.groq.com/openai/v1/chat/completions',
     model: GROQ_DEFAULT_MODEL,
     headers: (key) => ({ 'Authorization': `Bearer ${key}`, 'Content-Type': 'application/json', 'User-Agent': CHROME_UA }),
+    // gpt-oss-20b is a reasoning model — without this it can spend the whole
+    // max_tokens budget on hidden reasoning and return empty `content`, same
+    // failure mode the OpenRouter providers above avoid with reasoning:{enabled:false}.
+    extraBody: { reasoning_effort: 'low' },
     timeout: 15_000,
   },
 ];
@@ -689,6 +706,18 @@ async function warmDigestCache(language = 'en') {
     Origin: 'https://worldmonitor.app',
   };
   if (RELAY_API_KEY) headers['X-WorldMonitor-Key'] = RELAY_API_KEY;
+  else if (LOCAL_ENTERPRISE_KEY) headers['X-WorldMonitor-Key'] = LOCAL_ENTERPRISE_KEY;
+  // FAII-only addition: src-tauri/sidecar/local-api-server.mjs's global auth
+  // gate rejects EVERY request without Authorization: Bearer <LOCAL_API_TOKEN>
+  // (or x-worldmonitor-local-token) before any route handler even runs — a
+  // gate the original hosted deployment (api.worldmonitor.app) doesn't have,
+  // which is why this header was never needed here before. Without it, this
+  // call 401s against a local FAII install regardless of RELAY_API_KEY, and
+  // since the insights seed hard-requires a warmed digest to proceed (see
+  // the FETCH FAILED abort below), that 401 was fatal, not just a missed
+  // cache-warm. No-op against the original cloud API since LOCAL_API_TOKEN
+  // is never set there.
+  if (process.env.LOCAL_API_TOKEN) headers['Authorization'] = `Bearer ${process.env.LOCAL_API_TOKEN}`;
   try {
     const resp = await fetch(`${apiBase}/api/news/v1/list-feed-digest?variant=full&lang=${encodeURIComponent(language)}`, {
       headers,
@@ -696,7 +725,7 @@ async function warmDigestCache(language = 'en') {
     });
     if (resp.ok) console.log(`  ${language} digest cache warmed via RPC`);
     else {
-      const keyNote = RELAY_API_KEY ? '' : ' (WORLDMONITOR_RELAY_KEY not set — Origin-only auth)';
+      const keyNote = (RELAY_API_KEY || LOCAL_ENTERPRISE_KEY) ? '' : ' (no WORLDMONITOR_RELAY_KEY or WORLDMONITOR_VALID_KEYS set — Origin-only auth)';
       console.warn(`  Digest warm failed: HTTP ${resp.status}${keyNote}`);
     }
   } catch (err) {
@@ -875,7 +904,7 @@ async function fetchInsights() {
     ? await callLLM(null, {
         systemPrompt: synthesisSystemPrompt(new Date().toISOString().split('T')[0]),
         userPrompt: synthesisUserPrompt(topStories),
-        maxTokens: 900,
+        maxTokens: 2200,
         // A model whose output trips the editorial gates must not strand the
         // run. callLLM resamples this model once before demoting to a weaker
         // one, so a single unusable sample no longer costs the better writer.

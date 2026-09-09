@@ -5,7 +5,7 @@ import { CHROME_UA } from '../../../_shared/constants';
 import { cachedFetchJson } from '../../../_shared/redis';
 import { UPSTREAM_TIMEOUT_MS } from './_shared';
 
-export type StockNewsSearchProviderId = 'exa' | 'brave' | 'serpapi' | 'google-news-rss';
+export type StockNewsSearchProviderId = 'exa' | 'serpapi' | 'google-news-rss';
 
 type StockNewsSearchResult = {
   provider: StockNewsSearchProviderId;
@@ -16,7 +16,7 @@ type StockNewsProviderResult = Omit<StockNewsSearchResult, 'fetchedAtMs'>;
 
 type SearchProviderDefinition = {
   id: Exclude<StockNewsSearchProviderId, 'google-news-rss'>;
-  envKey: 'EXA_API_KEYS' | 'BRAVE_API_KEYS' | 'SERPAPI_API_KEYS';
+  envKey: 'EXA_API_KEYS' | 'SERPAPI_API_KEYS';
   search: (
     query: string,
     maxResults: number,
@@ -236,51 +236,6 @@ async function searchWithExa(
   );
 }
 
-async function searchWithBrave(
-  query: string,
-  maxResults: number,
-  days: number,
-  apiKey: string,
-  signal?: AbortSignal,
-): Promise<StockAnalysisHeadline[]> {
-  const freshness = days <= 1 ? 'pd' : days <= 7 ? 'pw' : days <= 30 ? 'pm' : 'py';
-  const url = new URL('https://api.search.brave.com/res/v1/web/search');
-  url.searchParams.set('q', query);
-  url.searchParams.set('count', String(Math.min(maxResults, 10)));
-  url.searchParams.set('freshness', freshness);
-  url.searchParams.set('search_lang', 'en');
-  url.searchParams.set('country', 'US');
-  url.searchParams.set('safesearch', 'moderate');
-
-  const response = await fetch(url, {
-    headers: {
-      Accept: 'application/json',
-      'User-Agent': CHROME_UA,
-      'X-Subscription-Token': apiKey,
-    },
-    signal: providerSignal(signal),
-  });
-
-  if (!response.ok) {
-    throw new Error(`Brave HTTP ${response.status}`);
-  }
-
-  const payload = await response.json() as {
-    web?: {
-      results?: Array<{ title?: string; url?: string; description?: string; age?: string; page_age?: string; meta_url?: { hostname?: string } }>;
-    };
-  };
-  return dedupeHeadlines(
-    (payload.web?.results || []).map(item => ({
-      title: String(item.title || '').trim(),
-      source: String(item.meta_url?.hostname || '').replace(/^www\./, '') || extractDomain(String(item.url || '')),
-      link: String(item.url || '').trim(),
-      publishedAt: relativeDateToTimestamp(item.age || item.page_age),
-    })),
-    maxResults,
-  );
-}
-
 async function searchWithSerpApi(
   query: string,
   maxResults: number,
@@ -335,8 +290,12 @@ async function searchViaProviders(
 ): Promise<StockNewsProviderResult | null> {
   const providers: SearchProviderDefinition[] = [
     { id: 'exa', envKey: 'EXA_API_KEYS', search: searchWithExa },
-    { id: 'brave', envKey: 'BRAVE_API_KEYS', search: searchWithBrave },
     { id: 'serpapi', envKey: 'SERPAPI_API_KEYS', search: searchWithSerpApi },
+    // Brave removed: its Search API free tier ended Feb 2026 (metered billing
+    // only now). No replacement provider added here -- this file's existing
+    // google-news-rss fallback (searchRecentStockHeadlines, below) already
+    // runs for free, no key, whenever every paid provider above is unset or
+    // fails, so the net coverage is unchanged.
   ];
 
   for (const provider of providers) {

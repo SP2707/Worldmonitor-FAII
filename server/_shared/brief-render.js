@@ -1392,7 +1392,7 @@ const NAV_SCRIPT = `<script>
  * @param {BriefData} data
  * @returns {BriefData}
  */
-function redactForPublic(data) {
+export function redactForPublic(data) {
   const safeLead = typeof data.digest?.publicLead === 'string' && data.digest.publicLead.length > 0
     ? data.digest.publicLead
     : '';

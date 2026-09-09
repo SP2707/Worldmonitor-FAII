@@ -111,13 +111,19 @@ export function isValidShareHashShape(hash: unknown): hash is string {
 }
 
 /**
- * Compose the full public share URL.
+ * Compose the full internal RPC URL for a shared brief.
+ *
+ * FAII is headless — nothing here renders for a browser — so this
+ * points at /api/brief/v1/public/{hash}, the JSON back-connection in
+ * api/brief/v1/public/[hash].ts, NOT the text/html mirror at
+ * /api/brief/public/{hash} (that route stays in the tree as a
+ * human-readable fallback, but callers inside FAII should never be
+ * handed a client-display page as their "share" reference).
  *
  * Consumers should always go through this helper so the path shape
  * and the hash derivation stay in lockstep. The optional `refCode`
- * attaches a referral query parameter for signup attribution when
- * the recipient clicks the magazine's subscribe CTA.
- * `issueDate` is the legacy parameter name for the slot string
+ * is passed through as attribution context for whatever calls this
+ * back; `issueDate` is the legacy parameter name for the slot string
  * (`YYYY-MM-DD-HHMM`).
  */
 export async function buildPublicBriefUrl({
@@ -137,7 +143,7 @@ export async function buildPublicBriefUrl({
   const trimmedBase = baseUrl.replace(/\/+$/, '');
   const qs = refCode ? `?ref=${encodeURIComponent(refCode)}` : '';
   return {
-    url: `${trimmedBase}/api/brief/public/${hash}${qs}`,
+    url: `${trimmedBase}/api/brief/v1/public/${hash}${qs}`,
     hash,
   };
 }

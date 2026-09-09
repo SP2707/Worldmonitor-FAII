@@ -1,0 +1,51 @@
+# FAII's OWN local Redis + REST-proxy pair — deliberately separate from
+# worldmonitor-main's (worldmonitor-main/docker-compose.yml's `redis` and
+# `redis-rest` services). Same proven pattern (a self-written REST proxy,
+# docker/redis-rest-proxy.mjs — no external calls, no telemetry, no cloud
+# account of any kind), different container names, different port, own
+# named volume — so FAII has its own independent data store, not a
+# dependency on worldmonitor-main's container staying up.
+#
+# This does NOT run FAII's own server (that stays a plain `npm start`
+# Node process per README.md — no Docker needed for that part). It only
+# brings up the two support containers that give `npm start` a local
+# Redis to seed into and read from.
+#
+# Usage:
+#   REDIS_PASSWORD=$(openssl rand -hex 32) REDIS_TOKEN=$(openssl rand -hex 32) docker compose -f docker-compose.redis.yml up -d
+# Then point FAII's `npm start` env at it:
+#   UPSTASH_REDIS_REST_URL=http://127.0.0.1:8179
+#   UPSTASH_REDIS_REST_TOKEN=<the same REDIS_TOKEN value>
+#   UPSTASH_ALLOW_INSECURE_HTTP=true
+
+services:
+  redis:
+    image: docker.io/redis:7-alpine
+    container_name: faii-redis
+    command: >
+      redis-server
+      --requirepass "${REDIS_PASSWORD:?REDIS_PASSWORD required — generate with: openssl rand -hex 32}"
+      --maxmemory 256mb
+      --maxmemory-policy allkeys-lru
+    volumes:
+      - faii-redis-data:/data
+    restart: unless-stopped
+
+  redis-rest:
+    build:
+      context: docker
+      dockerfile: Dockerfile.redis-rest
+    image: faii-redis-rest:latest
+    container_name: faii-redis-rest
+    mem_limit: 512m
+    ports:
+      - "127.0.0.1:8179:80"
+    environment:
+      SRH_TOKEN: "${REDIS_TOKEN:?REDIS_TOKEN required — generate with: openssl rand -hex 32}"
+      SRH_CONNECTION_STRING: "redis://:${REDIS_PASSWORD:?REDIS_PASSWORD required — generate with: openssl rand -hex 32}@redis:6379"
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+volumes:
+  faii-redis-data:

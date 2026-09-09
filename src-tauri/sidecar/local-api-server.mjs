@@ -1923,27 +1923,34 @@ export async function createLocalApiServer(options = {}) {
       const boundPort = typeof address === 'object' && address?.port ? address.port : context.port;
       context.port = boundPort;
       const extraAllowedPrivateOrigins = [];
+      const addConfiguredPrivateOrigin = (envKey, blockedService) => {
+        const rawUrl = process.env[envKey];
+        if (!rawUrl) return;
+        try {
+          extraAllowedPrivateOrigins.push(new URL(rawUrl).origin);
+        } catch (err) {
+          context.logger.warn(
+            `[local-api] ${envKey} is not a valid URL; not added to the private-fetch allowlist (${blockedService}): ${err.message}`,
+          );
+        }
+      };
+
+      // Trust an operator-configured UPSTASH_REDIS_REST_URL even when it
+      // points at a private/loopback origin -- e.g. a local Upstash-REST-
+      // compatible stand-in on 127.0.0.1 (scripts/local-redis-rest.mjs), or
+      // docker-compose's internal redis-rest host. Originally gated to
+      // context.mode === 'docker' because desktop installs always pointed
+      // this at a public Upstash https origin that already passes the SSRF
+      // check -- but a self-hosted local Redis stand-in run OUTSIDE Docker
+      // (tauri-sidecar mode) hits the exact same private-origin case, and
+      // without this the guard blocks every Redis call (runRedisPipeline /
+      // setCachedJson) and the seeded brief can never be read back. The
+      // origin comes only from an operator-set env var, never from request
+      // input, so unconditioning this from docker-only does not widen what
+      // an untrusted caller can reach.
+      addConfiguredPrivateOrigin('UPSTASH_REDIS_REST_URL', 'Redis calls will be SSRF-blocked');
+
       if (context.mode === 'docker') {
-        const addConfiguredPrivateOrigin = (envKey, blockedService) => {
-          const rawUrl = process.env[envKey];
-          if (!rawUrl) return;
-          try {
-            extraAllowedPrivateOrigins.push(new URL(rawUrl).origin);
-          } catch (err) {
-            context.logger.warn(
-              `[local-api] ${envKey} is not a valid URL; not added to the private-fetch allowlist (${blockedService}): ${err.message}`,
-            );
-          }
-        };
-
-        // Docker self-host ONLY: the Redis REST proxy (UPSTASH_REDIS_REST_URL)
-        // points at an internal private host (e.g. http://redis-rest:80 on a
-        // docker network). Without trusting it the SSRF guard blocks every Redis
-        // call and all /api/* return 503 REDIS_DOWN. On desktop,
-        // UPSTASH_REDIS_REST_URL is a public Upstash https origin that already
-        // passes the SSRF check, so this path is docker-only.
-        addConfiguredPrivateOrigin('UPSTASH_REDIS_REST_URL', 'Redis calls will be SSRF-blocked');
-
         // SELF_HOSTING.md documents LLM_API_URL for compose-network or LAN
         // endpoints; OLLAMA_API_URL is the supported desktop runtime setting.
         // Without trusting their exact configured origins, the global SSRF
