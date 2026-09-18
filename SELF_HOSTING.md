@@ -107,6 +107,13 @@ services:
       LLM_API_KEY: ""
       LLM_MODEL: ""
 
+      # 🔎 Live web search (optional — fills state/city-level gaps the RSS
+      # digest misses). Point at your own self-hosted SearXNG instance —
+      # falls back to BRAVE_API_KEYS above if set and this is left empty.
+      WEB_SEARCH_URL: ""          # e.g. http://searxng:8080 (self-hosted, no account)
+      WEB_SEARCH_API_KEY: ""      # only if your SearXNG sits behind auth
+      WEB_SEARCH_REGIONS: ""      # e.g. "Bavaria:DE,Catalonia:ES" — defaults to Indian states
+
   ais-relay:
     environment:
       AISSTREAM_API_KEY: ""       # same key as above — relay needs it too
@@ -117,9 +124,10 @@ services:
 | Status | Keys |
 |--------|------|
 | 🟢 No key needed | Earthquakes, weather, natural events, UNHCR displacement, prediction markets, stablecoins, crypto, spending, climate anomalies, submarine cables, BIS data, cyber threats |
+| 🟢 No key needed (self-hosted) | Live web search / regional search gaps — run your own SearXNG instance and set `WEB_SEARCH_URL` |
 | 🟢 Free signup | GROQ, FRED, EIA, NASA FIRMS, AISSTREAM, Finnhub, Alpha Vantage, AviationStack, ACLED, OpenRouter |
 | 🟡 Free (limited) | OpenSky (higher rate limits with account) |
-| 🔴 Paid | Cloudflare Radar (internet outages) |
+| 🔴 Paid | Cloudflare Radar (internet outages), Brave Search API (`BRAVE_API_KEYS` — card required for verification even on its free monthly credits; optional fallback only, `WEB_SEARCH_URL` above covers the same feature with no account) |
 
 ## 🌱 Seeding Data
 
@@ -343,6 +351,52 @@ services:
       - "your-host:192.168.1.100"  # if not DNS-resolvable
 ```
 
+### Self-Hosted Web Search
+
+Fills a gap the RSS digest pipeline can't: sparse state/city-level regional
+news (e.g. an Indian state-level story no national wire picked up). Backed by
+`scripts/_web-search.mjs` (a live search-and-fetch-snippets capability the
+LLM-brief code can call directly) and `scripts/seed-regional-search-gaps.mjs`
+(a seeder that walks a configurable regional watchlist — see
+`WEB_SEARCH_REGIONS` above). Neither touches the RSS pipeline itself.
+
+Run [SearXNG](https://docs.searxng.org/) — free, open-source, no account —
+alongside the stack:
+
+```yaml
+# docker-compose.override.yml
+services:
+  searxng:
+    image: searxng/searxng:latest
+    ports:
+      - "8888:8080"
+    volumes:
+      - ./searxng:/etc/searxng
+    environment:
+      - SEARXNG_BASE_URL=http://localhost:8888/
+
+  worldmonitor:
+    environment:
+      WEB_SEARCH_URL: "http://searxng:8080"
+```
+
+JSON output is off by default on SearXNG (public instances disable it against
+abuse); enable it for your own instance by setting in
+`./searxng/settings.yml`:
+
+```yaml
+search:
+  formats:
+    - html
+    - json
+```
+
+No self-hosted instance handy? `scripts/_web-search.mjs` falls back to the
+already-documented `BRAVE_API_KEYS` (see "🔑 API Keys" above) when
+`WEB_SEARCH_URL` is unset — note that's a cloud key requiring card
+verification, not a self-hosted option, so `WEB_SEARCH_URL` is the only path
+that keeps this fully self-hosted with no external account.
+
 ## 🐛 Troubleshooting
 
 | Issue | Fix |
@@ -354,3 +408,4 @@ services:
 | 🚢 No vessel data | Set `AISSTREAM_API_KEY` in both `worldmonitor` and `ais-relay` services |
 | 🔥 No wildfire data | Set `NASA_FIRMS_API_KEY` |
 | 🌐 No outage data | Requires `CLOUDFLARE_API_TOKEN` (paid Radar access) |
+| 🔎 `seed-regional-search-gaps.mjs` says SKIP | No search backend configured — set `WEB_SEARCH_URL` (self-hosted SearXNG) or `BRAVE_API_KEYS` |

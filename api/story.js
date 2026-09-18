@@ -22,8 +22,25 @@ var COUNTRY_NAMES = {
   VE: "Venezuela"
 };
 var BOT_UA = /twitterbot|facebookexternalhit|linkedinbot|slackbot|telegrambot|whatsapp|discordbot|redditbot|googlebot/i;
+
+// Resolves the public origin these client-facing (bot-crawled) links point
+// at. Pinned to WORLDMONITOR_PUBLIC_BASE_URL when set — same override
+// api/brief/share-url.ts honors — so a self-hosted / FAII deployment emits
+// links back to its own backend connection instead of the upstream
+// worldmonitor.app SaaS domain baked in here previously.
+function resolveBaseUrl(req) {
+  const pinned = process.env.WORLDMONITOR_PUBLIC_BASE_URL;
+  if (pinned) return pinned.replace(/\/+$/, "");
+  const forwardedProto = req.headers["x-forwarded-proto"];
+  const proto = (Array.isArray(forwardedProto) ? forwardedProto[0] : forwardedProto) || "http";
+  const forwardedHost = req.headers["x-forwarded-host"];
+  const host = (Array.isArray(forwardedHost) ? forwardedHost[0] : forwardedHost) || req.headers.host || "localhost";
+  return `${proto}://${host}`;
+}
+
 function handler(req, res) {
-  const url = new URL(req.url, "https://worldmonitor.app");
+  const baseUrl = resolveBaseUrl(req);
+  const url = new URL(req.url, baseUrl);
   const countryCode = (url.searchParams.get("c") || "").toUpperCase();
   const type = url.searchParams.get("t") || "ciianalysis";
   const ts = url.searchParams.get("ts") || "";
@@ -31,7 +48,6 @@ function handler(req, res) {
   const level = url.searchParams.get("l") || "";
   const ua = req.headers["user-agent"] || "";
   const isBot = BOT_UA.test(ua);
-  const baseUrl = "https://worldmonitor.app";
   const spaUrl = `${baseUrl}/?c=${countryCode}&t=${type}${ts ? `&ts=${ts}` : ""}`;
   if (!isBot) {
     res.writeHead(302, { Location: spaUrl });
