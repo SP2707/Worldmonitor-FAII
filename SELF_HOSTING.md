@@ -2,6 +2,16 @@
 
 Run the full World Monitor stack locally with Docker/Podman.
 
+> **This is the parent project's Docker-based guide.** This repo
+> (Worldmonitor-FAII) is a headless, Docker-free fork built for Alfred's
+> Recon lane — see `README.md` for its actual, much shorter setup
+> (`npm install && LOCAL_API_TOKEN=... npm start`, no Docker, no Redis
+> account required — a local Redis stand-in auto-launches). The rest of
+> this file describes the full stack this fork intentionally does not run;
+> it's kept for reference (e.g. `docker/redis-rest-proxy.mjs`, the
+> Docker-based Redis REST proxy this fork's `scripts/local-redis-rest.mjs`
+> is a Docker-free equivalent of).
+
 ## 📋 Prerequisites
 
 - **Docker** or **Podman** (rootless works fine)

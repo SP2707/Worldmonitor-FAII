@@ -15,14 +15,18 @@ npm install
 LOCAL_API_TOKEN=$(openssl rand -hex 32) npm start
 ```
 
-That's it. No Docker, no Redis, no Convex are required to boot. `npm start`
-compiles the ~150 API handlers (`docker/build-handlers.mjs`, esbuild, a few
-seconds) and then starts the server (`src-tauri/sidecar/local-api-server.mjs`)
-on `http://127.0.0.1:46123` (override with `LOCAL_API_PORT`).
+That's it. No Docker, no Redis account, no Convex are required to boot.
+`npm start` compiles the ~150 API handlers (`docker/build-handlers.mjs`,
+esbuild, a few seconds), auto-launches a local, in-process, Docker-free
+Redis stand-in when `UPSTASH_REDIS_REST_URL` isn't set
+(`scripts/local-redis-rest.mjs`, wired in by `scripts/start-with-local-redis.mjs`
+— see "What's optional" below), and then starts the server
+(`src-tauri/sidecar/local-api-server.mjs`) on `http://127.0.0.1:46123`
+(override with `LOCAL_API_PORT`).
 
 Verified this boots clean and serves real MCP tool calls with **zero**
-API keys, zero Redis, zero Convex configured — confirmed by actually running
-it, not assumed.
+API keys, zero Redis account, zero Convex configured — confirmed by actually
+running it, not assumed.
 
 ## Auth
 
@@ -51,11 +55,23 @@ direct REST over MCP.
 ## What's optional / degrades gracefully
 
 - **Redis** (`UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN`) — powers
-  the cached bulk-dataset endpoints (earthquakes, military flights, etc, ~39
-  of ~150 routes). Without it, those specific routes return an empty/"Redis
-  not configured" result rather than crashing — confirmed by testing. Point
-  it at a free Upstash account if you want those endpoints live; otherwise
-  skip it.
+  the cached bulk-dataset endpoints and the news digest (`/api/news/v1/list-feed-digest`
+  and friends — ~39 of ~150 routes). You don't need to configure anything:
+  when `UPSTASH_REDIS_REST_URL` is unset, `npm start` auto-launches
+  `scripts/local-redis-rest.mjs`, a pure-Node, in-memory (+ file-persisted to
+  `.local-redis-data.json`) stand-in that speaks the same Upstash REST
+  protocol this codebase's own Redis client already targets, and points the
+  sidecar at it (`scripts/start-with-local-redis.mjs`). No Docker, no
+  account, no extra step — confirmed end-to-end: the digest route reaches
+  real storage, its on-demand rebuild runs, and results persist across
+  requests instead of "unavailable"/`itemsServed: 0`. (Getting real *content*
+  in the digest still depends on being able to reach the RSS feed hosts
+  themselves over the network — a from-scratch instance with no network
+  access to those feeds will see a well-formed but empty digest until a feed
+  fetch succeeds, same as before.) Point `UPSTASH_REDIS_REST_URL` /
+  `UPSTASH_REDIS_REST_TOKEN` at a free Upstash account instead if you want a
+  durable remote store or are running more than one instance against the
+  same data; the local stand-in is single-process, dev/self-host scoped.
 - **Data-source API keys** (Groq, FRED, EIA, NASA FIRMS, AISSTREAM, Finnhub,
   etc. — see `.env.example`) — each unlocks one feed; everything else keeps
   working without it.

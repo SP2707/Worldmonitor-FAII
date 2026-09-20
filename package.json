@@ -181,7 +181,7 @@
     "legal:pdfs": "node scripts/build-legal-pdfs.mjs",
     "legal:pdfs:check": "node scripts/build-legal-pdfs.mjs --check",
     "build:faii": "node docker/build-handlers.mjs",
-    "start": "node docker/build-handlers.mjs && node src-tauri/sidecar/local-api-server.mjs"
+    "start": "node scripts/start-with-local-redis.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",

@@ -142,3 +142,84 @@ playground-pricing.html
 # compile time — `cargo test` fails on a resource path that does not exist.
 src-tauri/notices/*
 !src-tauri/notices/.gitkeep
+
+# scripts/local-redis-rest.mjs's persisted store — the local, Docker-free
+# Upstash-REST stand-in that `npm start` auto-launches when no
+# UPSTASH_REDIS_REST_URL is configured (scripts/start-with-local-redis.mjs).
+# This is a dev-machine data file (can grow to several MB once seeders run
+# against it), not source, and its path is also independently overridable
+# via LOCAL_REDIS_DATA_FILE.
+.local-redis-data.json
+
+# docker/build-handlers.mjs (this fork's npm-start build step, distinct from
+# the parent project's scripts/build-sidecar-handlers.mjs /
+# scripts/build-sidecar-sebuf.mjs whose output the two api/ rules above
+# already cover) compiles EVERY api/**/*.ts to an esbuild bundle at the same
+# path with a .js extension. Those bundles were accidentally committed
+# alongside their .ts sources in 40a53c2 (~900 files, ~885k lines) — ignore
+# every api/**/*.js EXCEPT the hand-written .js files that have no .ts
+# counterpart (those ARE the source; docker/build-handlers.mjs's pass 2
+# rebundles them in place with inlined deps, so they're allowed to differ
+# after a build but stay tracked as source either way).
+api/**/*.js
+!api/_api-key.js
+!api/_bootstrap-public-tier.js
+!api/_bootstrap-r2.js
+!api/_bootstrap-tier-keys.js
+!api/_canada-alerts-cutover.js
+!api/_china-decision-health.js
+!api/_cii-risk-cache-keys.js
+!api/_client-ip.js
+!api/_content-freshness.js
+!api/_convex-error.js
+!api/_cors.js
+!api/_crypto.js
+!api/_github-release.js
+!api/_idempotency.js
+!api/_json-response.js
+!api/_oauth-token.js
+!api/_pool-coverage.js
+!api/_product-catalog.generated.js
+!api/_rankable-coverage.js
+!api/_rate-limit-fallback.js
+!api/_rate-limit.js
+!api/_relay.js
+!api/_rss-allowed-domain-match.js
+!api/_rss-allowed-domains.js
+!api/_rss-fetch-headers.js
+!api/_seed-envelope.js
+!api/_sentry-common.js
+!api/_sentry-edge.js
+!api/_sentry-node.js
+!api/_session.js
+!api/_upstash-json.js
+!api/_usage-telemetry.js
+!api/_user-api-key.js
+!api/_wildfire-dashboard.js
+!api/analytics-health.js
+!api/bootstrap.js
+!api/cache-purge.js
+!api/correlation-runtime-mode.js
+!api/download.js
+!api/fwdstart.js
+!api/geo.js
+!api/gpsjam.js
+!api/health.js
+!api/oauth/authorize.js
+!api/oauth/register.js
+!api/og-story.js
+!api/opensky.js
+!api/oref-alerts.js
+!api/polymarket.js
+!api/reverse-geocode.js
+!api/rss-proxy.js
+!api/security/report.js
+!api/seed-health.js
+!api/story.js
+!api/supply-chain/hormuz-tracker.js
+!api/telegram-feed.js
+!api/version.js
+!api/wm-session.js
+!api/x-feed.js
+!api/youtube/embed.js
+!api/youtube/live.js
