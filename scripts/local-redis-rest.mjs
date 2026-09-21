@@ -757,6 +757,22 @@ const server = http.createServer(async (req, res) => {
       return json(res, 200, commands.map(handleCommand));
     }
 
+    // Upstash MULTI/EXEC transaction endpoint. Same request body as /pipeline
+    // (array of command arrays) and same response shape (array of
+    // {result}|{error}, one per command). Atomicity comes for free: handleCommand
+    // is fully synchronous and Node is single-threaded, so no other request can
+    // interleave between the commands. Unlike /pipeline this validates every
+    // entry up front and rejects the whole batch (no partial execution), which
+    // matches Upstash returning a single top-level {error} for a bad transaction.
+    if (req.method === 'POST' && url.pathname === '/multi-exec') {
+      const body = await readBody(req);
+      const commands = JSON.parse(body || '[]');
+      if (!Array.isArray(commands) || !commands.every((c) => Array.isArray(c) && c.length > 0)) {
+        return json(res, 400, { error: 'multi-exec body must be an array of non-empty command arrays' });
+      }
+      return json(res, 200, commands.map(handleCommand));
+    }
+
     if (req.method === 'POST' && url.pathname === '/') {
       const body = await readBody(req);
       const cmd = JSON.parse(body || '[]');

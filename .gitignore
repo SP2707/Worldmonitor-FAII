@@ -223,3 +223,7 @@ api/**/*.js
 !api/x-feed.js
 !api/youtube/embed.js
 !api/youtube/live.js
+
+# Background seed runner status (scripts/seed-on-start.mjs)
+.seed-status.json
+.seed-status.json.*.tmp

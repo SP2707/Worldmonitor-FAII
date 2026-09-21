@@ -31,6 +31,9 @@
 //   4. Run `node docker/build-handlers.mjs` to completion, then exec
 //      `node src-tauri/sidecar/local-api-server.mjs` with the (possibly
 //      augmented) environment, stdio inherited.
+//   4b. Right after the sidecar is spawned, launch scripts/seed-on-start.mjs in
+//      the background (non-blocking; waits for the sidecar health probe and
+//      Redis itself). Progress: GET /api/seed-status (auth required).
 //   5. On the sidecar process exiting or this process receiving
 //      SIGINT/SIGTERM, stop the local Redis shim too (it's not durable
 //      infrastructure — it's dev/self-hosted scaffolding for this process's
@@ -58,7 +61,11 @@ const READY_POLL_INTERVAL_MS = 150;
 // script uses) so an operator's own UPSTASH_REDIS_REST_URL is honored.
 loadEnvFile(import.meta.url);
 
+// Both the seed runner and the sidecar's /api/seed-status route read this file.
+process.env.SEED_STATUS_FILE ||= path.join(PROJECT_DIR, '.seed-status.json');
+
 let redisChild = null;
+let seedChild = null;
 
 async function waitUntilReady(url, timeoutMs) {
   const deadline = Date.now() + timeoutMs;
@@ -104,6 +111,33 @@ function runToCompletion(command, args) {
   });
 }
 
+// Background seeding (scripts/seed-on-start.mjs). Never awaited: the sidecar is
+// already serving by the time this runs, and the runner has its own timeouts.
+// Opt out with SEED_ON_START=0. It waits for Redis itself, so this behaves the
+// same whether the stand-in was launched above or UPSTASH_REDIS_REST_URL was
+// preset by the caller.
+function launchSeedRunner() {
+  if (process.env.SEED_ON_START === '0') {
+    console.log('[start] SEED_ON_START=0 — background seeding disabled.');
+    return;
+  }
+  seedChild = spawn(process.execPath, [path.join(__dirname, 'seed-on-start.mjs')], {
+    cwd: PROJECT_DIR,
+    env: process.env,
+    stdio: 'inherit',
+  });
+  seedChild.on('error', (err) => console.warn(`[start] could not launch seed runner: ${err.message}`));
+  seedChild.on('exit', (code) => {
+    if (code !== null && code !== 0) console.warn(`[start] seed runner exited (code=${code}); server unaffected.`);
+  });
+}
+
+function stopSeedRunner() {
+  if (seedChild && !seedChild.killed) {
+    try { seedChild.kill(); } catch { /* already gone */ }
+  }
+}
+
 function stopRedisShim() {
   if (redisChild && !redisChild.killed) {
     try {
@@ -128,6 +162,7 @@ async function main() {
 
   for (const signal of ['SIGINT', 'SIGTERM']) {
     process.on(signal, () => {
+      stopSeedRunner();
       stopRedisShim();
       process.exit(0);
     });
@@ -146,7 +181,9 @@ async function main() {
     env: process.env,
     stdio: 'inherit',
   });
+  launchSeedRunner();
   sidecar.on('exit', (code) => {
+    stopSeedRunner();
     stopRedisShim();
     process.exit(code ?? 0);
   });

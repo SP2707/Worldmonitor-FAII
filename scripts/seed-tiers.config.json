@@ -1,0 +1,61 @@
+{
+  "_comment": "Tier config for scripts/seed-on-start.mjs. Edit this file, not the runner. Tiers 1,2 run by default; add 3 via SEED_TIERS=1,2,3. 'script' is the file name in scripts/ without .mjs. 'freshMinutes' = skip on next start if the last OK run is younger than this. 'requiresAnyEnv' = run only if at least one of these env vars is non-empty (otherwise recorded as SKIP without spawning). 'timeoutSec' overrides the default per-seeder timeout. Tier-1 membership is based on static reading of each seeder's process.env usage and has NOT yet been confirmed by running every seeder; see the handoff report.",
+  "defaults": { "timeoutSec": 120, "freshMinutes": 25, "concurrency": 2 },
+  "excluded": {
+    "seed-military-maritime-news": "Warm-pings https://api.worldmonitor.app (the upstream hosted gateway) and seeds nothing locally; excluded so no request goes to a non-public-source host."
+  },
+  "tiers": {
+    "1": [
+      { "script": "seed-current-events-wikipedia", "freshMinutes": 60 },
+      { "script": "seed-earthquakes", "freshMinutes": 15 },
+      { "script": "seed-natural-events", "freshMinutes": 30 },
+      { "script": "seed-weather-alerts", "freshMinutes": 15 },
+      { "script": "seed-internet-outages", "freshMinutes": 30 },
+      { "script": "seed-gdelt-intel", "freshMinutes": 30 },
+      { "script": "seed-unrest-events", "freshMinutes": 60 },
+      { "script": "seed-conflict-intel", "freshMinutes": 60 },
+      { "script": "seed-hormuz", "freshMinutes": 60 },
+      { "script": "seed-chokepoint-flows", "freshMinutes": 120 },
+      { "script": "seed-disease-outbreaks", "freshMinutes": 240 },
+      { "script": "seed-portwatch", "freshMinutes": 360 },
+      { "script": "seed-portwatch-chokepoints-ref", "freshMinutes": 720 },
+      { "script": "seed-portwatch-disruptions", "freshMinutes": 360 },
+      { "script": "seed-portwatch-port-activity", "freshMinutes": 720, "timeoutSec": 300 }
+    ],
+    "2": [
+      { "script": "seed-security-advisories", "freshMinutes": 240, "requiresAnyEnv": ["RELAY_URL"], "note": "Defaults to proxy.worldmonitor.app as an RSS relay (sends feed URLs to that host); only runs if you set your own RELAY_URL." },
+      { "script": "seed-fred-rates", "requiresAnyEnv": ["FRED_API_KEY"], "freshMinutes": 360 },
+      { "script": "seed-economic-calendar", "requiresAnyEnv": ["FRED_API_KEY"], "freshMinutes": 360 },
+      { "script": "seed-bls-series", "requiresAnyEnv": ["FRED_API_KEY"], "freshMinutes": 720 },
+      { "script": "seed-eia-petroleum", "requiresAnyEnv": ["EIA_API_KEY"], "freshMinutes": 360 },
+      { "script": "seed-fire-detections", "requiresAnyEnv": ["NASA_FIRMS_API_KEY", "FIRMS_API_KEY"], "freshMinutes": 60 },
+      { "script": "seed-market-quotes", "requiresAnyEnv": ["FINNHUB_API_KEY", "ALPHA_VANTAGE_API_KEY"], "freshMinutes": 15 },
+      { "script": "seed-commodity-quotes", "requiresAnyEnv": ["ALPHA_VANTAGE_API_KEY"], "freshMinutes": 30 },
+      { "script": "seed-earnings-calendar", "requiresAnyEnv": ["FINNHUB_API_KEY"], "freshMinutes": 360 },
+      { "script": "seed-ucdp-events", "requiresAnyEnv": ["UCDP_ACCESS_TOKEN", "UC_DP_KEY"], "freshMinutes": 360 },
+      { "script": "seed-cyber-threats", "requiresAnyEnv": ["ABUSEIPDB_API_KEY", "OTX_API_KEY", "URLHAUS_AUTH_KEY"], "freshMinutes": 60 },
+      { "script": "seed-health-air-quality", "requiresAnyEnv": ["OPENAQ_API_KEY", "WAQI_API_KEY"], "freshMinutes": 120 },
+      { "script": "seed-webcams", "requiresAnyEnv": ["WINDY_API_KEY"], "freshMinutes": 720 },
+      { "script": "seed-aviation", "requiresAnyEnv": ["AVIATIONSTACK_API", "ICAO_API_KEY"], "freshMinutes": 120, "timeoutSec": 300 }
+    ],
+    "3": [
+      { "script": "seed-forecasts", "freshMinutes": 360, "timeoutSec": 600, "note": "~900KB script; heavy." },
+      { "script": "seed-military-flights", "freshMinutes": 30, "timeoutSec": 300 },
+      { "script": "seed-toronto-road-restrictions", "freshMinutes": 60 },
+      { "script": "seed-toronto-tfs", "freshMinutes": 60 },
+      { "script": "seed-toronto-tps", "freshMinutes": 60 },
+      { "script": "seed-ttc-alerts", "freshMinutes": 30 },
+      { "script": "seed-saskalert", "freshMinutes": 60 },
+      { "script": "seed-bc-emergency-info", "freshMinutes": 60 },
+      { "script": "seed-alberta-emergency-alert", "freshMinutes": 60 },
+      { "script": "seed-open511", "freshMinutes": 30 },
+      { "script": "seed-provincial-511", "freshMinutes": 30 },
+      { "script": "seed-bundle-canada", "freshMinutes": 360, "timeoutSec": 600 },
+      { "script": "seed-china-macro", "freshMinutes": 720 },
+      { "script": "seed-china-policy-events", "freshMinutes": 720 },
+      { "script": "seed-china-stock-connect", "freshMinutes": 720 },
+      { "script": "seed-china-corporate-disclosures", "freshMinutes": 720 },
+      { "script": "seed-china-decision-signals", "freshMinutes": 720 }
+    ]
+  }
+}

@@ -1476,6 +1476,34 @@ async function dispatch(requestUrl, req, routes, context) {
     return json({ error: 'Unauthorized' }, 401);
   }
 
+  // Seed progress written by scripts/seed-on-start.mjs (.seed-status.json).
+  // Read-only, tiny, and behind the auth gate above. Returns state=not-started
+  // when the runner has not written anything yet.
+  if (requestUrl.pathname === '/api/seed-status') {
+    const statusFile = process.env.SEED_STATUS_FILE || path.join(context.dataDir, '.seed-status.json');
+    try {
+      const raw = JSON.parse(readFileSync(statusFile, 'utf8'));
+      const seeders = {};
+      for (const [name, r] of Object.entries(raw.seeders ?? {})) {
+        seeders[name] = { tier: r.tier, result: r.result, at: r.finishedAt, ...(r.fresh ? { fresh: true } : {}), ...(r.result !== 'OK' && r.lastLine ? { note: r.lastLine } : {}) };
+      }
+      return json({
+        state: raw.state ?? 'idle',
+        currentTier: raw.currentTier ?? null,
+        tiers: raw.tiers ?? [],
+        counts: raw.counts ?? {},
+        running: raw.running ?? [],
+        startedAt: raw.startedAt ?? null,
+        lastCompletedAt: raw.lastCompletedAt ?? null,
+        refreshMinutes: raw.refreshMinutes ?? 0,
+        ...(raw.error ? { error: raw.error } : {}),
+        seeders,
+      });
+    } catch {
+      return json({ state: 'not-started', counts: {}, seeders: {} });
+    }
+  }
+
   if (requestUrl.pathname === '/api/local-status') {
     return json({
       success: true,
