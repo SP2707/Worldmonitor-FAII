@@ -363,6 +363,25 @@ export function getMcpBillingVerificationDenial(
   );
 }
 
+// Set ONLY by src-tauri/sidecar/local-api-server.mjs's dispatch(), and only
+// on a request that already cleared that file's own "Global auth gate"
+// (LOCAL_API_TOKEN via Authorization: Bearer or x-worldmonitor-local-token).
+// That file strips both the transport header and a matching Authorization
+// header before ever invoking a route handler — correctly, since Authorization
+// means OAuth caller identity here, not the sidecar's local shared secret —
+// which otherwise left this Docker-free, Clerk/Convex-free, single-user fork's
+// npm-start sidecar with literally no way to pass this gate on any tool not
+// flagged `_freeTier: true` (68 of the 69 registered tools). This header is
+// unreachable from the hosted/Vercel deployment: nothing there ever routes a
+// request through that sidecar file. It is also unforgeable from an external
+// caller of the sidecar: that file deletes any externally-supplied copy
+// before setting its own. Checked LAST, after every real credential above,
+// so a caller presenting an actual OAuth bearer / operator key / user key on
+// a self-hosted deployment that DOES configure one keeps that exact behavior
+// unchanged. A second copy of this exact header name lives in
+// src-tauri/sidecar/local-api-server.mjs — edit both if it ever changes.
+const LOCAL_SIDECAR_AUTH_HEADER = 'x-worldmonitor-sidecar-authenticated';
+
 export async function resolveAuthContext(
   req: Request,
   deps: McpHandlerDeps,
@@ -400,6 +419,27 @@ export async function resolveAuthContext(
       };
     }
     return { ok: true, context };
+  }
+
+  // Local single-user fork fallback: no OAuth bearer parsed above — but the
+  // sidecar already authenticated this exact request via LOCAL_API_TOKEN
+  // before forwarding it here (see LOCAL_SIDECAR_AUTH_HEADER above). Checked
+  // here, before the X-WorldMonitor-Key branch's own early return on a
+  // missing key: that return would otherwise short-circuit past a check
+  // placed after it on the single most common case for this fork — no
+  // Authorization header survives the sidecar's strip, and no
+  // X-WorldMonitor-Key was ever sent, which is exactly what every plain
+  // local `tools/call` looks like. Still runs strictly after a real
+  // Authorization bearer was tried and failed/succeeded above, so a caller
+  // presenting actual OAuth credentials is unaffected. Reusing the `env_key`
+  // context kind is deliberate, not a new credential class:
+  // runContextPreChecks() already treats env_key as "operator-owned,
+  // ungated, and never metered by the daily counter", which is exactly the
+  // right behavior for the machine's own owner running their own
+  // single-process instance — no Clerk/Convex entitlement backend exists in
+  // this build for anything else to check.
+  if (req.headers.get(LOCAL_SIDECAR_AUTH_HEADER) === '1') {
+    return { ok: true, context: { kind: 'env_key', apiKey: 'local-sidecar' } };
   }
 
   const candidateKey = req.headers.get('X-WorldMonitor-Key') ?? '';

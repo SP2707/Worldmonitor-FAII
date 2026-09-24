@@ -17,6 +17,21 @@ const DESKTOP_AUTH_TIMESTAMP_HEADER = 'X-WorldMonitor-Desktop-Timestamp';
 const DESKTOP_AUTH_SIGNATURE_HEADER = 'X-WorldMonitor-Desktop-Signature';
 const LOCAL_API_TRANSPORT_HEADER = 'x-worldmonitor-local-token';
 
+// Set on every request forwarded to a route handler AFTER this file's own
+// "Global auth gate" (below) has already accepted it via LOCAL_API_TOKEN.
+// api/mcp/auth.ts's resolveAuthContext() checks this header as a last-resort
+// local-single-user credential for MCP tools/call, because the very next
+// block strips both LOCAL_API_TRANSPORT_HEADER and a matching Authorization
+// header before the handler ever sees the request — by design (Authorization
+// means OAuth caller identity to route handlers, not this process's local
+// shared secret) — which otherwise leaves MCP tool calls with zero identity
+// to authenticate with, even though the caller already proved it holds
+// LOCAL_API_TOKEN. Unforgeable by an external caller: stripped from the
+// inbound request below, then set only here, unconditionally, after the gate.
+// A second copy of this exact header name lives in api/mcp/auth.ts — edit
+// both if it ever changes.
+const LOCAL_SIDECAR_AUTH_HEADER = 'x-worldmonitor-sidecar-authenticated';
+
 // Monkey-patch globalThis.fetch to force IPv4 for HTTPS requests.
 // Node.js built-in fetch (undici) tries IPv6 first via Happy Eyeballs.
 // Government APIs (EIA, NASA FIRMS, FRED) publish AAAA records but their
@@ -1809,6 +1824,12 @@ async function dispatch(requestUrl, req, routes, context) {
     if (hdrs.get('Authorization') === `Bearer ${expectedToken}`) {
       hdrs.delete('Authorization');
     }
+    // Never trust a client-supplied copy: strip first, then set unconditionally.
+    // Reaching this line already proves the request passed the Global auth gate
+    // above, so this is a safe, unforgeable "authenticated locally" signal for
+    // api/mcp/auth.ts's resolveAuthContext() — see LOCAL_SIDECAR_AUTH_HEADER.
+    hdrs.delete(LOCAL_SIDECAR_AUTH_HEADER);
+    hdrs.set(LOCAL_SIDECAR_AUTH_HEADER, '1');
     const request = new Request(requestUrl.toString(), {
       method: req.method,
       headers: hdrs,
