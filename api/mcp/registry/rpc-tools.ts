@@ -1661,8 +1661,13 @@ export const RPC_TOOLS: ToolDef[] = [
       // dispatchToolsCall reports a normal tool-execution failure. For Pro
       // callers the already-reserved slot stays charged because the tool has
       // executed.
+      //
+      // Typed as McpSourceUnavailableError, matching executeTool's own
+      // cache_all_null guard: surfaces as -32003 with `unavailable_inputs`
+      // listing dataKeys, not the generic -32603 that gives a caller no way
+      // to tell "never seeded" from "the tool is actually broken".
       if (dataResults.every((v: unknown) => v === null || v === undefined)) {
-        throw new Error('cache_all_null');
+        throw new McpSourceUnavailableError('cache_all_null', dataKeys, []);
       }
 
       const { cached_at, stale } = evaluateFreshness(freshnessChecks, metaResults);

@@ -18,6 +18,7 @@ import {
   isEntitlementBackendConfigured,
 } from '../../server/_shared/entitlement-check';
 import { checkProMcpAccess } from '../../server/_shared/pro-mcp-gate';
+import { isLocalSidecarAuthenticated } from '../../server/_shared/local-sidecar-auth';
 import type { BillingVerificationCode } from './billing-denial';
 import {
   buildInternalMcpHeaders,
@@ -378,9 +379,15 @@ export function getMcpBillingVerificationDenial(
 // before setting its own. Checked LAST, after every real credential above,
 // so a caller presenting an actual OAuth bearer / operator key / user key on
 // a self-hosted deployment that DOES configure one keeps that exact behavior
-// unchanged. A second copy of this exact header name lives in
-// src-tauri/sidecar/local-api-server.mjs — edit both if it ever changes.
-const LOCAL_SIDECAR_AUTH_HEADER = 'x-worldmonitor-sidecar-authenticated';
+// unchanged.
+//
+// Defined once in server/_shared/local-sidecar-auth.ts and imported here —
+// server/gateway.ts's createDomainGateway trusts the exact same header for
+// the exact same reason (see that module's own import of it), so this is
+// deliberately NOT a locally-redefined constant. A second copy of the header
+// STRING (not the const) still has to live in src-tauri/sidecar/local-api-server.mjs,
+// which is hand-written JS outside this file's esbuild bundle and can't import
+// a TS module — edit that one too if this value ever changes.
 
 export async function resolveAuthContext(
   req: Request,
@@ -438,7 +445,7 @@ export async function resolveAuthContext(
   // right behavior for the machine's own owner running their own
   // single-process instance — no Clerk/Convex entitlement backend exists in
   // this build for anything else to check.
-  if (req.headers.get(LOCAL_SIDECAR_AUTH_HEADER) === '1') {
+  if (isLocalSidecarAuthenticated(req)) {
     return { ok: true, context: { kind: 'env_key', apiKey: 'local-sidecar' } };
   }
 
@@ -916,6 +923,22 @@ export async function applyFreeTierLimit(
   headers: Record<string, string> = {},
   id: unknown = null,
 ): Promise<Response | null> {
+  // Local single-user sidecar mode: this specific request already cleared
+  // the sidecar's own LOCAL_API_TOKEN gate (see LOCAL_SIDECAR_AUTH_HEADER /
+  // resolveAuthContext's fallback above). It reaches this function at all
+  // only because a `_freeTier` tool call with no Authorization/X-WorldMonitor-Key
+  // header is promoted straight to the anonymous branch in handler.ts before
+  // resolveAuthContext ever runs — so the sidecar's own gate is the only
+  // credential check this call has actually been through. Skipping the
+  // per-IP free-tier ceiling here is correct, not a loophole: this fork has
+  // no accounts, tiers, or paywalls at all (README), so there is no free
+  // tier to protect from the operator's own local process. This also sidesteps
+  // a real limitation, not just a policy choice — the sliding-window limiter
+  // below depends on Upstash's EVALSHA, which this fork's local, Docker-free
+  // Redis stand-in (scripts/local-redis-rest.mjs) does not implement, so
+  // without this bypass every free-tier tool call in local mode fails closed
+  // with a 503 regardless of actual rate.
+  if (isLocalSidecarAuthenticated(req)) return null;
   // A Cloudflare client-IP header without the configured transit proof makes
   // getClientIp fall back to the shared Cloudflare-PoP x-real-ip. For a tight
   // 10/min public-data budget that would turn one caller into a 429 for every

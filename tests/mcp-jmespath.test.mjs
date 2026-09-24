@@ -467,12 +467,13 @@ describe('api/mcp.ts — JMESPath projection (v1.7.0)', () => {
       assert.ok(env._jmespath_error?.startsWith('expression_too_long:'));
     });
 
-    it('cache_all_null still triggers -32603 (rollback path preserved — applyJmespath did NOT regress it)', async () => {
-      // No mock — all Redis reads return null → cache_all_null → throw → -32603.
-      // Confirms applyJmespath's no-throw guarantee didn't accidentally
-      // swallow the genuine tool-execution error path.
+    it('cache_all_null still triggers -32003 (rollback path preserved — applyJmespath did NOT regress it)', async () => {
+      // No mock — all Redis reads return null → cache_all_null → throw
+      // McpSourceUnavailableError → -32003. Confirms applyJmespath's
+      // no-throw guarantee didn't accidentally swallow the genuine
+      // tool-execution error path.
       const { body } = await callTool('get_market_data', { jmespath: 'data' });
-      assert.equal(body.error?.code, -32603, 'cache_all_null must still surface as -32603');
+      assert.equal(body.error?.code, -32003, 'cache_all_null must still surface as -32003');
     });
 
     it('jmespath composes with the existing summary flag (summary first, then projection)', async () => {

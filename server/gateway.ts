@@ -42,6 +42,10 @@ import {
   type CachedEntitlements,
 } from './_shared/entitlement-check';
 import { checkProMcpAccess } from './_shared/pro-mcp-gate';
+import {
+  isLocalSidecarAuthenticated,
+  LOCAL_SIDECAR_PRINCIPAL_ID,
+} from './_shared/local-sidecar-auth';
 import { resolveClerkSession } from './_shared/auth-session';
 import {
   INTERNAL_MCP_SIG_HEADER,
@@ -1019,7 +1023,29 @@ export function createDomainGateway(
     // because we re-checked tier ≥ 1 + mcpAccess === true above.
     // ----------------------------------------------------------------------
     let internalMcpVerified = false;
-    if (request.headers.has(INTERNAL_MCP_SIG_HEADER)) {
+    if (isLocalSidecarAuthenticated(request)) {
+      // Local single-user sidecar mode (Worldmonitor-FAII fork): this exact
+      // request already cleared the sidecar's own LOCAL_API_TOKEN gate — see
+      // server/_shared/local-sidecar-auth.ts for why this header can be
+      // trusted. Treat it exactly like a verified internal-MCP tool fetch
+      // (same downstream skips: validateApiKey, tier gating, entitlement
+      // check, gateway rate limiting — see every `!internalMcpVerified`
+      // check below). This is what makes an `_execute` MCP tool's own
+      // internal loopback re-fetch into this gateway (api/mcp/auth.ts's
+      // buildAuthHeaders carries the LOCAL_API_TOKEN bearer, but this
+      // gateway previously had no idea what that meant) actually succeed
+      // instead of 401ing with "Invalid API key" — the same local-sidecar
+      // fallback api/mcp/auth.ts's resolveAuthContext already grants the
+      // inbound /api/mcp request itself, now extended here too. No HMAC or
+      // entitlement verification applies: there is no per-user identity or
+      // billing backend in this build to check against.
+      const headers = new Headers(request.headers);
+      headers.set(INTERNAL_MCP_VERIFIED_HEADER, getInternalMcpVerifiedNonce());
+      headers.set(TRUSTED_USER_ID_HEADER, LOCAL_SIDECAR_PRINCIPAL_ID);
+      request = cloneRequestWithHeaders(request, headers);
+      usage.sessionUserId = LOCAL_SIDECAR_PRINCIPAL_ID;
+      internalMcpVerified = true;
+    } else if (request.headers.has(INTERNAL_MCP_SIG_HEADER)) {
       const hmacSecret = process.env.MCP_INTERNAL_HMAC_SECRET ?? '';
       if (!hmacSecret) {
         // Server misconfiguration on the HMAC-attempt path. Surface as 500

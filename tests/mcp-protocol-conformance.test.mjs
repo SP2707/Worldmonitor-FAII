@@ -53,7 +53,7 @@ describe('api/mcp.ts — protocol conformance lifecycle (in-process)', () => {
     // beforeEach) because `readJsonFromUpstash` in api/_upstash-json.js short-
     // circuits to `null` when they're missing — that would trip the F6
     // `cache_all_null` guard on every `get_market_data` call and surface as
-    // -32603 before the quota path under test could fire. Setting them keeps
+    // -32003 before the quota path under test could fire. Setting them keeps
     // the cache-read path live so the fetch stub below can answer the GETs.
     //
     // Side effect of setting them: `getMcpProMinRatelimit()` constructs a real

@@ -112,18 +112,28 @@ export async function executeTool(
 
   // F6: if every cache key returned null/undefined AND the tool actually
   // had keys configured, this is a degenerate-empty result (Redis transient
-  // / stampede). Throw so dispatchToolsCall reports a normal tool-execution
-  // failure; for Pro callers the already-reserved daily slot stays charged
-  // because this check runs after the tool has executed.
+  // / stampede / never-seeded). Throw so dispatchToolsCall reports a normal
+  // tool-execution failure; for Pro callers the already-reserved daily slot
+  // stays charged because this check runs after the tool has executed.
   //
   // Cache-tools always have at least one key (validated in the registry
   // type). The all-null case is structurally distinguishable from "the
   // upstream returned an empty list" (which is a JSON value, not null).
+  //
+  // Typed as McpSourceUnavailableError (not a plain Error) so this surfaces
+  // as the documented -32003 "Required data inputs are unavailable" with
+  // `unavailable_inputs` listing the exact keys that came back null, instead
+  // of falling through to the generic -32603 "Internal error: data fetch
+  // failed" — which told a caller nothing about whether this was a real bug
+  // or simply unseeded/expired cache data. tool._cacheKeys is what actually
+  // came back null here (that's this very check's condition), so it's
+  // reported as unavailable, not failed — nothing here indicates a fetch
+  // attempt failed, only that the data was never there to read.
   if (
     tool._cacheKeys.length > 0 &&
     results.every((v: unknown) => v === null || v === undefined)
   ) {
-    throw new Error('cache_all_null');
+    throw new McpSourceUnavailableError('cache_all_null', tool._cacheKeys, []);
   }
 
   const data: Record<string, unknown> = {};

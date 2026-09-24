@@ -557,18 +557,21 @@ describe('api/mcp.ts — PRO MCP Server', () => {
     assert.equal(body.error?.message, `Unknown tool: ${name.slice(0, 100)}`);
   });
 
-  it('tools/call with known tool returns -32603 when EVERY cache read is null (F6: cache_all_null)', async () => {
+  it('tools/call with known tool returns -32003 when EVERY cache read is null (F6: cache_all_null)', async () => {
     // F6 review pass: degenerate-empty result (Redis transient/stampede)
     // must surface as a tool-execution failure instead of a misleading success.
     // The env_key path doesn't have a quota counter; Pro callers keep the
     // already-reserved slot charged after this post-execution failure.
+    // Typed as McpSourceUnavailableError -> -32003 "Required data inputs are
+    // unavailable" (not the generic -32603), so a caller can tell "never
+    // seeded / evicted cache" from "the tool implementation is broken".
     const res = await handler(makeReq('POST', {
       jsonrpc: '2.0', id: 4, method: 'tools/call',
       params: { name: 'get_market_data', arguments: {} },
     }));
     assert.equal(res.status, 200);
     const body = await res.json();
-    assert.equal(body.error?.code, -32603, 'all-null cache reads must surface as -32603');
+    assert.equal(body.error?.code, -32003, 'all-null cache reads must surface as -32003');
   });
 
   it('evaluateFreshness marks bundled data stale when any required source meta is missing', () => {
@@ -1760,12 +1763,13 @@ describe('api/mcp.ts — PRO MCP Server', () => {
     assert.deepEqual(payload.data.summary, summaryPayload, 'label-walk strips year+v1, exposes payload under data.summary');
   });
 
-  it('get_displacement_data returns -32603 when cache is empty (cache_all_null)', async () => {
+  it('get_displacement_data returns -32003 when cache is empty (cache_all_null)', async () => {
     process.env.UPSTASH_REDIS_REST_URL = 'https://fake.upstash.io';
     process.env.UPSTASH_REDIS_REST_TOKEN = 'fake_token';
 
     // Upstash returns {} (no result) for every GET — simulates fresh deploy
-    // or evicted cache. executeTool's cache_all_null guard must throw → -32603.
+    // or evicted cache. executeTool's cache_all_null guard must throw
+    // McpSourceUnavailableError -> -32003.
     globalThis.fetch = async () => new Response(JSON.stringify({}), {
       status: 200, headers: { 'Content-Type': 'application/json' },
     });
@@ -1779,7 +1783,7 @@ describe('api/mcp.ts — PRO MCP Server', () => {
     }));
     assert.equal(res.status, 200);
     const body = await res.json();
-    assert.equal(body.error?.code, -32603, 'empty cache must surface as -32603 (cache_all_null)');
+    assert.equal(body.error?.code, -32003, 'empty cache must surface as -32003 (cache_all_null)');
   });
 
   // --- get_health_signals (U2) ---
@@ -2066,14 +2070,15 @@ describe('api/mcp.ts — PRO MCP Server', () => {
     assert.equal(payload.error, 'country_code is required');
   });
 
-  it('get_consumer_prices throws cache_all_null (→ -32603) when every 5 cache reads return null', async () => {
+  it('get_consumer_prices throws cache_all_null (→ -32003) when every 5 cache reads return null', async () => {
     process.env.UPSTASH_REDIS_REST_URL = 'https://fake.upstash.io';
     process.env.UPSTASH_REDIS_REST_TOKEN = 'fake_token';
 
     // F6 contract parity with the cache-tool path: hybrid _execute mirrors the
     // executeTool cache_all_null guard so degenerate-empty responses surface as
-    // -32603 instead of success. Without this guard, every other cache-tool
-    // throws on all-null while this one would return a misleading success.
+    // McpSourceUnavailableError (-32003) instead of success. Without this
+    // guard, every other cache-tool throws on all-null while this one would
+    // return a misleading success.
     globalThis.fetch = async () => new Response(JSON.stringify({}), { status: 200, headers: { 'Content-Type': 'application/json' } });
 
     const freshMod = await import(`../api/mcp.ts?t=${Date.now()}`);
@@ -2085,7 +2090,7 @@ describe('api/mcp.ts — PRO MCP Server', () => {
     }));
     assert.equal(res.status, 200);
     const body = await res.json();
-    assert.equal(body.error?.code, -32603, 'all-5-null reads must surface as -32603 cache_all_null');
+    assert.equal(body.error?.code, -32003, 'all-5-null reads must surface as -32003 cache_all_null');
   });
 
   it('get_consumer_prices rejects oversized/non-alpha country_code (e.g. "aexxx", "AE-DXB") with result-level error', async () => {
@@ -2676,12 +2681,13 @@ describe('api/mcp.ts — PRO MCP Server', () => {
     assert.equal(payload.cached_at, null, 'mixed-validity meta yields cached_at=null per evaluateFreshness contract');
   });
 
-  it('get_energy_intelligence throws cache_all_null (→ -32603) when every 9 cache reads return null', async () => {
+  it('get_energy_intelligence throws cache_all_null (→ -32003) when every 9 cache reads return null', async () => {
     process.env.UPSTASH_REDIS_REST_URL = 'https://fake.upstash.io';
     process.env.UPSTASH_REDIS_REST_TOKEN = 'fake_token';
 
-    // F6 contract: degenerate-empty result must surface as -32603. For Pro
-    // callers this is a post-execution failure, so the slot remains charged.
+    // F6 contract: degenerate-empty result must surface as McpSourceUnavailableError
+    // (-32003). For Pro callers this is a post-execution failure, so the slot
+    // remains charged.
     globalThis.fetch = async () => new Response(JSON.stringify({}), { status: 200, headers: { 'Content-Type': 'application/json' } });
 
     const freshMod = await import(`../api/mcp.ts?t=${Date.now()}`);
@@ -2693,7 +2699,7 @@ describe('api/mcp.ts — PRO MCP Server', () => {
     }));
     assert.equal(res.status, 200);
     const body = await res.json();
-    assert.equal(body.error?.code, -32603, 'all-9-null reads must surface as -32603 cache_all_null');
+    assert.equal(body.error?.code, -32003, 'all-9-null reads must surface as -32003 cache_all_null');
   });
 
   it('get_supply_chain_data still returns its 3 slices unchanged (regression — U6 must not touch get_supply_chain_data._cacheKeys)', async () => {
@@ -3683,8 +3689,9 @@ describe('api/mcp.ts — U7 Pro-path', () => {
 
   it('F6: cache-only tool with all-null reads → slot stays charged (GHSA-hcq5, no post-execution refund)', async () => {
     // Pro path: starting at 5, every cache read returns null → executeTool
-    // throws cache_all_null AFTER running. Per GHSA-hcq5 the slot is NOT
-    // refunded (the cost is already incurred) → counter stays at 6.
+    // throws McpSourceUnavailableError (cache_all_null) AFTER running. Per
+    // GHSA-hcq5 the slot is NOT refunded (the cost is already incurred) →
+    // counter stays at 6.
     const { deps, pipe } = makeProDeps({ pipelineOpts: { initialCount: 5 } });
     // Stub Upstash with a result of null (genuine miss).
     process.env.UPSTASH_REDIS_REST_URL = 'https://stub.upstash';
@@ -3693,7 +3700,7 @@ describe('api/mcp.ts — U7 Pro-path', () => {
     const res = await mcpHandler(proReq('POST', callBody('get_market_data')), deps);
     assert.equal(res.status, 200, 'JSON-RPC error returns HTTP 200');
     const body = await res.json();
-    assert.equal(body.error?.code, -32603, 'cache_all_null surfaces as -32603');
+    assert.equal(body.error?.code, -32003, 'cache_all_null surfaces as -32003');
     assert.equal(pipe.count, 6, 'GHSA-hcq5: cache_all_null throws after execution, so the slot stays charged (no DECR refund)');
   });
 

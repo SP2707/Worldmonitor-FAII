@@ -100,8 +100,9 @@ describe('api/mcp.ts — Pro daily quota is NOT refunded after execution (GHSA-h
   });
 
   it('errored dispatch keeps the reserved slot charged (counter stays at 1, not refunded to 0)', async () => {
-    // All cache reads null → get_market_data throws `cache_all_null`, which
-    // dispatchToolsCall's catch turns into a -32603 error AFTER _execute ran.
+    // All cache reads null → get_market_data throws `cache_all_null`
+    // (McpSourceUnavailableError), which dispatchToolsCall's catch turns
+    // into a -32003 error AFTER _execute ran.
     stubCacheFetch({
       'market:stocks-bootstrap:v1': null,
       'market:crypto:v1': null,

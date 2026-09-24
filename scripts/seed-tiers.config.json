@@ -1,5 +1,5 @@
 {
-  "_comment": "Tier config for scripts/seed-on-start.mjs. Edit this file, not the runner. Tiers 1,2 run by default; add 3 via SEED_TIERS=1,2,3. 'script' is the file name in scripts/ without .mjs. 'freshMinutes' = skip on next start if the last OK run is younger than this. 'requiresAnyEnv' = run only if at least one of these env vars is non-empty (otherwise recorded as SKIP without spawning). 'timeoutSec' overrides the default per-seeder timeout. Tier-1 membership is based on static reading of each seeder's process.env usage and has NOT yet been confirmed by running every seeder; see the handoff report.",
+  "_comment": "Tier config for scripts/seed-on-start.mjs. Edit this file, not the runner. Tiers 1,2 run by default; add 3 via SEED_TIERS=1,2,3. 'script' is the file name in scripts/ without .mjs. 'freshMinutes' = skip on next start if the last OK run is younger than this. 'requiresAnyEnv' = run only if at least one of these env vars is non-empty (otherwise recorded as SKIP without spawning). 'timeoutSec' overrides the default per-seeder timeout. Tier-1 membership is based on static reading of each seeder's process.env usage and has NOT yet been confirmed by running every seeder; see the handoff report. NOTE: this file covers a curated subset of scripts/seed-*.mjs, not all of them (~185 seed scripts exist in total) -- a script absent from every tier and from 'excluded' simply never runs via npm start; that is a coverage gap in this config, not a signal that the script is unsafe or unsupported. seed-insights.mjs (news:insights:v1, used by get_news_intelligence) is a known, deliberately-withheld example: its warmDigestCache() step defaults to fetching https://api.worldmonitor.app when API_BASE_URL is unset, so auto-enabling it here would silently start making requests to a non-local host by default -- same category of risk as the excluded entry below. Add it only after setting API_BASE_URL to point at this sidecar, or after adding a local-mode-aware default to that script itself.",
   "defaults": { "timeoutSec": 120, "freshMinutes": 25, "concurrency": 2 },
   "excluded": {
     "seed-military-maritime-news": "Warm-pings https://api.worldmonitor.app (the upstream hosted gateway) and seeds nothing locally; excluded so no request goes to a non-public-source host."
@@ -36,7 +36,11 @@
       { "script": "seed-cyber-threats", "requiresAnyEnv": ["ABUSEIPDB_API_KEY", "OTX_API_KEY", "URLHAUS_AUTH_KEY"], "freshMinutes": 60 },
       { "script": "seed-health-air-quality", "requiresAnyEnv": ["OPENAQ_API_KEY", "WAQI_API_KEY"], "freshMinutes": 120 },
       { "script": "seed-webcams", "requiresAnyEnv": ["WINDY_API_KEY"], "freshMinutes": 720 },
-      { "script": "seed-aviation", "requiresAnyEnv": ["AVIATIONSTACK_API", "ICAO_API_KEY"], "freshMinutes": 120, "timeoutSec": 300 }
+      { "script": "seed-aviation", "requiresAnyEnv": ["AVIATIONSTACK_API", "ICAO_API_KEY"], "freshMinutes": 120, "timeoutSec": 300 },
+      { "script": "seed-imf-macro", "freshMinutes": 4320, "note": "Public IMF SDMX API, no key required; feeds get_country_macro." },
+      { "script": "seed-imf-growth", "freshMinutes": 4320 },
+      { "script": "seed-imf-labor", "freshMinutes": 4320 },
+      { "script": "seed-imf-external", "freshMinutes": 4320 }
     ],
     "3": [
       { "script": "seed-forecasts", "freshMinutes": 360, "timeoutSec": 600, "note": "~900KB script; heavy." },
