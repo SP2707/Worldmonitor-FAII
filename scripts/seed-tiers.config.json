@@ -40,7 +40,8 @@
       { "script": "seed-imf-macro", "freshMinutes": 4320, "note": "Public IMF SDMX API, no key required; feeds get_country_macro." },
       { "script": "seed-imf-growth", "freshMinutes": 4320 },
       { "script": "seed-imf-labor", "freshMinutes": 4320 },
-      { "script": "seed-imf-external", "freshMinutes": 4320 }
+      { "script": "seed-imf-external", "freshMinutes": 4320 },
+      { "script": "seed-insights", "freshMinutes": 60, "requiresAnyEnv": ["OLLAMA_API_URL", "OPENROUTER_API_KEY", "GROQ_API_KEY"], "note": "Populates news:insights:v1 (get_world_brief). Was never in any tier before -- its warmDigestCache() step defaults to the real hosted https://api.worldmonitor.app when API_BASE_URL is unset. Enabled only after setting API_BASE_URL=http://127.0.0.1:46123 in .env.local; skips cleanly if no provider key/URL is set." }
     ],
     "3": [
       { "script": "seed-forecasts", "freshMinutes": 360, "timeoutSec": 600, "note": "~900KB script; heavy." },
