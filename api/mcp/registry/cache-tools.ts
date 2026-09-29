@@ -14,6 +14,13 @@ import {
   computeCredibilityScore,
 } from '../../../shared/news-credibility.js';
 import { getSourceTier } from '../../../server/_shared/source-tiers';
+import {
+  getVerifiedTrackRecordAdjustment,
+  parseSourceCredibilityStore,
+  parseClaimVerificationRecord,
+  verificationJoinKey,
+  MIN_SAMPLES_FOR_ADJUSTMENT,
+} from '../../../server/_shared/source-credibility';
 import { hasRedistributableProviderAttribution } from '../../../shared/provider-redistribution';
 import { CII_RISK_SCORE_CACHE_KEYS } from '../../_cii-risk-cache-keys.js';
 // @ts-expect-error — generated Edge-safe JS mirror; authored types live in shared/bootstrap-tier-keys.d.ts
@@ -195,6 +202,59 @@ function addNewsSourceProvenance(value: unknown): unknown {
           propagandaRisk: provenance.risk,
           independentCorroborationCount: Number.isFinite(corroboration) ? corroboration : 1,
         }),
+    };
+  });
+}
+
+/**
+ * Sibling to addNewsSourceProvenance: joins news:verification:v1's
+ * per-headline verdicts and source:credibility:v1's dynamic per-source
+ * feedback-loop score onto get_news_intelligence's topStories. Kept
+ * separate from addNewsSourceProvenance (rather than extending its
+ * signature) so that function's existing, narrower contract — one story in,
+ * one story out — stays untouched; this one needs the whole `data` object
+ * to reach both side-table keys.
+ *
+ * Mutates data.insights.topStories in place, matching mapNested's own
+ * in-place-narrowing convention used throughout this _postFilter. Never
+ * throws on malformed input — every parse below already degrades to a safe
+ * empty value, so at worst this attaches `claimVerification: null` /
+ * `sourceVerificationTrackRecord: null` and leaves credibilityScore exactly
+ * as addNewsSourceProvenance left it.
+ */
+function attachClaimVerification(data: Record<string, unknown>): void {
+  const insights = data.insights;
+  if (!insights || typeof insights !== 'object' || Array.isArray(insights)) return;
+  const topStories = (insights as Record<string, unknown>).topStories;
+  if (!Array.isArray(topStories)) return;
+
+  const verificationRaw = data.verification;
+  const verificationMap = verificationRaw && typeof verificationRaw === 'object' && !Array.isArray(verificationRaw)
+    ? verificationRaw as Record<string, unknown>
+    : {};
+  const credibilityStore = parseSourceCredibilityStore(data.credibility);
+
+  (insights as Record<string, unknown>).topStories = topStories.map((story) => {
+    if (!story || typeof story !== 'object' || Array.isArray(story)) return story;
+    const record = story as Record<string, unknown>;
+    const sourceName = typeof record.primarySource === 'string' ? record.primarySource.trim() : '';
+    const title = typeof record.primaryTitle === 'string' ? record.primaryTitle : '';
+
+    const verification = parseClaimVerificationRecord(verificationMap[verificationJoinKey(sourceName, title)]);
+    const trackRecord = credibilityStore[sourceName];
+    const adjustment = getVerifiedTrackRecordAdjustment(trackRecord);
+    const baseCredibility = typeof record.credibilityScore === 'number' ? record.credibilityScore : null;
+    const adjustedCredibility = baseCredibility !== null && adjustment !== 0
+      ? Math.min(100, Math.max(0, Math.round(baseCredibility + adjustment)))
+      : baseCredibility;
+
+    return {
+      ...record,
+      ...(adjustedCredibility !== null ? { credibilityScore: adjustedCredibility } : {}),
+      claimVerification: verification,
+      sourceVerificationTrackRecord: (trackRecord && trackRecord.sampleCount >= MIN_SAMPLES_FOR_ADJUSTMENT && trackRecord.score !== null)
+        ? { score: trackRecord.score, sampleCount: trackRecord.sampleCount }
+        : null,
     };
   });
 }
@@ -942,7 +1002,17 @@ export const CACHE_TOOLS: ToolDef[] = [
           topStories: { type: 'array', items: { type: 'object', properties: {
             primaryTitle: { type: 'string' }, primarySource: { type: 'string' }, primaryLink: { type: 'string' },
             pubDate: { type: 'string' }, sourceCount: { type: 'number' }, importanceScore: { type: 'number' },
-            credibilityScore: { type: 'number', description: '0-100 source-reliability score, distinct from importanceScore. Built from source tier, propaganda risk, and independent corroboration. State-controlled media is capped at 40.' },
+            credibilityScore: { type: 'number', description: "0-100 source-reliability score, distinct from importanceScore. Built from source tier, propaganda risk, and independent corroboration, then nudged by this source's own verified track record (see sourceVerificationTrackRecord) once it has enough verified samples. State-controlled media is capped at 40 before that nudge." },
+            claimVerification: { type: ['object', 'null'], description: "LLM-based verdict on this specific headline's central claim (scripts/seed-news-verification.mjs), independent of credibilityScore. Null until this story has been through a verification pass.", properties: {
+              verdict: { type: 'string', enum: ['true', 'substantially_true', 'false', 'misleading', 'unverifiable'] },
+              confidence: { type: 'number', description: "0-1 confidence in the verdict itself, not in the story's importance." },
+              reasoning: { type: 'string', description: 'One-sentence reason for the verdict.' },
+              verifiedAt: { type: 'string' },
+            } },
+            sourceVerificationTrackRecord: { type: ['object', 'null'], description: "This source's accumulated claim-verification history (scripts/_source-credibility.mjs) — the feedback-loop signal already folded into credibilityScore above. Null until the source has at least 3 verified samples.", properties: {
+              score: { type: 'number', description: "0-100 EWMA of this source's verified-claim outcomes." },
+              sampleCount: { type: 'number' },
+            } },
             // Corroboration and clustering fields the seeder already writes
             // into every news:insights:v1 topStories entry (see the object
             // built in scripts/seed-insights.mjs). This is a cache tool: the
@@ -1005,6 +1075,7 @@ export const CACHE_TOOLS: ToolDef[] = [
       const countries = argStrList(params.country);
       const limit = (argNum(params.limit) ?? DEFAULT_LIST_LIMIT);
       mapNested(data, 'insights', 'topStories', addNewsSourceProvenance);
+      attachClaimVerification(data);
       if (topic) narrowNested(data, 'gdelt-intel', 'topics', (t) => argStr(t.id) === topic);
       if (category) narrowNested(data, 'insights', 'topStories', (s) => argStr(s.category) === category);
       if (countries.length > 0) {
@@ -1042,6 +1113,15 @@ export const CACHE_TOOLS: ToolDef[] = [
       'intelligence:gdelt-intel:v1',
       'intelligence:cross-source-signals:v1',
       'intelligence:advisories-bootstrap:v1',
+      // Claim-level verification verdicts (scripts/seed-news-verification.mjs)
+      // and the dynamic per-source credibility feedback loop
+      // (scripts/_source-credibility.mjs) — joined onto topStories by
+      // attachClaimVerification below, not baked into news:insights:v1
+      // itself. Deliberately NOT in _freshnessChecks below: a missing or
+      // stale verification pass must never make this tool report stale —
+      // it is an optional enrichment, not a required input.
+      'news:verification:v1',
+      'source:credibility:v1',
     ],
     // Per-key budgets (#5864): the envelope used to gate on the insights meta
     // alone, so a stalled GDELT materializer left agents reading stale:false
