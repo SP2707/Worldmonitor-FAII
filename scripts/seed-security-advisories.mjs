@@ -38,7 +38,10 @@ const ADVISORY_FEEDS = [
   { name: 'WHO Africa Emergencies', sourceCountry: 'INT', sourceCategory: 'health', url: 'https://www.afro.who.int/rss/emergencies.xml' },
 ];
 
-const RELAY_URL = process.env.RELAY_URL || 'https://proxy.worldmonitor.app';
+// Direct fetch by default: every feed here is a public RSS/Atom URL, so no
+// third-party relay (and no data sent to proxy.worldmonitor.app) is needed.
+// Set RELAY_URL only if your network blocks these hosts.
+const RELAY_URL = process.env.RELAY_URL || '';
 
 function parseUsLevel(title) {
   const m = title.match(/Level (\d)/i);
@@ -146,7 +149,7 @@ function rssProxyUrl(feedUrl) {
     console.warn(`  Skipping disallowed domain: ${domain}`);
     return null;
   }
-  return `${RELAY_URL}/rss?url=${encodeURIComponent(feedUrl)}`;
+  return RELAY_URL ? `${RELAY_URL}/rss?url=${encodeURIComponent(feedUrl)}` : feedUrl;
 }
 
 async function fetchFeed(feed) {

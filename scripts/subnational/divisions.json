@@ -1,0 +1,2410 @@
+{
+ "generatedFrom": "top_15_countries_states_list.md",
+ "note": "391 unique divisions (the source list has 392 entries; \"Adygea\" appears twice). ISO 3166-2 codes from the pycountry/iso-codes dataset; NUTS 2021 codes added for DE/FR/IT.",
+ "count": 391,
+ "divisions": [
+  {
+   "id": "AE-AJ",
+   "country": "AE",
+   "countryName": "United Arab Emirates",
+   "name": "Ajman"
+  },
+  {
+   "id": "AE-AZ",
+   "country": "AE",
+   "countryName": "United Arab Emirates",
+   "name": "Abu Dhabi"
+  },
+  {
+   "id": "AE-DU",
+   "country": "AE",
+   "countryName": "United Arab Emirates",
+   "name": "Dubai"
+  },
+  {
+   "id": "AE-FU",
+   "country": "AE",
+   "countryName": "United Arab Emirates",
+   "name": "Fujairah"
+  },
+  {
+   "id": "AE-RK",
+   "country": "AE",
+   "countryName": "United Arab Emirates",
+   "name": "Ras Al Khaimah"
+  },
+  {
+   "id": "AE-SH",
+   "country": "AE",
+   "countryName": "United Arab Emirates",
+   "name": "Sharjah"
+  },
+  {
+   "id": "AE-UQ",
+   "country": "AE",
+   "countryName": "United Arab Emirates",
+   "name": "Umm Al Quwain"
+  },
+  {
+   "id": "CA-AB",
+   "country": "CA",
+   "countryName": "Canada",
+   "name": "Alberta"
+  },
+  {
+   "id": "CA-BC",
+   "country": "CA",
+   "countryName": "Canada",
+   "name": "British Columbia"
+  },
+  {
+   "id": "CA-MB",
+   "country": "CA",
+   "countryName": "Canada",
+   "name": "Manitoba"
+  },
+  {
+   "id": "CA-NB",
+   "country": "CA",
+   "countryName": "Canada",
+   "name": "New Brunswick"
+  },
+  {
+   "id": "CA-NL",
+   "country": "CA",
+   "countryName": "Canada",
+   "name": "Newfoundland and Labrador"
+  },
+  {
+   "id": "CA-NS",
+   "country": "CA",
+   "countryName": "Canada",
+   "name": "Nova Scotia"
+  },
+  {
+   "id": "CA-NT",
+   "country": "CA",
+   "countryName": "Canada",
+   "name": "Northwest Territories"
+  },
+  {
+   "id": "CA-NU",
+   "country": "CA",
+   "countryName": "Canada",
+   "name": "Nunavut"
+  },
+  {
+   "id": "CA-ON",
+   "country": "CA",
+   "countryName": "Canada",
+   "name": "Ontario"
+  },
+  {
+   "id": "CA-PE",
+   "country": "CA",
+   "countryName": "Canada",
+   "name": "Prince Edward Island"
+  },
+  {
+   "id": "CA-QC",
+   "country": "CA",
+   "countryName": "Canada",
+   "name": "Quebec"
+  },
+  {
+   "id": "CA-SK",
+   "country": "CA",
+   "countryName": "Canada",
+   "name": "Saskatchewan"
+  },
+  {
+   "id": "CA-YT",
+   "country": "CA",
+   "countryName": "Canada",
+   "name": "Yukon"
+  },
+  {
+   "id": "CN-AH",
+   "country": "CN",
+   "countryName": "China",
+   "name": "Anhui"
+  },
+  {
+   "id": "CN-BJ",
+   "country": "CN",
+   "countryName": "China",
+   "name": "Beijing"
+  },
+  {
+   "id": "CN-CQ",
+   "country": "CN",
+   "countryName": "China",
+   "name": "Chongqing"
+  },
+  {
+   "id": "CN-FJ",
+   "country": "CN",
+   "countryName": "China",
+   "name": "Fujian"
+  },
+  {
+   "id": "CN-GD",
+   "country": "CN",
+   "countryName": "China",
+   "name": "Guangdong"
+  },
+  {
+   "id": "CN-GS",
+   "country": "CN",
+   "countryName": "China",
+   "name": "Gansu"
+  },
+  {
+   "id": "CN-GX",
+   "country": "CN",
+   "countryName": "China",
+   "name": "Guangxi"
+  },
+  {
+   "id": "CN-GZ",
+   "country": "CN",
+   "countryName": "China",
+   "name": "Guizhou"
+  },
+  {
+   "id": "CN-HA",
+   "country": "CN",
+   "countryName": "China",
+   "name": "Henan"
+  },
+  {
+   "id": "CN-HB",
+   "country": "CN",
+   "countryName": "China",
+   "name": "Hubei"
+  },
+  {
+   "id": "CN-HE",
+   "country": "CN",
+   "countryName": "China",
+   "name": "Hebei"
+  },
+  {
+   "id": "CN-HI",
+   "country": "CN",
+   "countryName": "China",
+   "name": "Hainan"
+  },
+  {
+   "id": "CN-HK",
+   "country": "CN",
+   "countryName": "China",
+   "name": "Hong Kong"
+  },
+  {
+   "id": "CN-HL",
+   "country": "CN",
+   "countryName": "China",
+   "name": "Heilongjiang"
+  },
+  {
+   "id": "CN-HN",
+   "country": "CN",
+   "countryName": "China",
+   "name": "Hunan"
+  },
+  {
+   "id": "CN-JL",
+   "country": "CN",
+   "countryName": "China",
+   "name": "Jilin"
+  },
+  {
+   "id": "CN-JS",
+   "country": "CN",
+   "countryName": "China",
+   "name": "Jiangsu"
+  },
+  {
+   "id": "CN-JX",
+   "country": "CN",
+   "countryName": "China",
+   "name": "Jiangxi"
+  },
+  {
+   "id": "CN-LN",
+   "country": "CN",
+   "countryName": "China",
+   "name": "Liaoning"
+  },
+  {
+   "id": "CN-MO",
+   "country": "CN",
+   "countryName": "China",
+   "name": "Macau"
+  },
+  {
+   "id": "CN-NM",
+   "country": "CN",
+   "countryName": "China",
+   "name": "Inner Mongolia"
+  },
+  {
+   "id": "CN-NX",
+   "country": "CN",
+   "countryName": "China",
+   "name": "Ningxia"
+  },
+  {
+   "id": "CN-QH",
+   "country": "CN",
+   "countryName": "China",
+   "name": "Qinghai"
+  },
+  {
+   "id": "CN-SC",
+   "country": "CN",
+   "countryName": "China",
+   "name": "Sichuan"
+  },
+  {
+   "id": "CN-SD",
+   "country": "CN",
+   "countryName": "China",
+   "name": "Shandong"
+  },
+  {
+   "id": "CN-SH",
+   "country": "CN",
+   "countryName": "China",
+   "name": "Shanghai"
+  },
+  {
+   "id": "CN-SN",
+   "country": "CN",
+   "countryName": "China",
+   "name": "Shaanxi"
+  },
+  {
+   "id": "CN-SX",
+   "country": "CN",
+   "countryName": "China",
+   "name": "Shanxi"
+  },
+  {
+   "id": "CN-TJ",
+   "country": "CN",
+   "countryName": "China",
+   "name": "Tianjin"
+  },
+  {
+   "id": "CN-XJ",
+   "country": "CN",
+   "countryName": "China",
+   "name": "Xinjiang"
+  },
+  {
+   "id": "CN-XZ",
+   "country": "CN",
+   "countryName": "China",
+   "name": "Tibet"
+  },
+  {
+   "id": "CN-YN",
+   "country": "CN",
+   "countryName": "China",
+   "name": "Yunnan"
+  },
+  {
+   "id": "CN-ZJ",
+   "country": "CN",
+   "countryName": "China",
+   "name": "Zhejiang"
+  },
+  {
+   "id": "DE-BB",
+   "country": "DE",
+   "countryName": "Germany",
+   "name": "Brandenburg",
+   "nuts": "DE4"
+  },
+  {
+   "id": "DE-BE",
+   "country": "DE",
+   "countryName": "Germany",
+   "name": "Berlin",
+   "nuts": "DE3"
+  },
+  {
+   "id": "DE-BW",
+   "country": "DE",
+   "countryName": "Germany",
+   "name": "Baden-Württemberg",
+   "nuts": "DE1"
+  },
+  {
+   "id": "DE-BY",
+   "country": "DE",
+   "countryName": "Germany",
+   "name": "Bavaria",
+   "nuts": "DE2"
+  },
+  {
+   "id": "DE-HB",
+   "country": "DE",
+   "countryName": "Germany",
+   "name": "Bremen",
+   "nuts": "DE5"
+  },
+  {
+   "id": "DE-HE",
+   "country": "DE",
+   "countryName": "Germany",
+   "name": "Hesse",
+   "nuts": "DE7"
+  },
+  {
+   "id": "DE-HH",
+   "country": "DE",
+   "countryName": "Germany",
+   "name": "Hamburg",
+   "nuts": "DE6"
+  },
+  {
+   "id": "DE-MV",
+   "country": "DE",
+   "countryName": "Germany",
+   "name": "Mecklenburg-Vorpommern",
+   "nuts": "DE8"
+  },
+  {
+   "id": "DE-NI",
+   "country": "DE",
+   "countryName": "Germany",
+   "name": "Lower Saxony",
+   "nuts": "DE9"
+  },
+  {
+   "id": "DE-NW",
+   "country": "DE",
+   "countryName": "Germany",
+   "name": "North Rhine-Westphalia",
+   "nuts": "DEA"
+  },
+  {
+   "id": "DE-RP",
+   "country": "DE",
+   "countryName": "Germany",
+   "name": "Rhineland-Palatinate",
+   "nuts": "DEB"
+  },
+  {
+   "id": "DE-SH",
+   "country": "DE",
+   "countryName": "Germany",
+   "name": "Schleswig-Holstein",
+   "nuts": "DEF"
+  },
+  {
+   "id": "DE-SL",
+   "country": "DE",
+   "countryName": "Germany",
+   "name": "Saarland",
+   "nuts": "DEC"
+  },
+  {
+   "id": "DE-SN",
+   "country": "DE",
+   "countryName": "Germany",
+   "name": "Saxony",
+   "nuts": "DED"
+  },
+  {
+   "id": "DE-ST",
+   "country": "DE",
+   "countryName": "Germany",
+   "name": "Saxony-Anhalt",
+   "nuts": "DEE"
+  },
+  {
+   "id": "DE-TH",
+   "country": "DE",
+   "countryName": "Germany",
+   "name": "Thuringia",
+   "nuts": "DEG"
+  },
+  {
+   "id": "FR-20R",
+   "country": "FR",
+   "countryName": "France",
+   "name": "Corsica",
+   "nuts": "FRM"
+  },
+  {
+   "id": "FR-ARA",
+   "country": "FR",
+   "countryName": "France",
+   "name": "Auvergne-Rhône-Alpes",
+   "nuts": "FRK"
+  },
+  {
+   "id": "FR-BFC",
+   "country": "FR",
+   "countryName": "France",
+   "name": "Bourgogne-Franche-Comté",
+   "nuts": "FRC"
+  },
+  {
+   "id": "FR-BRE",
+   "country": "FR",
+   "countryName": "France",
+   "name": "Brittany (Bretagne)",
+   "nuts": "FRH"
+  },
+  {
+   "id": "FR-CVL",
+   "country": "FR",
+   "countryName": "France",
+   "name": "Centre-Val de Loire",
+   "nuts": "FRB"
+  },
+  {
+   "id": "FR-GES",
+   "country": "FR",
+   "countryName": "France",
+   "name": "Grand Est",
+   "nuts": "FRF"
+  },
+  {
+   "id": "FR-GF",
+   "country": "FR",
+   "countryName": "France",
+   "name": "French Guiana",
+   "nuts": "FRY3"
+  },
+  {
+   "id": "FR-GP",
+   "country": "FR",
+   "countryName": "France",
+   "name": "Guadeloupe",
+   "nuts": "FRY1"
+  },
+  {
+   "id": "FR-HDF",
+   "country": "FR",
+   "countryName": "France",
+   "name": "Hauts-de-France",
+   "nuts": "FRE"
+  },
+  {
+   "id": "FR-IDF",
+   "country": "FR",
+   "countryName": "France",
+   "name": "Île-de-France",
+   "nuts": "FR1"
+  },
+  {
+   "id": "FR-MQ",
+   "country": "FR",
+   "countryName": "France",
+   "name": "Martinique",
+   "nuts": "FRY2"
+  },
+  {
+   "id": "FR-NAQ",
+   "country": "FR",
+   "countryName": "France",
+   "name": "Nouvelle-Aquitaine",
+   "nuts": "FRI"
+  },
+  {
+   "id": "FR-NOR",
+   "country": "FR",
+   "countryName": "France",
+   "name": "Normandy",
+   "nuts": "FRD"
+  },
+  {
+   "id": "FR-OCC",
+   "country": "FR",
+   "countryName": "France",
+   "name": "Occitanie",
+   "nuts": "FRJ"
+  },
+  {
+   "id": "FR-PAC",
+   "country": "FR",
+   "countryName": "France",
+   "name": "Provence-Alpes-Côte d'Azur",
+   "nuts": "FRL"
+  },
+  {
+   "id": "FR-PDL",
+   "country": "FR",
+   "countryName": "France",
+   "name": "Pays de la Loire",
+   "nuts": "FRG"
+  },
+  {
+   "id": "FR-RE",
+   "country": "FR",
+   "countryName": "France",
+   "name": "Réunion",
+   "nuts": "FRY4"
+  },
+  {
+   "id": "FR-YT",
+   "country": "FR",
+   "countryName": "France",
+   "name": "Mayotte",
+   "nuts": "FRY5"
+  },
+  {
+   "id": "GB-ENG",
+   "country": "GB",
+   "countryName": "United Kingdom",
+   "name": "England"
+  },
+  {
+   "id": "GB-NIR",
+   "country": "GB",
+   "countryName": "United Kingdom",
+   "name": "Northern Ireland"
+  },
+  {
+   "id": "GB-SCT",
+   "country": "GB",
+   "countryName": "United Kingdom",
+   "name": "Scotland"
+  },
+  {
+   "id": "GB-WLS",
+   "country": "GB",
+   "countryName": "United Kingdom",
+   "name": "Wales"
+  },
+  {
+   "id": "IL-D",
+   "country": "IL",
+   "countryName": "Israel",
+   "name": "Southern District"
+  },
+  {
+   "id": "IL-HA",
+   "country": "IL",
+   "countryName": "Israel",
+   "name": "Haifa District"
+  },
+  {
+   "id": "IL-JM",
+   "country": "IL",
+   "countryName": "Israel",
+   "name": "Jerusalem District"
+  },
+  {
+   "id": "IL-M",
+   "country": "IL",
+   "countryName": "Israel",
+   "name": "Central District"
+  },
+  {
+   "id": "IL-TA",
+   "country": "IL",
+   "countryName": "Israel",
+   "name": "Tel Aviv District"
+  },
+  {
+   "id": "IL-Z",
+   "country": "IL",
+   "countryName": "Israel",
+   "name": "Northern District"
+  },
+  {
+   "id": "IN-AN",
+   "country": "IN",
+   "countryName": "India",
+   "name": "Andaman and Nicobar Islands"
+  },
+  {
+   "id": "IN-AP",
+   "country": "IN",
+   "countryName": "India",
+   "name": "Andhra Pradesh"
+  },
+  {
+   "id": "IN-AR",
+   "country": "IN",
+   "countryName": "India",
+   "name": "Arunachal Pradesh"
+  },
+  {
+   "id": "IN-AS",
+   "country": "IN",
+   "countryName": "India",
+   "name": "Assam"
+  },
+  {
+   "id": "IN-BR",
+   "country": "IN",
+   "countryName": "India",
+   "name": "Bihar"
+  },
+  {
+   "id": "IN-CG",
+   "country": "IN",
+   "countryName": "India",
+   "name": "Chhattisgarh"
+  },
+  {
+   "id": "IN-CH",
+   "country": "IN",
+   "countryName": "India",
+   "name": "Chandigarh"
+  },
+  {
+   "id": "IN-DH",
+   "country": "IN",
+   "countryName": "India",
+   "name": "Dadra and Nagar Haveli and Daman and Diu"
+  },
+  {
+   "id": "IN-DL",
+   "country": "IN",
+   "countryName": "India",
+   "name": "Delhi"
+  },
+  {
+   "id": "IN-GA",
+   "country": "IN",
+   "countryName": "India",
+   "name": "Goa"
+  },
+  {
+   "id": "IN-GJ",
+   "country": "IN",
+   "countryName": "India",
+   "name": "Gujarat"
+  },
+  {
+   "id": "IN-HP",
+   "country": "IN",
+   "countryName": "India",
+   "name": "Himachal Pradesh"
+  },
+  {
+   "id": "IN-HR",
+   "country": "IN",
+   "countryName": "India",
+   "name": "Haryana"
+  },
+  {
+   "id": "IN-JH",
+   "country": "IN",
+   "countryName": "India",
+   "name": "Jharkhand"
+  },
+  {
+   "id": "IN-JK",
+   "country": "IN",
+   "countryName": "India",
+   "name": "Jammu and Kashmir"
+  },
+  {
+   "id": "IN-KA",
+   "country": "IN",
+   "countryName": "India",
+   "name": "Karnataka"
+  },
+  {
+   "id": "IN-KL",
+   "country": "IN",
+   "countryName": "India",
+   "name": "Kerala"
+  },
+  {
+   "id": "IN-LA",
+   "country": "IN",
+   "countryName": "India",
+   "name": "Ladakh"
+  },
+  {
+   "id": "IN-LD",
+   "country": "IN",
+   "countryName": "India",
+   "name": "Lakshadweep"
+  },
+  {
+   "id": "IN-MH",
+   "country": "IN",
+   "countryName": "India",
+   "name": "Maharashtra"
+  },
+  {
+   "id": "IN-ML",
+   "country": "IN",
+   "countryName": "India",
+   "name": "Meghalaya"
+  },
+  {
+   "id": "IN-MN",
+   "country": "IN",
+   "countryName": "India",
+   "name": "Manipur"
+  },
+  {
+   "id": "IN-MP",
+   "country": "IN",
+   "countryName": "India",
+   "name": "Madhya Pradesh"
+  },
+  {
+   "id": "IN-MZ",
+   "country": "IN",
+   "countryName": "India",
+   "name": "Mizoram"
+  },
+  {
+   "id": "IN-NL",
+   "country": "IN",
+   "countryName": "India",
+   "name": "Nagaland"
+  },
+  {
+   "id": "IN-OD",
+   "country": "IN",
+   "countryName": "India",
+   "name": "Odisha"
+  },
+  {
+   "id": "IN-PB",
+   "country": "IN",
+   "countryName": "India",
+   "name": "Punjab"
+  },
+  {
+   "id": "IN-PY",
+   "country": "IN",
+   "countryName": "India",
+   "name": "Puducherry"
+  },
+  {
+   "id": "IN-RJ",
+   "country": "IN",
+   "countryName": "India",
+   "name": "Rajasthan"
+  },
+  {
+   "id": "IN-SK",
+   "country": "IN",
+   "countryName": "India",
+   "name": "Sikkim"
+  },
+  {
+   "id": "IN-TN",
+   "country": "IN",
+   "countryName": "India",
+   "name": "Tamil Nadu"
+  },
+  {
+   "id": "IN-TR",
+   "country": "IN",
+   "countryName": "India",
+   "name": "Tripura"
+  },
+  {
+   "id": "IN-TS",
+   "country": "IN",
+   "countryName": "India",
+   "name": "Telangana"
+  },
+  {
+   "id": "IN-UK",
+   "country": "IN",
+   "countryName": "India",
+   "name": "Uttarakhand"
+  },
+  {
+   "id": "IN-UP",
+   "country": "IN",
+   "countryName": "India",
+   "name": "Uttar Pradesh"
+  },
+  {
+   "id": "IN-WB",
+   "country": "IN",
+   "countryName": "India",
+   "name": "West Bengal"
+  },
+  {
+   "id": "IT-21",
+   "country": "IT",
+   "countryName": "Italy",
+   "name": "Piedmont",
+   "nuts": "ITC1"
+  },
+  {
+   "id": "IT-23",
+   "country": "IT",
+   "countryName": "Italy",
+   "name": "Aosta Valley",
+   "nuts": "ITC2"
+  },
+  {
+   "id": "IT-25",
+   "country": "IT",
+   "countryName": "Italy",
+   "name": "Lombardy",
+   "nuts": "ITC4"
+  },
+  {
+   "id": "IT-32",
+   "country": "IT",
+   "countryName": "Italy",
+   "name": "Trentino-Alto Adige",
+   "nuts": [
+    "ITH1",
+    "ITH2"
+   ]
+  },
+  {
+   "id": "IT-34",
+   "country": "IT",
+   "countryName": "Italy",
+   "name": "Veneto",
+   "nuts": "ITH3"
+  },
+  {
+   "id": "IT-36",
+   "country": "IT",
+   "countryName": "Italy",
+   "name": "Friuli-Venezia Giulia",
+   "nuts": "ITH4"
+  },
+  {
+   "id": "IT-42",
+   "country": "IT",
+   "countryName": "Italy",
+   "name": "Liguria",
+   "nuts": "ITC3"
+  },
+  {
+   "id": "IT-45",
+   "country": "IT",
+   "countryName": "Italy",
+   "name": "Emilia-Romagna",
+   "nuts": "ITH5"
+  },
+  {
+   "id": "IT-52",
+   "country": "IT",
+   "countryName": "Italy",
+   "name": "Tuscany",
+   "nuts": "ITI1"
+  },
+  {
+   "id": "IT-55",
+   "country": "IT",
+   "countryName": "Italy",
+   "name": "Umbria",
+   "nuts": "ITI2"
+  },
+  {
+   "id": "IT-57",
+   "country": "IT",
+   "countryName": "Italy",
+   "name": "Marche",
+   "nuts": "ITI3"
+  },
+  {
+   "id": "IT-62",
+   "country": "IT",
+   "countryName": "Italy",
+   "name": "Lazio",
+   "nuts": "ITI4"
+  },
+  {
+   "id": "IT-65",
+   "country": "IT",
+   "countryName": "Italy",
+   "name": "Abruzzo",
+   "nuts": "ITF1"
+  },
+  {
+   "id": "IT-67",
+   "country": "IT",
+   "countryName": "Italy",
+   "name": "Molise",
+   "nuts": "ITF2"
+  },
+  {
+   "id": "IT-72",
+   "country": "IT",
+   "countryName": "Italy",
+   "name": "Campania",
+   "nuts": "ITF3"
+  },
+  {
+   "id": "IT-75",
+   "country": "IT",
+   "countryName": "Italy",
+   "name": "Apulia",
+   "nuts": "ITF4"
+  },
+  {
+   "id": "IT-77",
+   "country": "IT",
+   "countryName": "Italy",
+   "name": "Basilicata",
+   "nuts": "ITF5"
+  },
+  {
+   "id": "IT-78",
+   "country": "IT",
+   "countryName": "Italy",
+   "name": "Calabria",
+   "nuts": "ITF6"
+  },
+  {
+   "id": "IT-82",
+   "country": "IT",
+   "countryName": "Italy",
+   "name": "Sicily",
+   "nuts": "ITG1"
+  },
+  {
+   "id": "IT-88",
+   "country": "IT",
+   "countryName": "Italy",
+   "name": "Sardinia",
+   "nuts": "ITG2"
+  },
+  {
+   "id": "JP-01",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Hokkaido"
+  },
+  {
+   "id": "JP-02",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Aomori"
+  },
+  {
+   "id": "JP-03",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Iwate"
+  },
+  {
+   "id": "JP-04",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Miyagi"
+  },
+  {
+   "id": "JP-05",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Akita"
+  },
+  {
+   "id": "JP-06",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Yamagata"
+  },
+  {
+   "id": "JP-07",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Fukushima"
+  },
+  {
+   "id": "JP-08",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Ibaraki"
+  },
+  {
+   "id": "JP-09",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Tochigi"
+  },
+  {
+   "id": "JP-10",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Gumma"
+  },
+  {
+   "id": "JP-11",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Saitama"
+  },
+  {
+   "id": "JP-12",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Chiba"
+  },
+  {
+   "id": "JP-13",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Tokyo"
+  },
+  {
+   "id": "JP-14",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Kanagawa"
+  },
+  {
+   "id": "JP-15",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Niigata"
+  },
+  {
+   "id": "JP-16",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Toyama"
+  },
+  {
+   "id": "JP-17",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Ishikawa"
+  },
+  {
+   "id": "JP-18",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Fukui"
+  },
+  {
+   "id": "JP-19",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Yamanashi"
+  },
+  {
+   "id": "JP-20",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Nagano"
+  },
+  {
+   "id": "JP-21",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Gifu"
+  },
+  {
+   "id": "JP-22",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Shizuoka"
+  },
+  {
+   "id": "JP-23",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Aichi"
+  },
+  {
+   "id": "JP-24",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Mie"
+  },
+  {
+   "id": "JP-25",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Shiga"
+  },
+  {
+   "id": "JP-26",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Kyoto"
+  },
+  {
+   "id": "JP-27",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Osaka"
+  },
+  {
+   "id": "JP-28",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Hyogo"
+  },
+  {
+   "id": "JP-29",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Nara"
+  },
+  {
+   "id": "JP-30",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Wakayama"
+  },
+  {
+   "id": "JP-31",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Tottori"
+  },
+  {
+   "id": "JP-32",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Shimane"
+  },
+  {
+   "id": "JP-33",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Okayama"
+  },
+  {
+   "id": "JP-34",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Hiroshima"
+  },
+  {
+   "id": "JP-35",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Yamaguchi"
+  },
+  {
+   "id": "JP-36",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Tokushima"
+  },
+  {
+   "id": "JP-37",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Kagawa"
+  },
+  {
+   "id": "JP-38",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Ehime"
+  },
+  {
+   "id": "JP-39",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Kochi"
+  },
+  {
+   "id": "JP-40",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Fukuoka"
+  },
+  {
+   "id": "JP-41",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Saga"
+  },
+  {
+   "id": "JP-42",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Nagasaki"
+  },
+  {
+   "id": "JP-43",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Kumamoto"
+  },
+  {
+   "id": "JP-44",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Oita"
+  },
+  {
+   "id": "JP-45",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Miyazaki"
+  },
+  {
+   "id": "JP-46",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Kagoshima"
+  },
+  {
+   "id": "JP-47",
+   "country": "JP",
+   "countryName": "Japan",
+   "name": "Okinawa"
+  },
+  {
+   "id": "KR-11",
+   "country": "KR",
+   "countryName": "South Korea",
+   "name": "Seoul"
+  },
+  {
+   "id": "KR-26",
+   "country": "KR",
+   "countryName": "South Korea",
+   "name": "Busan"
+  },
+  {
+   "id": "KR-27",
+   "country": "KR",
+   "countryName": "South Korea",
+   "name": "Daegu"
+  },
+  {
+   "id": "KR-28",
+   "country": "KR",
+   "countryName": "South Korea",
+   "name": "Incheon"
+  },
+  {
+   "id": "KR-29",
+   "country": "KR",
+   "countryName": "South Korea",
+   "name": "Gwangju"
+  },
+  {
+   "id": "KR-30",
+   "country": "KR",
+   "countryName": "South Korea",
+   "name": "Daejeon"
+  },
+  {
+   "id": "KR-31",
+   "country": "KR",
+   "countryName": "South Korea",
+   "name": "Ulsan"
+  },
+  {
+   "id": "KR-41",
+   "country": "KR",
+   "countryName": "South Korea",
+   "name": "Gyeonggi-do"
+  },
+  {
+   "id": "KR-42",
+   "country": "KR",
+   "countryName": "South Korea",
+   "name": "Gangwon-do"
+  },
+  {
+   "id": "KR-43",
+   "country": "KR",
+   "countryName": "South Korea",
+   "name": "Chungcheongbuk-do"
+  },
+  {
+   "id": "KR-44",
+   "country": "KR",
+   "countryName": "South Korea",
+   "name": "Chungcheongnam-do"
+  },
+  {
+   "id": "KR-45",
+   "country": "KR",
+   "countryName": "South Korea",
+   "name": "Jeollabuk-do"
+  },
+  {
+   "id": "KR-46",
+   "country": "KR",
+   "countryName": "South Korea",
+   "name": "Jeollanam-do"
+  },
+  {
+   "id": "KR-47",
+   "country": "KR",
+   "countryName": "South Korea",
+   "name": "Gyeongsangbuk-do"
+  },
+  {
+   "id": "KR-48",
+   "country": "KR",
+   "countryName": "South Korea",
+   "name": "Gyeongsangnam-do"
+  },
+  {
+   "id": "KR-49",
+   "country": "KR",
+   "countryName": "South Korea",
+   "name": "Jeju-do"
+  },
+  {
+   "id": "KR-50",
+   "country": "KR",
+   "countryName": "South Korea",
+   "name": "Sejong"
+  },
+  {
+   "id": "RU-AD",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Adygea"
+  },
+  {
+   "id": "RU-AL",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Altai Republic"
+  },
+  {
+   "id": "RU-ALT",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Altai Krai"
+  },
+  {
+   "id": "RU-AMU",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Amur Oblast"
+  },
+  {
+   "id": "RU-ARK",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Arkhangelsk Oblast"
+  },
+  {
+   "id": "RU-AST",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Astrakhan Oblast"
+  },
+  {
+   "id": "RU-BA",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Bashkortostan"
+  },
+  {
+   "id": "RU-BEL",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Belgorod Oblast"
+  },
+  {
+   "id": "RU-BRY",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Bryansk Oblast"
+  },
+  {
+   "id": "RU-BU",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Buryatia"
+  },
+  {
+   "id": "RU-CE",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Chechnya"
+  },
+  {
+   "id": "RU-CHE",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Chelyabinsk Oblast"
+  },
+  {
+   "id": "RU-CHU",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Chukotka"
+  },
+  {
+   "id": "RU-CU",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Chuvashia"
+  },
+  {
+   "id": "RU-DA",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Dagestan"
+  },
+  {
+   "id": "RU-IN",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Ingushetia"
+  },
+  {
+   "id": "RU-IRK",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Irkutsk Oblast"
+  },
+  {
+   "id": "RU-IVA",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Ivanovo Oblast"
+  },
+  {
+   "id": "RU-KAM",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Kamchatka Krai"
+  },
+  {
+   "id": "RU-KB",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Kabardino-Balkaria"
+  },
+  {
+   "id": "RU-KC",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Karachay-Cherkessia"
+  },
+  {
+   "id": "RU-KDA",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Krasnodar Krai"
+  },
+  {
+   "id": "RU-KEM",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Kemerovo Oblast"
+  },
+  {
+   "id": "RU-KGD",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Kaliningrad Oblast"
+  },
+  {
+   "id": "RU-KGN",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Kurgan Oblast"
+  },
+  {
+   "id": "RU-KHA",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Khabarovsk Krai"
+  },
+  {
+   "id": "RU-KHM",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Khanty-Mansi Autonomous Okrug"
+  },
+  {
+   "id": "RU-KIR",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Kirov Oblast"
+  },
+  {
+   "id": "RU-KK",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Khakassia"
+  },
+  {
+   "id": "RU-KL",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Kalmykia"
+  },
+  {
+   "id": "RU-KLU",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Kaluga Oblast"
+  },
+  {
+   "id": "RU-KO",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Komi Republic"
+  },
+  {
+   "id": "RU-KOS",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Kostroma Oblast"
+  },
+  {
+   "id": "RU-KR",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Karelia"
+  },
+  {
+   "id": "RU-KRS",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Kursk Oblast"
+  },
+  {
+   "id": "RU-KYA",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Krasnoyarsk Krai"
+  },
+  {
+   "id": "RU-LEN",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Leningrad Oblast"
+  },
+  {
+   "id": "RU-LIP",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Lipetsk Oblast"
+  },
+  {
+   "id": "RU-MAG",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Magadan Oblast"
+  },
+  {
+   "id": "RU-ME",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Mari El"
+  },
+  {
+   "id": "RU-MO",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Mordovia"
+  },
+  {
+   "id": "RU-MOS",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Moscow Oblast"
+  },
+  {
+   "id": "RU-MOW",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Moscow (Federal City)"
+  },
+  {
+   "id": "RU-MUR",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Murmansk Oblast"
+  },
+  {
+   "id": "RU-NEN",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Nenets Autonomous Okrug"
+  },
+  {
+   "id": "RU-NGR",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Novgorod Oblast"
+  },
+  {
+   "id": "RU-NIZ",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Nizhny Novgorod Oblast"
+  },
+  {
+   "id": "RU-NVS",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Novosibirsk Oblast"
+  },
+  {
+   "id": "RU-OMS",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Omsk Oblast"
+  },
+  {
+   "id": "RU-ORE",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Orenburg Oblast"
+  },
+  {
+   "id": "RU-ORL",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Oryol Oblast"
+  },
+  {
+   "id": "RU-PER",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Perm Krai"
+  },
+  {
+   "id": "RU-PNZ",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Penza Oblast"
+  },
+  {
+   "id": "RU-PRI",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Primorsky Krai"
+  },
+  {
+   "id": "RU-PSK",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Pskov Oblast"
+  },
+  {
+   "id": "RU-ROS",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Rostov Oblast"
+  },
+  {
+   "id": "RU-RYA",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Ryazan Oblast"
+  },
+  {
+   "id": "RU-SA",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Sakha (Yakutia)"
+  },
+  {
+   "id": "RU-SAK",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Sakhalin Oblast"
+  },
+  {
+   "id": "RU-SAM",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Samara Oblast"
+  },
+  {
+   "id": "RU-SAR",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Saratov Oblast"
+  },
+  {
+   "id": "RU-SE",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "North Ossetia-Alania"
+  },
+  {
+   "id": "RU-SMO",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Smolensk Oblast"
+  },
+  {
+   "id": "RU-SPE",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Saint Petersburg (Federal City)"
+  },
+  {
+   "id": "RU-STA",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Stavropol Krai"
+  },
+  {
+   "id": "RU-SVE",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Sverdlovsk Oblast"
+  },
+  {
+   "id": "RU-TA",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Tatarstan"
+  },
+  {
+   "id": "RU-TAM",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Tambov Oblast"
+  },
+  {
+   "id": "RU-TOM",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Tomsk Oblast"
+  },
+  {
+   "id": "RU-TUL",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Tula Oblast"
+  },
+  {
+   "id": "RU-TVE",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Tver Oblast"
+  },
+  {
+   "id": "RU-TY",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Tuva"
+  },
+  {
+   "id": "RU-TYU",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Tyumen Oblast"
+  },
+  {
+   "id": "RU-UD",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Udmurtia"
+  },
+  {
+   "id": "RU-ULY",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Ulyanovsk Oblast"
+  },
+  {
+   "id": "RU-VGG",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Volgograd Oblast"
+  },
+  {
+   "id": "RU-VLA",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Vladimir Oblast"
+  },
+  {
+   "id": "RU-VLG",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Vologda Oblast"
+  },
+  {
+   "id": "RU-VOR",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Voronezh Oblast"
+  },
+  {
+   "id": "RU-YAN",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Yamalo-Nenets Autonomous Okrug"
+  },
+  {
+   "id": "RU-YAR",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Yaroslavl Oblast"
+  },
+  {
+   "id": "RU-YEV",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Jewish Autonomous Oblast"
+  },
+  {
+   "id": "RU-ZAB",
+   "country": "RU",
+   "countryName": "Russia",
+   "name": "Zabaykalsky Krai"
+  },
+  {
+   "id": "SA-01",
+   "country": "SA",
+   "countryName": "Saudi Arabia",
+   "name": "Riyadh"
+  },
+  {
+   "id": "SA-02",
+   "country": "SA",
+   "countryName": "Saudi Arabia",
+   "name": "Makkah"
+  },
+  {
+   "id": "SA-03",
+   "country": "SA",
+   "countryName": "Saudi Arabia",
+   "name": "Madinah"
+  },
+  {
+   "id": "SA-04",
+   "country": "SA",
+   "countryName": "Saudi Arabia",
+   "name": "Eastern Province"
+  },
+  {
+   "id": "SA-05",
+   "country": "SA",
+   "countryName": "Saudi Arabia",
+   "name": "Al-Qassim"
+  },
+  {
+   "id": "SA-06",
+   "country": "SA",
+   "countryName": "Saudi Arabia",
+   "name": "Ha'il"
+  },
+  {
+   "id": "SA-07",
+   "country": "SA",
+   "countryName": "Saudi Arabia",
+   "name": "Tabuk"
+  },
+  {
+   "id": "SA-08",
+   "country": "SA",
+   "countryName": "Saudi Arabia",
+   "name": "Northern Borders"
+  },
+  {
+   "id": "SA-09",
+   "country": "SA",
+   "countryName": "Saudi Arabia",
+   "name": "Jazan"
+  },
+  {
+   "id": "SA-10",
+   "country": "SA",
+   "countryName": "Saudi Arabia",
+   "name": "Najran"
+  },
+  {
+   "id": "SA-11",
+   "country": "SA",
+   "countryName": "Saudi Arabia",
+   "name": "Al-Baha"
+  },
+  {
+   "id": "SA-12",
+   "country": "SA",
+   "countryName": "Saudi Arabia",
+   "name": "Al-Jawf"
+  },
+  {
+   "id": "SA-14",
+   "country": "SA",
+   "countryName": "Saudi Arabia",
+   "name": "Asir"
+  },
+  {
+   "id": "UA-05",
+   "country": "UA",
+   "countryName": "Ukraine",
+   "name": "Vinnytsia"
+  },
+  {
+   "id": "UA-07",
+   "country": "UA",
+   "countryName": "Ukraine",
+   "name": "Volyn"
+  },
+  {
+   "id": "UA-09",
+   "country": "UA",
+   "countryName": "Ukraine",
+   "name": "Luhansk"
+  },
+  {
+   "id": "UA-12",
+   "country": "UA",
+   "countryName": "Ukraine",
+   "name": "Dnipropetrovsk"
+  },
+  {
+   "id": "UA-14",
+   "country": "UA",
+   "countryName": "Ukraine",
+   "name": "Donetsk"
+  },
+  {
+   "id": "UA-18",
+   "country": "UA",
+   "countryName": "Ukraine",
+   "name": "Zhytomyr"
+  },
+  {
+   "id": "UA-21",
+   "country": "UA",
+   "countryName": "Ukraine",
+   "name": "Zakarpattia"
+  },
+  {
+   "id": "UA-23",
+   "country": "UA",
+   "countryName": "Ukraine",
+   "name": "Zaporizhzhia"
+  },
+  {
+   "id": "UA-26",
+   "country": "UA",
+   "countryName": "Ukraine",
+   "name": "Ivano-Frankivsk"
+  },
+  {
+   "id": "UA-30",
+   "country": "UA",
+   "countryName": "Ukraine",
+   "name": "Kyiv (Special Status)"
+  },
+  {
+   "id": "UA-32",
+   "country": "UA",
+   "countryName": "Ukraine",
+   "name": "Kyiv Oblast"
+  },
+  {
+   "id": "UA-35",
+   "country": "UA",
+   "countryName": "Ukraine",
+   "name": "Kirovohrad"
+  },
+  {
+   "id": "UA-40",
+   "country": "UA",
+   "countryName": "Ukraine",
+   "name": "Sevastopol (Special Status)"
+  },
+  {
+   "id": "UA-43",
+   "country": "UA",
+   "countryName": "Ukraine",
+   "name": "Crimea (Autonomous Republic)"
+  },
+  {
+   "id": "UA-46",
+   "country": "UA",
+   "countryName": "Ukraine",
+   "name": "Lviv"
+  },
+  {
+   "id": "UA-48",
+   "country": "UA",
+   "countryName": "Ukraine",
+   "name": "Mykolaiv"
+  },
+  {
+   "id": "UA-51",
+   "country": "UA",
+   "countryName": "Ukraine",
+   "name": "Odesa"
+  },
+  {
+   "id": "UA-53",
+   "country": "UA",
+   "countryName": "Ukraine",
+   "name": "Poltava"
+  },
+  {
+   "id": "UA-56",
+   "country": "UA",
+   "countryName": "Ukraine",
+   "name": "Rivne"
+  },
+  {
+   "id": "UA-59",
+   "country": "UA",
+   "countryName": "Ukraine",
+   "name": "Sumy"
+  },
+  {
+   "id": "UA-61",
+   "country": "UA",
+   "countryName": "Ukraine",
+   "name": "Ternopil"
+  },
+  {
+   "id": "UA-63",
+   "country": "UA",
+   "countryName": "Ukraine",
+   "name": "Kharkiv"
+  },
+  {
+   "id": "UA-65",
+   "country": "UA",
+   "countryName": "Ukraine",
+   "name": "Kherson"
+  },
+  {
+   "id": "UA-68",
+   "country": "UA",
+   "countryName": "Ukraine",
+   "name": "Khmelnytskyi"
+  },
+  {
+   "id": "UA-71",
+   "country": "UA",
+   "countryName": "Ukraine",
+   "name": "Cherkasy"
+  },
+  {
+   "id": "UA-74",
+   "country": "UA",
+   "countryName": "Ukraine",
+   "name": "Chernihiv"
+  },
+  {
+   "id": "UA-77",
+   "country": "UA",
+   "countryName": "Ukraine",
+   "name": "Chernivtsi"
+  },
+  {
+   "id": "US-AK",
+   "country": "US",
+   "countryName": "United States",
+   "name": "Alaska"
+  },
+  {
+   "id": "US-AL",
+   "country": "US",
+   "countryName": "United States",
+   "name": "Alabama"
+  },
+  {
+   "id": "US-AR",
+   "country": "US",
+   "countryName": "United States",
+   "name": "Arkansas"
+  },
+  {
+   "id": "US-AZ",
+   "country": "US",
+   "countryName": "United States",
+   "name": "Arizona"
+  },
+  {
+   "id": "US-CA",
+   "country": "US",
+   "countryName": "United States",
+   "name": "California"
+  },
+  {
+   "id": "US-CO",
+   "country": "US",
+   "countryName": "United States",
+   "name": "Colorado"
+  },
+  {
+   "id": "US-CT",
+   "country": "US",
+   "countryName": "United States",
+   "name": "Connecticut"
+  },
+  {
+   "id": "US-DC",
+   "country": "US",
+   "countryName": "United States",
+   "name": "District of Columbia"
+  },
+  {
+   "id": "US-DE",
+   "country": "US",
+   "countryName": "United States",
+   "name": "Delaware"
+  },
+  {
+   "id": "US-FL",
+   "country": "US",
+   "countryName": "United States",
+   "name": "Florida"
+  },
+  {
+   "id": "US-GA",
+   "country": "US",
+   "countryName": "United States",
+   "name": "Georgia"
+  },
+  {
+   "id": "US-HI",
+   "country": "US",
+   "countryName": "United States",
+   "name": "Hawaii"
+  },
+  {
+   "id": "US-IA",
+   "country": "US",
+   "countryName": "United States",
+   "name": "Iowa"
+  },
+  {
+   "id": "US-ID",
+   "country": "US",
+   "countryName": "United States",
+   "name": "Idaho"
+  },
+  {
+   "id": "US-IL",
+   "country": "US",
+   "countryName": "United States",
+   "name": "Illinois"
+  },
+  {
+   "id": "US-IN",
+   "country": "US",
+   "countryName": "United States",
+   "name": "Indiana"
+  },
+  {
+   "id": "US-KS",
+   "country": "US",
+   "countryName": "United States",
+   "name": "Kansas"
+  },
+  {
+   "id": "US-KY",
+   "country": "US",
+   "countryName": "United States",
+   "name": "Kentucky"
+  },
+  {
+   "id": "US-LA",
+   "country": "US",
+   "countryName": "United States",
+   "name": "Louisiana"
+  },
+  {
+   "id": "US-MA",
+   "country": "US",
+   "countryName": "United States",
+   "name": "Massachusetts"
+  },
+  {
+   "id": "US-MD",
+   "country": "US",
+   "countryName": "United States",
+   "name": "Maryland"
+  },
+  {
+   "id": "US-ME",
+   "country": "US",
+   "countryName": "United States",
+   "name": "Maine"
+  },
+  {
+   "id": "US-MI",
+   "country": "US",
+   "countryName": "United States",
+   "name": "Michigan"
+  },
+  {
+   "id": "US-MN",
+   "country": "US",
+   "countryName": "United States",
+   "name": "Minnesota"
+  },
+  {
+   "id": "US-MO",
+   "country": "US",
+   "countryName": "United States",
+   "name": "Missouri"
+  },
+  {
+   "id": "US-MS",
+   "country": "US",
+   "countryName": "United States",
+   "name": "Mississippi"
+  },
+  {
+   "id": "US-MT",
+   "country": "US",
+   "countryName": "United States",
+   "name": "Montana"
+  },
+  {
+   "id": "US-NC",
+   "country": "US",
+   "countryName": "United States",
+   "name": "North Carolina"
+  },
+  {
+   "id": "US-ND",
+   "country": "US",
+   "countryName": "United States",
+   "name": "North Dakota"
+  },
+  {
+   "id": "US-NE",
+   "country": "US",
+   "countryName": "United States",
+   "name": "Nebraska"
+  },
+  {
+   "id": "US-NH",
+   "country": "US",
+   "countryName": "United States",
+   "name": "New Hampshire"
+  },
+  {
+   "id": "US-NJ",
+   "country": "US",
+   "countryName": "United States",
+   "name": "New Jersey"
+  },
+  {
+   "id": "US-NM",
+   "country": "US",
+   "countryName": "United States",
+   "name": "New Mexico"
+  },
+  {
+   "id": "US-NV",
+   "country": "US",
+   "countryName": "United States",
+   "name": "Nevada"
+  },
+  {
+   "id": "US-NY",
+   "country": "US",
+   "countryName": "United States",
+   "name": "New York"
+  },
+  {
+   "id": "US-OH",
+   "country": "US",
+   "countryName": "United States",
+   "name": "Ohio"
+  },
+  {
+   "id": "US-OK",
+   "country": "US",
+   "countryName": "United States",
+   "name": "Oklahoma"
+  },
+  {
+   "id": "US-OR",
+   "country": "US",
+   "countryName": "United States",
+   "name": "Oregon"
+  },
+  {
+   "id": "US-PA",
+   "country": "US",
+   "countryName": "United States",
+   "name": "Pennsylvania"
+  },
+  {
+   "id": "US-RI",
+   "country": "US",
+   "countryName": "United States",
+   "name": "Rhode Island"
+  },
+  {
+   "id": "US-SC",
+   "country": "US",
+   "countryName": "United States",
+   "name": "South Carolina"
+  },
+  {
+   "id": "US-SD",
+   "country": "US",
+   "countryName": "United States",
+   "name": "South Dakota"
+  },
+  {
+   "id": "US-TN",
+   "country": "US",
+   "countryName": "United States",
+   "name": "Tennessee"
+  },
+  {
+   "id": "US-TX",
+   "country": "US",
+   "countryName": "United States",
+   "name": "Texas"
+  },
+  {
+   "id": "US-UT",
+   "country": "US",
+   "countryName": "United States",
+   "name": "Utah"
+  },
+  {
+   "id": "US-VA",
+   "country": "US",
+   "countryName": "United States",
+   "name": "Virginia"
+  },
+  {
+   "id": "US-VT",
+   "country": "US",
+   "countryName": "United States",
+   "name": "Vermont"
+  },
+  {
+   "id": "US-WA",
+   "country": "US",
+   "countryName": "United States",
+   "name": "Washington"
+  },
+  {
+   "id": "US-WI",
+   "country": "US",
+   "countryName": "United States",
+   "name": "Wisconsin"
+  },
+  {
+   "id": "US-WV",
+   "country": "US",
+   "countryName": "United States",
+   "name": "West Virginia"
+  },
+  {
+   "id": "US-WY",
+   "country": "US",
+   "countryName": "United States",
+   "name": "Wyoming"
+  }
+ ]
+}

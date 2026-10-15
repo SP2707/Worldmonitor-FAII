@@ -20,6 +20,7 @@ import {
   computeIntervals,
   getIntervalWriteFailure,
   fetchRuntimeCacheState,
+  localAuthHeaders,
   parseCachedScorePayload,
   seedResilienceScores,
   warmLaggardCountries,
@@ -1098,5 +1099,16 @@ describe('laggard warmup aggregate budget (#6562 item 3)', () => {
       fetchImpl,
     });
     assert.equal(warmed, 2);
+  });
+});
+
+describe('localAuthHeaders', () => {
+  it('sends the bearer token only to a loopback base', () => {
+    const env = { LOCAL_API_TOKEN: 't0k' };
+    assert.deepEqual(localAuthHeaders('http://127.0.0.1:46123', env), { Authorization: 'Bearer t0k' });
+    assert.deepEqual(localAuthHeaders('http://localhost:1', env), { Authorization: 'Bearer t0k' });
+    assert.deepEqual(localAuthHeaders('https://api.worldmonitor.app', env), {});
+    assert.deepEqual(localAuthHeaders('not a url', env), {});
+    assert.deepEqual(localAuthHeaders('http://127.0.0.1:46123', {}), {});
   });
 });

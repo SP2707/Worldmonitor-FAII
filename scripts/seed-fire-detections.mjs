@@ -137,6 +137,113 @@ async function fetchAllRegions(apiKey) {
   return { fireDetections, pagination: undefined };
 }
 
+// ---------------------------------------------------------------------------
+// Keyless path: FIRMS publishes rolling 24h global CSVs that need no MAP_KEY.
+// One streamed download per satellite (3 total) replaces the old 27 paced
+// area-API calls, which could not finish inside the 120s seeder timeout.
+// ---------------------------------------------------------------------------
+export const FIRMS_PUBLIC_CSV = {
+  VIIRS_SNPP_NRT: 'https://firms.modaps.eosdis.nasa.gov/data/active_fire/suomi-npp-viirs-c2/csv/SUOMI_VIIRS_C2_Global_24h.csv',
+  VIIRS_NOAA20_NRT: 'https://firms.modaps.eosdis.nasa.gov/data/active_fire/noaa-20-viirs-c2/csv/J1_VIIRS_C2_Global_24h.csv',
+  VIIRS_NOAA21_NRT: 'https://firms.modaps.eosdis.nasa.gov/data/active_fire/noaa-21-viirs-c2/csv/J2_VIIRS_C2_Global_24h.csv',
+};
+
+/** "W,S,E,N" -> numbers. Exported for tests. */
+export function parseBbox(str) {
+  const [w, s, e, n] = String(str).split(',').map(Number);
+  return { w, s, e, n };
+}
+
+/** First monitored region containing the point, or null. Exported for tests. */
+export function regionForPoint(lat, lon, regions = MONITORED_REGIONS) {
+  for (const [name, bbox] of Object.entries(regions)) {
+    const { w, s, e, n } = parseBbox(bbox);
+    if (lat >= s && lat <= n && lon >= w && lon <= e) return name;
+  }
+  return null;
+}
+
+/** Row object -> detection, same shape the keyed path emits. Exported for tests. */
+export function rowToDetection(row, regionName) {
+  const brightness = parseFloat(row.bright_ti4 ?? '0') || 0;
+  const frp = parseFloat(row.frp ?? '0') || 0;
+  return {
+    id: `${row.latitude ?? ''}-${row.longitude ?? ''}-${row.acq_date ?? ''}-${row.acq_time ?? ''}`,
+    location: { latitude: parseFloat(row.latitude ?? '0') || 0, longitude: parseFloat(row.longitude ?? '0') || 0 },
+    brightness,
+    frp,
+    confidence: mapConfidence(row.confidence || ''),
+    satellite: row.satellite || '',
+    detectedAt: parseDetectedAt(row.acq_date || '', row.acq_time || ''),
+    region: regionName,
+    dayNight: row.daynight || '',
+    possibleExplosion: frp > 80 && brightness > 380,
+    source: 'firms',
+    kind: 'active',
+    emergency: true,
+  };
+}
+
+async function streamPublicCsv(url, onRow) {
+  const res = await fetch(url, {
+    headers: { Accept: 'text/csv', 'User-Agent': CHROME_UA },
+    signal: AbortSignal.timeout(100_000),
+  });
+  if (!res.ok || !res.body) throw new Error(`FIRMS public CSV ${res.status} for ${url}`);
+  const decoder = new TextDecoder();
+  let header = null;
+  let tail = '';
+  const handle = (line) => {
+    if (!line) return;
+    const vals = line.split(',');
+    if (!header) { header = vals.map((h) => h.trim()); return; }
+    if (vals.length < header.length) return;
+    const row = {};
+    for (let i = 0; i < header.length; i++) row[header[i]] = vals[i].trim();
+    onRow(row);
+  };
+  for await (const chunk of res.body) {
+    tail += decoder.decode(chunk, { stream: true });
+    const lines = tail.split('\n');
+    tail = lines.pop() ?? '';
+    for (const line of lines) handle(line.replace(/\r$/, ''));
+  }
+  tail += decoder.decode();
+  handle(tail.replace(/\r$/, ''));
+  if (!header) throw new Error(`FIRMS public CSV empty: ${url}`);
+}
+
+async function fetchAllRegionsKeyless() {
+  const seen = new Set();
+  const fireDetections = [];
+  let ok = 0;
+  let failed = 0;
+  for (const [source, url] of Object.entries(FIRMS_PUBLIC_CSV)) {
+    try {
+      let kept = 0;
+      await streamPublicCsv(url, (row) => {
+        const lat = parseFloat(row.latitude);
+        const lon = parseFloat(row.longitude);
+        if (!Number.isFinite(lat) || !Number.isFinite(lon)) return;
+        const region = regionForPoint(lat, lon);
+        if (!region) return;
+        const det = rowToDetection(row, region);
+        if (seen.has(det.id)) return;
+        seen.add(det.id);
+        fireDetections.push(det);
+        kept++;
+      });
+      ok++;
+      console.log(`  ${source}: ${kept} detections in monitored regions (keyless CSV)`);
+    } catch (err) {
+      failed++;
+      console.error(`  [FIRMS public] ${source}: ${err.message || err}`);
+    }
+  }
+  if (ok === 0) throw new Error('all keyless FIRMS CSV downloads failed');
+  return { fireDetections, pagination: undefined, meta: { ok, failed } };
+}
+
 export function declareRecords(data) {
   return Array.isArray(data?.fireDetections) ? data.fireDetections.length : 0;
 }
@@ -185,13 +292,19 @@ async function fetchMergedWildfires() {
   // reaches mergeWildfireSourcesWithBc, is swallowed by allSettled, and silently
   // republishes the canonical worldwide key as Canada-only on every tick.
   // Let a live FIRMS outage degrade; never let a misconfigured deploy do it.
-  if (!apiKey) {
-    console.error('[seed-fire-detections] NASA_FIRMS_API_KEY (or FIRMS_API_KEY) is required but not set. Refusing to run.');
-    process.exit(1);
-  }
-  console.log('  FIRMS key configured');
+  // A missing key is no longer fatal: the keyless public CSV is the primary
+  // path. The keyed area API remains only as a fallback when a key exists.
+  console.log(apiKey ? '  FIRMS key present (fallback only)' : '  no FIRMS key — using keyless public CSV');
   return mergeWildfireSourcesWithBc({
-    fetchFirms: async () => fetchAllRegions(apiKey),
+    fetchFirms: async () => {
+      try {
+        return await fetchAllRegionsKeyless();
+      } catch (err) {
+        if (!apiKey) throw err;
+        console.warn(`  keyless FIRMS failed (${err.message}) — falling back to keyed area API`);
+        return fetchAllRegions(apiKey);
+      }
+    },
     fetchCwfis: () => fetchCwfisFires({ fetchFn: globalThis.fetch, cache }),
     fetchBcWildfire: () => fetchBcFirePoints({ fetchFn: globalThis.fetch, cache }),
   });
@@ -231,7 +344,7 @@ async function main() {
   });
 }
 
-main().catch(err => {
+if (process.argv[1]?.endsWith('seed-fire-detections.mjs')) main().catch(err => {
   const _cause = err.cause ? ` (cause: ${err.cause.message || err.cause.code || err.cause})` : ''; console.error('FATAL:', (err.message || err) + _cause);
   process.exit(1);
 });

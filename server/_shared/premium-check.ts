@@ -24,7 +24,7 @@ export type PremiumCallerIdentity =
        */
       directLlmDailyLimit: number | null;
     }
-  | { isPremium: true; userId: null; kind: 'enterprise'; quotaExempt: true }
+  | { isPremium: true; userId: string | null; kind: 'enterprise'; quotaExempt: true }
   | {
     isPremium: false;
     userId: null;

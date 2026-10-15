@@ -66,28 +66,70 @@ export function validatePetroleum(agg) {
 }
 
 /**
+ * FRED mirrors the same EIA weekly petroleum series and serves them as CSV
+ * from fredgraph.csv with NO API key and no account. This replaces the old
+ * EIA_API_KEY-gated api.eia.gov/v2 call; payload shape is unchanged.
+ * Units are kept in EIA's own spelling so existing consumers see no change.
+ */
+export const FRED_SERIES = /** @type {const} */ ({
+  wti:        { id: 'WCOILWTICO',   unit: '$/BBL' },
+  brent:      { id: 'WCOILBRENTEU', unit: '$/BBL' },
+});
+
+/**
+ * Checked live against fredgraph.csv: WCRFPUS2 (US crude production) and WCESTUS1
+ * (US crude stocks) return HTTP 404 - FRED no longer carries them, and the EIA
+ * API that does needs a key. They are therefore omitted rather than requested on
+ * every run; the payload simply has no `production` / `inventory` until a keyless
+ * source is found. wti and brent were confirmed live (HTTP 200, current data).
+ */
+export const UNAVAILABLE_KEYLESS = /** @type {const} */ (['production', 'inventory']);
+
+/**
+ * Parse a FRED fredgraph.csv body ("observation_date,ID" or "DATE,ID" header,
+ * "." for missing values) into the two newest usable observations.
+ *
+ * @param {string} csv
+ * @param {string} unit
+ * @returns {SeriesPoint | null}
+ */
+export function parseFredCsv(csv, unit) {
+  if (typeof csv !== 'string') return null;
+  const lines = csv.trim().split(/\r?\n/);
+  if (lines.length < 2) return null;
+  const rows = [];
+  for (let i = lines.length - 1; i >= 1 && rows.length < 2; i--) {
+    const [date, raw] = lines[i].split(',');
+    const n = Number(raw);
+    if (!date || raw == null || raw.trim() === '' || raw.trim() === '.' || !Number.isFinite(n)) continue;
+    rows.push({ date: date.trim(), value: n });
+  }
+  if (rows.length === 0) return null;
+  return { current: rows[0].value, previous: rows[1]?.value ?? null, date: rows[0].date, unit };
+}
+
+/**
  * @param {string} key
- * @param {string} seriesId
- * @param {string} apiKey
+ * @param {{ id: string, unit: string }} spec
  * @returns {Promise<SeriesPoint | null>}
  */
-async function fetchOne(key, seriesId, apiKey) {
-  const url = `https://api.eia.gov/v2/seriesid/${seriesId}?api_key=${apiKey}&num=2`;
+async function fetchOne(key, spec) {
+  const since = new Date(Date.now() - 120 * 86400_000).toISOString().slice(0, 10);
+  const url = `https://fred.stlouisfed.org/graph/fredgraph.csv?id=${spec.id}&cosd=${since}`;
   try {
     const resp = await fetch(url, {
-      headers: { Accept: 'application/json' },
+      headers: { Accept: 'text/csv', 'User-Agent': 'Mozilla/5.0 (compatible; worldmonitor-faii)' },
       signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
     });
     if (!resp.ok) {
-      console.warn(`  [EIA] ${key} HTTP ${resp.status}`);
+      console.warn(`  [FRED] ${key} HTTP ${resp.status}`);
       return null;
     }
-    const body = await resp.json();
-    const parsed = parseSeries(body);
-    if (!parsed) console.warn(`  [EIA] ${key} no usable values`);
+    const parsed = parseFredCsv(await resp.text(), spec.unit);
+    if (!parsed) console.warn(`  [FRED] ${key} no usable values`);
     return parsed;
   } catch (err) {
-    console.warn(`  [EIA] ${key} fetch error: ${(err instanceof Error ? err.message : String(err))}`);
+    console.warn(`  [FRED] ${key} fetch error: ${(err instanceof Error ? err.message : String(err))}`);
     return null;
   }
 }
@@ -96,12 +138,9 @@ async function fetchOne(key, seriesId, apiKey) {
  * @returns {Promise<EiaPetroleum>}
  */
 async function fetchEiaPetroleum() {
-  const apiKey = process.env.EIA_API_KEY;
-  if (!apiKey) throw new Error('EIA_API_KEY not set');
-
-  const entries = /** @type {[keyof typeof SERIES, string][]} */ (Object.entries(SERIES));
+  const entries = /** @type {[keyof typeof FRED_SERIES, { id: string, unit: string }][]} */ (Object.entries(FRED_SERIES));
   const pairs = await Promise.all(
-    entries.map(async ([key, id]) => /** @type {const} */ ([key, await fetchOne(key, id, apiKey)])),
+    entries.map(async ([key, spec]) => /** @type {const} */ ([key, await fetchOne(key, spec)])),
   );
 
   /** @type {EiaPetroleum} */
@@ -125,7 +164,7 @@ if (isMain) {
   runSeed('energy', 'eia-petroleum', CANONICAL_KEY, fetchEiaPetroleum, {
     validateFn: validatePetroleum,
     ttlSeconds: TTL_SECONDS,
-    sourceVersion: 'eia-petroleum-v1',
+    sourceVersion: 'fred-eia-petroleum-v3',
     recordCount: (data) => countSeries(data),
     declareRecords,
     schemaVersion: 1,

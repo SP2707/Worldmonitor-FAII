@@ -1008,6 +1008,8 @@ export const CACHE_TOOLS: ToolDef[] = [
               confidence: { type: 'number', description: "0-1 confidence in the verdict itself, not in the story's importance." },
               reasoning: { type: 'string', description: 'One-sentence reason for the verdict.' },
               verifiedAt: { type: 'string' },
+              evidenceBased: { type: 'boolean', description: 'True only if independent web-search evidence backed this verdict. False means the verdict rests on model knowledge alone and confidence is capped at 0.6 — weigh it accordingly.' },
+              evidence: { type: 'array', description: 'Title and URL of the independent sources consulted (empty when evidenceBased is false).', items: { type: 'object', properties: { title: { type: 'string' }, url: { type: 'string' } } } },
             } },
             sourceVerificationTrackRecord: { type: ['object', 'null'], description: "This source's accumulated claim-verification history (scripts/_source-credibility.mjs) — the feedback-loop signal already folded into credibilityScore above. Null until the source has at least 3 verified samples.", properties: {
               score: { type: 'number', description: "0-100 EWMA of this source's verified-claim outcomes." },

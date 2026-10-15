@@ -227,3 +227,12 @@ api/**/*.js
 # Background seed runner status (scripts/seed-on-start.mjs)
 .seed-status.json
 .seed-status.json.*.tmp
+
+logs/
+.history.db*
+
+.tmp-seed-status-publisher-*/
+docs/samples/
+
+.tmp-seed-status-publisher-*/
+docs/samples/

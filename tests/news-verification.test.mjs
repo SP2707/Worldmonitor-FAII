@@ -178,7 +178,7 @@ describe('server/_shared/source-credibility.ts <-> scripts/_source-credibility.m
       parseClaimVerificationRecord({
         verdict: 'true', confidence: 0.8, reasoning: 'x', verifiedAt: '2026-01-01T00:00:00.000Z',
       }),
-      { verdict: 'true', confidence: 0.8, reasoning: 'x', verifiedAt: '2026-01-01T00:00:00.000Z' },
+      { verdict: 'true', confidence: 0.8, reasoning: 'x', verifiedAt: '2026-01-01T00:00:00.000Z', evidenceBased: false, evidence: [] },
     );
     assert.equal(parseClaimVerificationRecord({ verdict: 'not-a-verdict' }), null);
     assert.equal(parseClaimVerificationRecord(null), null);

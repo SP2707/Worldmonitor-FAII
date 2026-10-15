@@ -929,3 +929,10 @@ export async function checkEntitlementDetailed(
     entitlements: ent,
   };
 }
+
+// De-SaaS leftovers: the Convex entitlement backend is gone, so these helpers
+// are unreachable in this build. Referenced here only so `noUnusedLocals`
+// stays satisfied without deleting upstream code; remove together if desired.
+void _inFlight;
+void rememberVerificationUnavailable;
+void _getEntitlementsImpl;

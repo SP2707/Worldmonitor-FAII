@@ -40,7 +40,10 @@ import {
   buildVerificationPrompt,
   parseVerificationResponse,
   verificationJoinKey,
+  gatherEvidence,
+  applyEvidenceBasis,
 } from './_claim-verifier.mjs';
+import { webSearch } from './_web-search.mjs';
 import {
   SOURCE_CREDIBILITY_KEY,
   SOURCE_CREDIBILITY_TTL,
@@ -87,7 +90,8 @@ function importanceOf(story) {
 }
 
 async function verifyOneStory(story) {
-  const { systemPrompt, userPrompt } = buildVerificationPrompt(story);
+  const evidence = await gatherEvidence(story, webSearch);
+  const { systemPrompt, userPrompt } = buildVerificationPrompt({ ...story, evidence });
   let parsed = null;
   // NOTE: `stage` is not threaded through to this file's callLLM (see the
   // module header) — telemetry from this call shows up tagged
@@ -103,7 +107,7 @@ async function verifyOneStory(story) {
     },
   });
   if (!result || !parsed) return null;
-  return { ...parsed, model: result.model, provider: result.provider };
+  return { ...applyEvidenceBasis(parsed, evidence), model: result.model, provider: result.provider };
 }
 
 async function fetchVerifications() {
@@ -146,6 +150,8 @@ async function fetchVerifications() {
         verdict: outcome.verdict,
         confidence: outcome.confidence,
         reasoning: outcome.reasoning,
+        evidenceBased: outcome.evidenceBased,
+        evidence: outcome.evidence,
         model: outcome.model,
         provider: outcome.provider,
         verifiedAt: new Date(nowMs).toISOString(),
@@ -185,7 +191,7 @@ if (process.argv[1]?.endsWith('seed-news-verification.mjs')) {
     validateFn: (data) => data !== null && typeof data === 'object' && !Array.isArray(data),
     recordCount: declareRecords,
     declareRecords,
-    sourceVersion: 'claim-verifier-v1',
+    sourceVersion: 'claim-verifier-v2',
     schemaVersion: 1,
     maxStaleMin: FRESHNESS_MAX_STALE_MIN,
     zeroIsValid: true,

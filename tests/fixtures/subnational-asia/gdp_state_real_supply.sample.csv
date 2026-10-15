@@ -1,0 +1,85 @@
+series,date,state,sector,value
+abs,2023-01-01,Johor,p0,148710.224
+abs,2023-01-01,Johor,p1,17296.531
+abs,2023-01-01,Johor,p2,692.38
+abs,2023-01-01,Johor,p3,44165.268
+abs,2023-01-01,Johor,p4,4474.065
+abs,2023-01-01,Johor,p5,80384.213
+abs,2023-01-01,Johor,p6,1697.769
+abs,2023-01-01,W.P. Kuala Lumpur,p0,237185.211
+abs,2023-01-01,W.P. Kuala Lumpur,p1,0.0
+abs,2023-01-01,W.P. Kuala Lumpur,p2,153.999
+abs,2023-01-01,W.P. Kuala Lumpur,p3,6409.018
+abs,2023-01-01,W.P. Kuala Lumpur,p4,10511.334
+abs,2023-01-01,W.P. Kuala Lumpur,p5,218900.741
+abs,2023-01-01,W.P. Kuala Lumpur,p6,1209.03
+abs,2024-01-01,Johor,p0,158348.264
+abs,2024-01-01,Johor,p1,18201.25
+abs,2024-01-01,Johor,p2,776.656
+abs,2024-01-01,Johor,p3,45999.89
+abs,2024-01-01,Johor,p4,6371.025
+abs,2024-01-01,Johor,p5,85199.156
+abs,2024-01-01,Johor,p6,1800.287
+abs,2024-01-01,W.P. Kuala Lumpur,p0,251946.876
+abs,2024-01-01,W.P. Kuala Lumpur,p1,0.0
+abs,2024-01-01,W.P. Kuala Lumpur,p2,159.417
+abs,2024-01-01,W.P. Kuala Lumpur,p3,6684.863
+abs,2024-01-01,W.P. Kuala Lumpur,p4,12731.58
+abs,2024-01-01,W.P. Kuala Lumpur,p5,231079.502
+abs,2024-01-01,W.P. Kuala Lumpur,p6,1290.427
+abs,2025-01-01,Johor,p0,170947.488
+abs,2025-01-01,Johor,p1,18394.504
+abs,2025-01-01,Johor,p2,756.157
+abs,2025-01-01,Johor,p3,47859.332
+abs,2025-01-01,Johor,p4,8072.155
+abs,2025-01-01,Johor,p5,93607.732
+abs,2025-01-01,Johor,p6,2257.609
+abs,2025-01-01,W.P. Kuala Lumpur,p0,265103.982
+abs,2025-01-01,W.P. Kuala Lumpur,p1,0.0
+abs,2025-01-01,W.P. Kuala Lumpur,p2,163.349
+abs,2025-01-01,W.P. Kuala Lumpur,p3,6888.711
+abs,2025-01-01,W.P. Kuala Lumpur,p4,13493.697
+abs,2025-01-01,W.P. Kuala Lumpur,p5,243185.203
+abs,2025-01-01,W.P. Kuala Lumpur,p6,1371.954
+growth_yoy,2023-01-01,Johor,p0,4.5
+growth_yoy,2023-01-01,Johor,p1,-0.6
+growth_yoy,2023-01-01,Johor,p2,6.7
+growth_yoy,2023-01-01,Johor,p3,2.8
+growth_yoy,2023-01-01,Johor,p4,12.9
+growth_yoy,2023-01-01,Johor,p5,5.9
+growth_yoy,2023-01-01,Johor,p6,10.8
+growth_yoy,2024-01-01,Johor,p0,6.5
+growth_yoy,2024-01-01,Johor,p1,5.2
+growth_yoy,2024-01-01,Johor,p2,12.2
+growth_yoy,2024-01-01,Johor,p3,4.2
+growth_yoy,2024-01-01,Johor,p4,42.4
+growth_yoy,2024-01-01,Johor,p5,6.0
+growth_yoy,2024-01-01,Johor,p6,6.0
+growth_yoy,2025-01-01,Johor,p0,8.0
+growth_yoy,2025-01-01,Johor,p1,1.1
+growth_yoy,2025-01-01,Johor,p2,-2.6
+growth_yoy,2025-01-01,Johor,p3,4.0
+growth_yoy,2025-01-01,Johor,p4,26.7
+growth_yoy,2025-01-01,Johor,p5,9.9
+growth_yoy,2025-01-01,Johor,p6,25.4
+abs,2023-01-01,Supra,p0,44095.463
+abs,2023-01-01,Supra,p1,0.0
+abs,2023-01-01,Supra,p2,44095.463
+abs,2023-01-01,Supra,p3,0.0
+abs,2023-01-01,Supra,p4,0.0
+abs,2023-01-01,Supra,p5,0.0
+abs,2023-01-01,Supra,p6,0.0
+abs,2024-01-01,Supra,p0,44509.846
+abs,2024-01-01,Supra,p1,0.0
+abs,2024-01-01,Supra,p2,44509.846
+abs,2024-01-01,Supra,p3,0.0
+abs,2024-01-01,Supra,p4,0.0
+abs,2024-01-01,Supra,p5,0.0
+abs,2024-01-01,Supra,p6,0.0
+abs,2025-01-01,Supra,p0,43257.43
+abs,2025-01-01,Supra,p1,0.0
+abs,2025-01-01,Supra,p2,43257.43
+abs,2025-01-01,Supra,p3,0.0
+abs,2025-01-01,Supra,p4,0.0
+abs,2025-01-01,Supra,p5,0.0
+abs,2025-01-01,Supra,p6,0.0

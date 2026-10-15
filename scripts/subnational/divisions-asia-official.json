@@ -1,0 +1,311 @@
+{
+ "generatedFrom": "ISO 3166-2 (pycountry) ids and names; srcName is the label used by the national statistics office table (Mongolian NSO PxWeb, Malaysian OpenDOSM) and is what providers match on.",
+ "note": "Mongolia: 21 aimags + Ulaanbaatar. Malaysia: 13 states + 3 federal territories (the DOSM \"Supra\" row is extra-regio output, not a division).",
+ "count": 38,
+ "divisions": [
+  {
+   "id": "MN-035",
+   "country": "MN",
+   "countryName": "Mongolia",
+   "name": "Orhon",
+   "srcName": "Orkhon",
+   "layer": "asia-official"
+  },
+  {
+   "id": "MN-037",
+   "country": "MN",
+   "countryName": "Mongolia",
+   "name": "Darhan uul",
+   "srcName": "Darkhan-Uul",
+   "layer": "asia-official"
+  },
+  {
+   "id": "MN-039",
+   "country": "MN",
+   "countryName": "Mongolia",
+   "name": "Hentiy",
+   "srcName": "Khentii",
+   "layer": "asia-official"
+  },
+  {
+   "id": "MN-041",
+   "country": "MN",
+   "countryName": "Mongolia",
+   "name": "Hövsgöl",
+   "srcName": "Khuvsgul",
+   "layer": "asia-official"
+  },
+  {
+   "id": "MN-043",
+   "country": "MN",
+   "countryName": "Mongolia",
+   "name": "Hovd",
+   "srcName": "Khovd",
+   "layer": "asia-official"
+  },
+  {
+   "id": "MN-046",
+   "country": "MN",
+   "countryName": "Mongolia",
+   "name": "Uvs",
+   "srcName": "Uvs",
+   "layer": "asia-official"
+  },
+  {
+   "id": "MN-047",
+   "country": "MN",
+   "countryName": "Mongolia",
+   "name": "Töv",
+   "srcName": "Tuv",
+   "layer": "asia-official"
+  },
+  {
+   "id": "MN-049",
+   "country": "MN",
+   "countryName": "Mongolia",
+   "name": "Selenge",
+   "srcName": "Selenge",
+   "layer": "asia-official"
+  },
+  {
+   "id": "MN-051",
+   "country": "MN",
+   "countryName": "Mongolia",
+   "name": "Sühbaatar",
+   "srcName": "Sukhbaatar",
+   "layer": "asia-official"
+  },
+  {
+   "id": "MN-053",
+   "country": "MN",
+   "countryName": "Mongolia",
+   "name": "Ömnögovĭ",
+   "srcName": "Umnugovi",
+   "layer": "asia-official"
+  },
+  {
+   "id": "MN-055",
+   "country": "MN",
+   "countryName": "Mongolia",
+   "name": "Övörhangay",
+   "srcName": "Uvurkhangai",
+   "layer": "asia-official"
+  },
+  {
+   "id": "MN-057",
+   "country": "MN",
+   "countryName": "Mongolia",
+   "name": "Dzavhan",
+   "srcName": "Zavkhan",
+   "layer": "asia-official"
+  },
+  {
+   "id": "MN-059",
+   "country": "MN",
+   "countryName": "Mongolia",
+   "name": "Dundgovĭ",
+   "srcName": "Dundgovi",
+   "layer": "asia-official"
+  },
+  {
+   "id": "MN-061",
+   "country": "MN",
+   "countryName": "Mongolia",
+   "name": "Dornod",
+   "srcName": "Dornod",
+   "layer": "asia-official"
+  },
+  {
+   "id": "MN-063",
+   "country": "MN",
+   "countryName": "Mongolia",
+   "name": "Dornogovĭ",
+   "srcName": "Dornogovi",
+   "layer": "asia-official"
+  },
+  {
+   "id": "MN-064",
+   "country": "MN",
+   "countryName": "Mongolia",
+   "name": "Govĭ-Sümber",
+   "srcName": "Govisumber",
+   "layer": "asia-official"
+  },
+  {
+   "id": "MN-065",
+   "country": "MN",
+   "countryName": "Mongolia",
+   "name": "Govĭ-Altay",
+   "srcName": "Govi-Altai",
+   "layer": "asia-official"
+  },
+  {
+   "id": "MN-067",
+   "country": "MN",
+   "countryName": "Mongolia",
+   "name": "Bulgan",
+   "srcName": "Bulgan",
+   "layer": "asia-official"
+  },
+  {
+   "id": "MN-069",
+   "country": "MN",
+   "countryName": "Mongolia",
+   "name": "Bayanhongor",
+   "srcName": "Bayankhongor",
+   "layer": "asia-official"
+  },
+  {
+   "id": "MN-071",
+   "country": "MN",
+   "countryName": "Mongolia",
+   "name": "Bayan-Ölgiy",
+   "srcName": "Bayan-Ulgii",
+   "layer": "asia-official"
+  },
+  {
+   "id": "MN-073",
+   "country": "MN",
+   "countryName": "Mongolia",
+   "name": "Arhangay",
+   "srcName": "Arkhangai",
+   "layer": "asia-official"
+  },
+  {
+   "id": "MN-1",
+   "country": "MN",
+   "countryName": "Mongolia",
+   "name": "Ulaanbaatar",
+   "srcName": "Ulaanbaatar",
+   "layer": "asia-official"
+  },
+  {
+   "id": "MY-01",
+   "country": "MY",
+   "countryName": "Malaysia",
+   "name": "Johor",
+   "srcName": "Johor",
+   "layer": "asia-official"
+  },
+  {
+   "id": "MY-02",
+   "country": "MY",
+   "countryName": "Malaysia",
+   "name": "Kedah",
+   "srcName": "Kedah",
+   "layer": "asia-official"
+  },
+  {
+   "id": "MY-03",
+   "country": "MY",
+   "countryName": "Malaysia",
+   "name": "Kelantan",
+   "srcName": "Kelantan",
+   "layer": "asia-official"
+  },
+  {
+   "id": "MY-04",
+   "country": "MY",
+   "countryName": "Malaysia",
+   "name": "Melaka",
+   "srcName": "Melaka",
+   "layer": "asia-official"
+  },
+  {
+   "id": "MY-05",
+   "country": "MY",
+   "countryName": "Malaysia",
+   "name": "Negeri Sembilan",
+   "srcName": "Negeri Sembilan",
+   "layer": "asia-official"
+  },
+  {
+   "id": "MY-06",
+   "country": "MY",
+   "countryName": "Malaysia",
+   "name": "Pahang",
+   "srcName": "Pahang",
+   "layer": "asia-official"
+  },
+  {
+   "id": "MY-07",
+   "country": "MY",
+   "countryName": "Malaysia",
+   "name": "Pulau Pinang",
+   "srcName": "Pulau Pinang",
+   "layer": "asia-official"
+  },
+  {
+   "id": "MY-08",
+   "country": "MY",
+   "countryName": "Malaysia",
+   "name": "Perak",
+   "srcName": "Perak",
+   "layer": "asia-official"
+  },
+  {
+   "id": "MY-09",
+   "country": "MY",
+   "countryName": "Malaysia",
+   "name": "Perlis",
+   "srcName": "Perlis",
+   "layer": "asia-official"
+  },
+  {
+   "id": "MY-10",
+   "country": "MY",
+   "countryName": "Malaysia",
+   "name": "Selangor",
+   "srcName": "Selangor",
+   "layer": "asia-official"
+  },
+  {
+   "id": "MY-11",
+   "country": "MY",
+   "countryName": "Malaysia",
+   "name": "Terengganu",
+   "srcName": "Terengganu",
+   "layer": "asia-official"
+  },
+  {
+   "id": "MY-12",
+   "country": "MY",
+   "countryName": "Malaysia",
+   "name": "Sabah",
+   "srcName": "Sabah",
+   "layer": "asia-official"
+  },
+  {
+   "id": "MY-13",
+   "country": "MY",
+   "countryName": "Malaysia",
+   "name": "Sarawak",
+   "srcName": "Sarawak",
+   "layer": "asia-official"
+  },
+  {
+   "id": "MY-14",
+   "country": "MY",
+   "countryName": "Malaysia",
+   "name": "Wilayah Persekutuan Kuala Lumpur",
+   "srcName": "W.P. Kuala Lumpur",
+   "layer": "asia-official"
+  },
+  {
+   "id": "MY-15",
+   "country": "MY",
+   "countryName": "Malaysia",
+   "name": "Wilayah Persekutuan Labuan",
+   "srcName": "W.P. Labuan",
+   "layer": "asia-official"
+  },
+  {
+   "id": "MY-16",
+   "country": "MY",
+   "countryName": "Malaysia",
+   "name": "Wilayah Persekutuan Putrajaya",
+   "srcName": "W.P. Putrajaya",
+   "layer": "asia-official"
+  }
+ ]
+}

@@ -1,43 +1,29 @@
 #!/usr/bin/env node
 /**
- * Seed webcam camera metadata from Windy Webcams API v3.
+ * Seed webcam camera metadata from OpenStreetMap (Overpass API, ODbL, no key).
+ * Replaces the WINDY_API_KEY-gated Windy Webcams v3 source. OSM only has the
+ * cameras mappers tagged with `contact:webcam`, so coverage is sparser than
+ * Windy's; every entry carries its source URL.
  * Writes versioned geo+meta keys to Redis for spatial queries.
  *
  * Usage: node scripts/seed-webcams.mjs
- * Env:   WINDY_API_KEY, UPSTASH_REDIS_REST_URL, UPSTASH_REDIS_REST_TOKEN
+ * Env:   UPSTASH_REDIS_REST_URL, UPSTASH_REDIS_REST_TOKEN
  */
-
-const WINDY_API_KEY = process.env.WINDY_API_KEY;
-if (!WINDY_API_KEY) {
-  console.log('WINDY_API_KEY not set — skipping webcam seed');
-  process.exit(0);
-}
 
 const REDIS_URL = process.env.UPSTASH_REDIS_REST_URL;
 const REDIS_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN;
-if (!REDIS_URL || !REDIS_TOKEN) {
-  console.error('Redis credentials not set');
-  process.exit(1);
-}
 
 const PREFIX = process.env.KEY_PREFIX || '';
-const WINDY_BASE = 'https://api.windy.com/webcams/api/v3/webcams';
+const OVERPASS_URLS = [
+  'https://lz4.overpass-api.de/api/interpreter',
+  'https://overpass-api.de/api/interpreter',
+  'https://overpass.kumi.systems/api/interpreter',
+];
+const OVERPASS_QUERY = '[out:json][timeout:180];nwr["contact:webcam"];out center tags;';
 const PAGE_LIMIT = 50;
 const BATCH_SIZE = 500;
 const GEO_TTL = 86400;
 const MAX_OFFSET = 10000;
-
-// Regional bounding boxes: [S, W, N, E]
-const REGIONS = [
-  { name: 'Europe West',            bounds: [35, -15, 72, 15] },
-  { name: 'Europe East',            bounds: [35, 15, 72, 45] },
-  { name: 'Middle East + N.Africa', bounds: [10, 25, 45, 65] },
-  { name: 'Asia East',              bounds: [10, 65, 55, 145] },
-  { name: 'Asia SE + Oceania',      bounds: [-50, 95, 10, 180] },
-  { name: 'Americas North',         bounds: [15, -170, 72, -50] },
-  { name: 'Americas South',         bounds: [-60, -90, 15, -30] },
-  { name: 'Africa Sub-Saharan',     bounds: [-40, -20, 10, 55] },
-];
 
 async function pipelineRequest(commands) {
   const resp = await fetch(`${REDIS_URL}/pipeline`, {
@@ -52,74 +38,47 @@ async function pipelineRequest(commands) {
   return resp.json();
 }
 
-const MAX_SPLIT_DEPTH = 3;
-
-async function fetchRegion(bounds, regionName, depth = 0) {
-  const [S, W, N, E] = bounds;
+export function mapOsmElements(elements) {
   const cameras = [];
-  let offset = 0;
-
-  while (offset < MAX_OFFSET) {
-    const url = new URL(WINDY_BASE);
-    url.searchParams.set('cameraBoundingBox', `${S},${W},${N},${E}`);
-    url.searchParams.set('include', 'location,categories');
-    url.searchParams.set('limit', String(PAGE_LIMIT));
-    url.searchParams.set('offset', String(offset));
-
-    const resp = await fetch(url, {
-      headers: { 'x-windy-api-key': WINDY_API_KEY },
+  for (const el of Array.isArray(elements) ? elements : []) {
+    const lat = el.lat ?? el.center?.lat;
+    const lng = el.lon ?? el.center?.lon;
+    const tags = el.tags || {};
+    if (!Number.isFinite(lat) || !Number.isFinite(lng) || !tags['contact:webcam']) continue;
+    cameras.push({
+      webcamId: `osm-${el.type}-${el.id}`,
+      title: tags.name || tags['name:en'] || tags.operator || 'Webcam',
+      lat,
+      lng,
+      category: tags.tourism || tags.natural || tags.amenity || 'other',
+      country: tags['addr:country'] || '',
+      region: tags['addr:state'] || '',
+      status: 'active',
+      url: tags['contact:webcam'],
     });
-
-    if (!resp.ok) {
-      if (resp.status === 400 && offset > 0) {
-        console.log(`  [${regionName}] API offset limit at ${offset}, keeping ${cameras.length} cameras`);
-        break;
-      }
-      console.warn(`  [${regionName}] API error at offset ${offset}: ${resp.status}`);
-      break;
-    }
-
-    const data = await resp.json();
-    const webcams = data.webcams || [];
-    if (webcams.length === 0) break;
-
-    for (const wc of webcams) {
-      const loc = wc.location || {};
-      const cats = (wc.categories || []).map(c => c.id || c).filter(Boolean);
-      cameras.push({
-        webcamId: String(wc.webcamId || wc.id),
-        title: wc.title || '',
-        lat: loc.latitude ?? 0,
-        lng: loc.longitude ?? 0,
-        category: cats[0] || 'other',
-        country: loc.country || '',
-        region: loc.region || '',
-        status: wc.status || 'active',
-      });
-    }
-
-    offset += webcams.length;
-    if (webcams.length < PAGE_LIMIT) break;
   }
-
-  if (offset >= MAX_OFFSET - 50 && cameras.length >= MAX_OFFSET - 50 && depth < MAX_SPLIT_DEPTH) {
-    console.log(`  [${regionName}] Hit 10K cap (depth ${depth}), splitting into quadrants...`);
-    const midLat = (S + N) / 2;
-    const midLon = (W + E) / 2;
-    const quadrants = [
-      [[S, W, midLat, midLon], `${regionName} SW`],
-      [[S, midLon, midLat, E], `${regionName} SE`],
-      [[midLat, W, N, midLon], `${regionName} NW`],
-      [[midLat, midLon, N, E], `${regionName} NE`],
-    ];
-    cameras.length = 0;
-    for (const [qBounds, qName] of quadrants) {
-      const qCameras = await fetchRegion(qBounds, qName, depth + 1);
-      cameras.push(...qCameras);
-    }
-  }
-
   return cameras;
+}
+
+async function fetchOsmWebcams() {
+  let lastErr = null;
+  for (const endpoint of OVERPASS_URLS) {
+    try {
+      const resp = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'User-Agent': 'worldmonitor-faii webcam seeder' },
+        body: 'data=' + encodeURIComponent(OVERPASS_QUERY),
+        signal: AbortSignal.timeout(200_000),
+      });
+      if (!resp.ok) { lastErr = new Error(`Overpass ${endpoint}: HTTP ${resp.status}`); continue; }
+      const data = await resp.json();
+      return mapOsmElements(data.elements);
+    } catch (err) {
+      lastErr = err;
+      console.warn(`  [Overpass] ${endpoint}: ${err.message}`);
+    }
+  }
+  throw lastErr ?? new Error('Overpass unavailable');
 }
 
 async function seedGeo(geoKey, cameras) {
@@ -146,15 +105,14 @@ async function seedMeta(metaKey, cameras) {
 }
 
 async function main() {
+  if (!REDIS_URL || !REDIS_TOKEN) {
+    console.error('Redis credentials not set');
+    process.exit(1);
+  }
   console.log('seed-webcams: starting...');
 
-  const allCameras = [];
-  for (const { name, bounds } of REGIONS) {
-    console.log(`  Fetching ${name}...`);
-    const cameras = await fetchRegion(bounds, name);
-    console.log(`  ${name}: ${cameras.length} cameras`);
-    allCameras.push(...cameras);
-  }
+  const allCameras = await fetchOsmWebcams();
+  console.log(`  OSM: ${allCameras.length} cameras`);
 
   // Deduplicate by webcamId
   const seen = new Set();
@@ -216,9 +174,11 @@ async function main() {
   console.log(`seed-webcams: done (${unique.length} cameras seeded)`);
 }
 
-main().then(() => {
-  process.exit(0);
-}).catch(err => {
-  console.error('seed-webcams: fatal error:', err.message);
-  process.exit(1);
-});
+if (process.argv[1]?.endsWith('seed-webcams.mjs')) {
+  main().then(() => {
+    process.exit(0);
+  }).catch(err => {
+    console.error('seed-webcams: fatal error:', err.message);
+    process.exit(1);
+  });
+}

@@ -22,12 +22,6 @@ var COUNTRY_NAMES = {
   VE: "Venezuela"
 };
 var BOT_UA = /twitterbot|facebookexternalhit|linkedinbot|slackbot|telegrambot|whatsapp|discordbot|redditbot|googlebot/i;
-
-// Resolves the public origin these client-facing (bot-crawled) links point
-// at. Pinned to WORLDMONITOR_PUBLIC_BASE_URL when set — same override
-// api/brief/share-url.ts honors — so a self-hosted / FAII deployment emits
-// links back to its own backend connection instead of the upstream
-// worldmonitor.app SaaS domain baked in here previously.
 function resolveBaseUrl(req) {
   const pinned = process.env.WORLDMONITOR_PUBLIC_BASE_URL;
   if (pinned) return pinned.replace(/\/+$/, "");
@@ -37,7 +31,6 @@ function resolveBaseUrl(req) {
   const host = (Array.isArray(forwardedHost) ? forwardedHost[0] : forwardedHost) || req.headers.host || "localhost";
   return `${proto}://${host}`;
 }
-
 function handler(req, res) {
   const baseUrl = resolveBaseUrl(req);
   const url = new URL(req.url, baseUrl);

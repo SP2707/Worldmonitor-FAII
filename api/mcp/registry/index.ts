@@ -3,6 +3,7 @@ import { JMESPATH_SCHEMA } from '../jmespath';
 import type { McpAccessClass, PublicToolShape, ToolDef } from '../types';
 import { compressDescription, utf8ByteLength } from '../utils';
 import { CACHE_TOOLS } from './cache-tools';
+import { MAP_TOOLS } from './map-tools';
 import { NLP_TOOLS } from './nlp-tools';
 import { RPC_TOOLS } from './rpc-tools';
 import { SOURCE_TOOLS } from './source-tools';
@@ -12,8 +13,8 @@ import { SOURCE_TOOLS } from './source-tools';
 // emits tools in this same order, and `describe_tool({tool_name: 'nonexistent'})`
 // returns the available-list sorted before responding. NLP_TOOLS is appended
 // last so extracting it from rpc-tools.ts left every other tool's position
-// unchanged. SOURCE_TOOLS is appended after it for the same reason.
-export const TOOL_REGISTRY: ToolDef[] = [...CACHE_TOOLS, ...RPC_TOOLS, ...NLP_TOOLS, ...SOURCE_TOOLS];
+// unchanged. SOURCE_TOOLS is appended after it for the same reason, and MAP_TOOLS after that.
+export const TOOL_REGISTRY: ToolDef[] = [...CACHE_TOOLS, ...RPC_TOOLS, ...NLP_TOOLS, ...SOURCE_TOOLS, ...MAP_TOOLS];
 export const FREE_TIER_TOOL_NAMES: ReadonlySet<string> = new Set(
   TOOL_REGISTRY.filter((tool) => tool._freeTier === true).map((tool) => tool.name),
 );

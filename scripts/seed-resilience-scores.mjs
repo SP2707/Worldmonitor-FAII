@@ -19,6 +19,20 @@ import {
 loadEnvFile(import.meta.url);
 
 const API_BASE = process.env.API_BASE_URL || 'https://api.worldmonitor.app';
+
+// A local sidecar (API_BASE_URL on loopback) rejects requests without its
+// LOCAL_API_TOKEN. Send it only to a loopback base, never to a remote host.
+export function localAuthHeaders(base = API_BASE, env = process.env) {
+  const token = env.LOCAL_API_TOKEN;
+  if (!token) return {};
+  try {
+    const host = new URL(base).hostname;
+    if (host === '127.0.0.1' || host === 'localhost' || host === '[::1]' || host === '::1') {
+      return { Authorization: `Bearer ${token}` };
+    }
+  } catch { /* not a URL: send nothing */ }
+  return {};
+}
 // Normal premium reads/warmups use the standard API key allowlist.
 const WM_KEY = process.env.WORLDMONITOR_API_KEY
   || (process.env.WORLDMONITOR_VALID_KEYS ?? '').split(',').map((k) => k.trim()).filter(Boolean)[0]
@@ -133,7 +147,7 @@ export async function warmLaggardCountries(stillMissing, {
     const results = await Promise.allSettled(batch.map(async (cc) => {
       const scoreUrl = `${apiBase}/api/resilience/v1/get-resilience-score?countryCode=${cc}`;
       const resp = await fetchImpl(scoreUrl, {
-        headers: { 'User-Agent': SEED_UA, 'Accept': 'application/json', 'X-WorldMonitor-Key': apiKey },
+        headers: { 'User-Agent': SEED_UA, 'Accept': 'application/json', 'X-WorldMonitor-Key': apiKey, ...localAuthHeaders(apiBase) },
         signal: AbortSignal.timeout(30_000),
       });
       if (!resp.ok) throw new Error(`${cc}: HTTP ${resp.status}`);
@@ -211,7 +225,7 @@ async function redisTransaction(url, token, commands) {
 export async function fetchRuntimeCacheState(fetchFn = globalThis.fetch) {
   try {
     const resp = await fetchFn(`${API_BASE}/api/resilience/v1/get-runtime-manifest`, {
-      headers: { 'User-Agent': SEED_UA, 'Accept': 'application/json' },
+      headers: { 'User-Agent': SEED_UA, 'Accept': 'application/json', ...localAuthHeaders() },
       signal: AbortSignal.timeout(10_000),
     });
     if (!resp.ok) {
@@ -550,7 +564,7 @@ export async function seedResilienceScores({ runtimeCacheState = fetchRuntimeCac
       // degrade, and only the per-country laggard fallback (or nothing, if
       // WM_KEY is absent) would recover. Forcing a recompute routes the call
       // through warmMissingResilienceScores and its chunked pipeline SET.
-      const headers = { 'User-Agent': SEED_UA, 'Accept': 'application/json' };
+      const headers = { 'User-Agent': SEED_UA, 'Accept': 'application/json', ...localAuthHeaders() };
       if (WM_REFRESH_KEY) headers['X-WorldMonitor-Key'] = WM_REFRESH_KEY;
       const resp = await fetch(`${API_BASE}/api/resilience/v1/get-resilience-ranking?refresh=1`, {
         headers,
@@ -670,7 +684,7 @@ export async function refreshRankingAggregate({ url, token, laggardsWarmed }) {
     // recompute-then-SET atomically. Avoids the earlier "DEL then rebuild"
     // flow where a failed rebuild would leave the ranking absent instead of
     // stale-but-present.
-    const rebuildHeaders = { 'User-Agent': SEED_UA, 'Accept': 'application/json' };
+    const rebuildHeaders = { 'User-Agent': SEED_UA, 'Accept': 'application/json', ...localAuthHeaders() };
     if (WM_REFRESH_KEY) rebuildHeaders['X-WorldMonitor-Key'] = WM_REFRESH_KEY;
     const rebuildResp = await fetch(`${API_BASE}/api/resilience/v1/get-resilience-ranking?refresh=1`, {
       headers: rebuildHeaders,

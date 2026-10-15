@@ -10,6 +10,7 @@ import { compactUcdpDashboardPayload } from './_ucdp-dashboard.mjs';
 // probe timeout). CJS module imported from ESM, as seed-market-quotes.mjs does
 // with scripts/shared/notification-dedup.cjs.
 import ucdpCandidate from './shared/ucdp-candidate.cjs';
+import { fetchGedCsvEvents } from './shared/ucdp-ged-csv.mjs';
 
 const {
   CANDIDATE_MAX_PAGES,
@@ -164,7 +165,21 @@ async function main() {
   console.log(`  UCDP Token: ${ucdpToken ? maskToken(ucdpToken) : '(none — unauthenticated)'}`);
   console.log();
 
-  const { version, page0 } = await discoverVersion(ucdpToken);
+  // Token-gated REST API first (works if UCDP lets us in); on any failure fall
+  // back to the keyless annual CSV download so a missing token is not fatal.
+  let version;
+  let page0;
+  let csvMode = false;
+  try {
+    ({ version, page0 } = await discoverVersion(ucdpToken));
+  } catch (apiErr) {
+    console.warn(`  UCDP REST API unavailable (${apiErr.message}) — falling back to keyless GED CSV download`);
+    const csv = await fetchGedCsvEvents();
+    version = csv.version;
+    page0 = { Result: csv.events, TotalPages: 1 };
+    csvMode = true;
+    console.log(`  CSV fallback: v${version}, ${csv.events.length} recent events`);
+  }
   const totalPages = Math.max(1, Number(page0?.TotalPages) || 1);
   const newestPage = totalPages - 1;
   console.log(`  Version: ${version} | Total pages: ${totalPages}`);
@@ -223,7 +238,7 @@ async function main() {
   let candidateComplete = false;
   const candidateIds = new Set();
   try {
-    const candidate = await discoverCandidateVersion(ucdpToken);
+    const candidate = csvMode ? null : await discoverCandidateVersion(ucdpToken);
     if (candidate) {
       const merged = await fetchCandidatePages(candidateFetcher(ucdpToken), candidate);
       // Only claim the bare candidate version once the release was fetched

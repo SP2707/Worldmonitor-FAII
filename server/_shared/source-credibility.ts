@@ -109,9 +109,13 @@ export interface ClaimVerificationRecord {
   confidence: number;
   reasoning: string;
   verifiedAt: string;
+  /** True only when independent web-search evidence backed the verdict. Records written before v2 lack the field and read as false. */
+  evidenceBased: boolean;
+  /** Title + URL of the evidence consulted (empty when evidenceBased is false). */
+  evidence: Array<{ title: string; url: string }>;
 }
 
-const VALID_VERIFICATION_KEYS: ReadonlySet<string> = new Set(['verdict', 'confidence', 'reasoning', 'verifiedAt']);
+const VALID_VERIFICATION_KEYS: ReadonlySet<string> = new Set(['verdict', 'confidence', 'reasoning', 'verifiedAt', 'evidenceBased', 'evidence']);
 
 /**
  * Defensive parse of one news:verification:v1 entry. Never throws.
@@ -132,5 +136,12 @@ export function parseClaimVerificationRecord(raw: unknown): ClaimVerificationRec
   const verifiedAt = typeof v.verifiedAt === 'string' ? v.verifiedAt : null;
   if (!verifiedAt) return null;
   void VALID_VERIFICATION_KEYS; // documents the expected shape; not enforced strictly (forward-compatible with extra fields)
-  return { verdict, confidence, reasoning, verifiedAt };
+  const evidence = Array.isArray(v.evidence)
+    ? v.evidence
+      .filter((e): e is Record<string, unknown> => !!e && typeof e === 'object')
+      .map((e) => ({ title: typeof e.title === 'string' ? e.title : '', url: typeof e.url === 'string' ? e.url : '' }))
+      .slice(0, 4)
+    : [];
+  const evidenceBased = v.evidenceBased === true && evidence.length > 0;
+  return { verdict, confidence, reasoning, verifiedAt, evidenceBased, evidence };
 }

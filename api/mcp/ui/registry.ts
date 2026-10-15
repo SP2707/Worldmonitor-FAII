@@ -30,6 +30,7 @@ import { CONFLICT_EVENTS_APP_HTML } from './conflict-events-app';
 import { NATURAL_DISASTERS_APP_HTML } from './natural-disasters-app';
 import { PREDICTION_MARKETS_APP_HTML } from './prediction-markets-app';
 import { FORECASTS_APP_HTML } from './forecasts-app';
+import { MAP_APP_HTML } from './map-app';
 
 // Re-exported from the shared shell so the mimeType has a single source of
 // truth across the fleet (the first widget defined it here in v1.11.0).
@@ -48,6 +49,7 @@ export const CONFLICT_EVENTS_UI_URI = 'ui://worldmonitor/conflict-events.html';
 export const NATURAL_DISASTERS_UI_URI = 'ui://worldmonitor/natural-disasters.html';
 export const PREDICTION_MARKETS_UI_URI = 'ui://worldmonitor/prediction-markets.html';
 export const FORECASTS_UI_URI = 'ui://worldmonitor/forecasts.html';
+export const MAP_UI_URI = 'ui://worldmonitor/map.html';
 
 // Per-resource `_meta.ui` (ext-apps `UIResourceMeta`) is built by the shared
 // `buildUiMeta()` in ./shell — SINGLE source of truth for the fleet's CSP /
@@ -161,6 +163,15 @@ export const UI_RESOURCE_REGISTRY: UiResourceDef[] = [
     mimeType: UI_RESOURCE_MIME_TYPE,
     _meta: buildUiMeta(),
     html: FORECASTS_APP_HTML,
+  },
+  {
+    uri: MAP_UI_URI,
+    name: 'World Map (interactive)',
+    description:
+      'Interactive in-conversation app shell for render_map: draws the world map with the requested intelligence layers (points, lines, polygons, country shading, day/night), per-layer toggles and hover details, offline with no tile servers. Linked from the render_map tool via _meta.ui.resourceUri; an MCP-Apps host renders it inline and streams the tool result in via postMessage. Embeds the static world geometry only — no tool data — public and quota-exempt.',
+    mimeType: UI_RESOURCE_MIME_TYPE,
+    _meta: buildUiMeta(),
+    html: MAP_APP_HTML,
   },
 ];
 

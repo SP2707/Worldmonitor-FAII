@@ -371,6 +371,7 @@ describe('api/mcp.ts — resources capability + stability + auth-symmetry', () =
       'ui://worldmonitor/natural-disasters.html',
       'ui://worldmonitor/prediction-markets.html',
       'ui://worldmonitor/forecasts.html',
+      'ui://worldmonitor/map.html',
     ], 'resources/list = concrete DATA freshness probe then the ui:// app-shell fleet, in registry order');
     for (const r of body.result.resources) {
       assert.equal(typeof r.uri, 'string', `resource ${r.uri}: uri must be a string`);
@@ -594,6 +595,7 @@ describe('api/mcp.ts — resources capability + stability + auth-symmetry', () =
       'ui://worldmonitor/natural-disasters.html',
       'ui://worldmonitor/prediction-markets.html',
       'ui://worldmonitor/forecasts.html',
+      'ui://worldmonitor/map.html',
     ];
     for (const uri of shellWidgets) {
       const res = await handler(envKeyReq(readBody(uri)));

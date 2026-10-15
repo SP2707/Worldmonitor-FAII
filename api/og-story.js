@@ -39,10 +39,6 @@ function normalizeLevel(rawLevel) {
   const level = String(rawLevel || "").toLowerCase();
   return Object.hasOwn(LEVEL_COLORS, level) ? level : "normal";
 }
-// Base is only used to parse req.url's query string here (og-story.js never
-// emits an absolute link itself), but kept consistent with the
-// WORLDMONITOR_PUBLIC_BASE_URL / request-origin resolution api/story.js and
-// api/brief/share-url.ts use, rather than the old hardcoded SaaS domain.
 function resolveBaseUrl(req) {
   const pinned = process.env.WORLDMONITOR_PUBLIC_BASE_URL;
   if (pinned) return pinned.replace(/\/+$/, "");
@@ -52,7 +48,6 @@ function resolveBaseUrl(req) {
   const host = (Array.isArray(forwardedHost) ? forwardedHost[0] : forwardedHost) || req.headers.host || "localhost";
   return `${proto}://${host}`;
 }
-
 function handler(req, res) {
   const url = new URL(req.url, resolveBaseUrl(req));
   const countryCode = (url.searchParams.get("c") || "").toUpperCase();

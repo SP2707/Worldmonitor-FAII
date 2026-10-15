@@ -46,7 +46,7 @@
 
 import { spawn } from 'node:child_process';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { loadEnvFile } from './_seed-utils.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -63,6 +63,24 @@ loadEnvFile(import.meta.url);
 
 // Both the seed runner and the sidecar's /api/seed-status route read this file.
 process.env.SEED_STATUS_FILE ||= path.join(PROJECT_DIR, '.seed-status.json');
+
+// Optional Tor routing (docs/TOR.md). With SEED_TOR=1 every child process (sidecar, local Redis
+// stand-in, seeders) loads scripts/shared/tor-preload.mjs first, which sends all non-local traffic
+// through the local Tor SOCKS5 proxy. Fail closed: if Tor is not running, do not start at all
+// rather than quietly connecting directly.
+if (process.env.SEED_TOR === '1') {
+  const { findTorProxy } = await import('./shared/tor-fetch.mjs');
+  try {
+    const cands = (process.env.SEED_TOR_SOCKS || '127.0.0.1:9050,127.0.0.1:9150').split(',').map((x) => x.trim()).filter(Boolean);
+    const proxy = await findTorProxy(cands);
+    console.log(`[start] SEED_TOR=1: routing outbound traffic through Tor SOCKS ${proxy.host}:${proxy.port} (loopback stays direct)`);
+  } catch (err) {
+    console.error(`[start] ${err.message}`);
+    process.exit(1);
+  }
+  const preload = pathToFileURL(path.join(__dirname, 'shared', 'tor-preload.mjs')).href;
+  process.env.NODE_OPTIONS = `${process.env.NODE_OPTIONS ?? ''} --import=${preload}`.trim();
+}
 
 let redisChild = null;
 let seedChild = null;

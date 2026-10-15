@@ -1530,6 +1530,13 @@ async function main() {
   // intl on success.
   await writeDelaysBootstrap();
 
+  // Keyless mode: the FAA side-car above is free; the international feed needs a paid
+  // AviationStack key. Without one, finish cleanly instead of reporting a failure on every tick.
+  if (!process.env.AVIATIONSTACK_API) {
+    console.log('[Intl] No AVIATIONSTACK_API key - FAA/NOTAM/news side-cars done, intl skipped (not an error).');
+    process.exit(0);
+  }
+
   // Quota guard — skip the paid AviationStack fetch when last-good intl is still
   // fresh. Just extend the TTLs on the canonical key + its freshness meta so
   // consumers and /api/health keep serving last-good, then exit clean. The

@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  headless:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      # The API/MCP layer is what Alfred talks to; it must typecheck.
+      - run: npx tsc --noEmit -p tsconfig.api.json
+      # Focused headless suite: verifier, credibility, MCP layer.
+      # The full `npm run test:data` also covers the removed frontend and is
+      # not yet triaged for this fork, so it is deliberately not gated here.
+      - run: >
+          npx tsx --test
+          tests/claim-verifier-evidence.test.mjs
+          tests/news-verification.test.mjs
+          tests/news-credibility.test.mjs
+          tests/mcp.test.mjs

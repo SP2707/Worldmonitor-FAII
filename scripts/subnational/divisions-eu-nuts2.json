@@ -1,0 +1,1663 @@
+{
+ "generatedFrom": "Eurostat nama_10r_2gdp region list (NUTS 2021)",
+ "note": "NUTS 2 regions of Eurostat-covered countries not in divisions.json. A single-region country appears as one XX00 region (the whole country). Region names are Eurostat's own labels (often in the local language).",
+ "count": 207,
+ "divisions": [
+  {
+   "id": "AL-AL01",
+   "country": "AL",
+   "countryName": "Albania",
+   "name": "Veri",
+   "nuts": "AL01",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "AL-AL02",
+   "country": "AL",
+   "countryName": "Albania",
+   "name": "Qender",
+   "nuts": "AL02",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "AL-AL03",
+   "country": "AL",
+   "countryName": "Albania",
+   "name": "Jug",
+   "nuts": "AL03",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "AT-AT11",
+   "country": "AT",
+   "countryName": "Austria",
+   "name": "Burgenland",
+   "nuts": "AT11",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "AT-AT12",
+   "country": "AT",
+   "countryName": "Austria",
+   "name": "Niederösterreich",
+   "nuts": "AT12",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "AT-AT13",
+   "country": "AT",
+   "countryName": "Austria",
+   "name": "Wien",
+   "nuts": "AT13",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "AT-AT21",
+   "country": "AT",
+   "countryName": "Austria",
+   "name": "Kärnten",
+   "nuts": "AT21",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "AT-AT22",
+   "country": "AT",
+   "countryName": "Austria",
+   "name": "Steiermark",
+   "nuts": "AT22",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "AT-AT31",
+   "country": "AT",
+   "countryName": "Austria",
+   "name": "Oberösterreich",
+   "nuts": "AT31",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "AT-AT32",
+   "country": "AT",
+   "countryName": "Austria",
+   "name": "Salzburg",
+   "nuts": "AT32",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "AT-AT33",
+   "country": "AT",
+   "countryName": "Austria",
+   "name": "Tirol",
+   "nuts": "AT33",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "AT-AT34",
+   "country": "AT",
+   "countryName": "Austria",
+   "name": "Vorarlberg",
+   "nuts": "AT34",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "BE-BE10",
+   "country": "BE",
+   "countryName": "Belgium",
+   "name": "Région de Bruxelles-Capitale/Brussels Hoofdstedelijk Gewest",
+   "nuts": "BE10",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "BE-BE21",
+   "country": "BE",
+   "countryName": "Belgium",
+   "name": "Prov. Antwerpen",
+   "nuts": "BE21",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "BE-BE22",
+   "country": "BE",
+   "countryName": "Belgium",
+   "name": "Prov. Limburg (BE)",
+   "nuts": "BE22",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "BE-BE23",
+   "country": "BE",
+   "countryName": "Belgium",
+   "name": "Prov. Oost-Vlaanderen",
+   "nuts": "BE23",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "BE-BE24",
+   "country": "BE",
+   "countryName": "Belgium",
+   "name": "Prov. Vlaams-Brabant",
+   "nuts": "BE24",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "BE-BE25",
+   "country": "BE",
+   "countryName": "Belgium",
+   "name": "Prov. West-Vlaanderen",
+   "nuts": "BE25",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "BE-BE31",
+   "country": "BE",
+   "countryName": "Belgium",
+   "name": "Prov. Brabant wallon",
+   "nuts": "BE31",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "BE-BE32",
+   "country": "BE",
+   "countryName": "Belgium",
+   "name": "Prov. Hainaut",
+   "nuts": "BE32",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "BE-BE33",
+   "country": "BE",
+   "countryName": "Belgium",
+   "name": "Prov. Liège",
+   "nuts": "BE33",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "BE-BE34",
+   "country": "BE",
+   "countryName": "Belgium",
+   "name": "Prov. Luxembourg (BE)",
+   "nuts": "BE34",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "BE-BE35",
+   "country": "BE",
+   "countryName": "Belgium",
+   "name": "Prov. Namur",
+   "nuts": "BE35",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "BG-BG31",
+   "country": "BG",
+   "countryName": "Bulgaria",
+   "name": "Severozapaden",
+   "nuts": "BG31",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "BG-BG32",
+   "country": "BG",
+   "countryName": "Bulgaria",
+   "name": "Severen tsentralen",
+   "nuts": "BG32",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "BG-BG33",
+   "country": "BG",
+   "countryName": "Bulgaria",
+   "name": "Severoiztochen",
+   "nuts": "BG33",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "BG-BG34",
+   "country": "BG",
+   "countryName": "Bulgaria",
+   "name": "Yugoiztochen",
+   "nuts": "BG34",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "BG-BG41",
+   "country": "BG",
+   "countryName": "Bulgaria",
+   "name": "Yugozapaden",
+   "nuts": "BG41",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "BG-BG42",
+   "country": "BG",
+   "countryName": "Bulgaria",
+   "name": "Yuzhen tsentralen",
+   "nuts": "BG42",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "CH-CH01",
+   "country": "CH",
+   "countryName": "Switzerland",
+   "name": "Région lémanique",
+   "nuts": "CH01",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "CH-CH02",
+   "country": "CH",
+   "countryName": "Switzerland",
+   "name": "Espace Mittelland",
+   "nuts": "CH02",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "CH-CH03",
+   "country": "CH",
+   "countryName": "Switzerland",
+   "name": "Nordwestschweiz",
+   "nuts": "CH03",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "CH-CH04",
+   "country": "CH",
+   "countryName": "Switzerland",
+   "name": "Zürich",
+   "nuts": "CH04",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "CH-CH05",
+   "country": "CH",
+   "countryName": "Switzerland",
+   "name": "Ostschweiz",
+   "nuts": "CH05",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "CH-CH06",
+   "country": "CH",
+   "countryName": "Switzerland",
+   "name": "Zentralschweiz",
+   "nuts": "CH06",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "CH-CH07",
+   "country": "CH",
+   "countryName": "Switzerland",
+   "name": "Ticino",
+   "nuts": "CH07",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "CY-CY00",
+   "country": "CY",
+   "countryName": "Cyprus",
+   "name": "Kýpros",
+   "nuts": "CY00",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "CZ-CZ01",
+   "country": "CZ",
+   "countryName": "Czechia",
+   "name": "Praha",
+   "nuts": "CZ01",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "CZ-CZ02",
+   "country": "CZ",
+   "countryName": "Czechia",
+   "name": "Střední Čechy",
+   "nuts": "CZ02",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "CZ-CZ03",
+   "country": "CZ",
+   "countryName": "Czechia",
+   "name": "Jihozápad",
+   "nuts": "CZ03",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "CZ-CZ04",
+   "country": "CZ",
+   "countryName": "Czechia",
+   "name": "Severozápad",
+   "nuts": "CZ04",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "CZ-CZ05",
+   "country": "CZ",
+   "countryName": "Czechia",
+   "name": "Severovýchod",
+   "nuts": "CZ05",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "CZ-CZ06",
+   "country": "CZ",
+   "countryName": "Czechia",
+   "name": "Jihovýchod",
+   "nuts": "CZ06",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "CZ-CZ07",
+   "country": "CZ",
+   "countryName": "Czechia",
+   "name": "Střední Morava",
+   "nuts": "CZ07",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "CZ-CZ08",
+   "country": "CZ",
+   "countryName": "Czechia",
+   "name": "Moravskoslezsko",
+   "nuts": "CZ08",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "DK-DK01",
+   "country": "DK",
+   "countryName": "Denmark",
+   "name": "Hovedstaden",
+   "nuts": "DK01",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "DK-DK02",
+   "country": "DK",
+   "countryName": "Denmark",
+   "name": "Sjælland",
+   "nuts": "DK02",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "DK-DK03",
+   "country": "DK",
+   "countryName": "Denmark",
+   "name": "Syddanmark",
+   "nuts": "DK03",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "DK-DK04",
+   "country": "DK",
+   "countryName": "Denmark",
+   "name": "Midtjylland",
+   "nuts": "DK04",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "DK-DK05",
+   "country": "DK",
+   "countryName": "Denmark",
+   "name": "Nordjylland",
+   "nuts": "DK05",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "EE-EE00",
+   "country": "EE",
+   "countryName": "Estonia",
+   "name": "Eesti",
+   "nuts": "EE00",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "ES-ES11",
+   "country": "ES",
+   "countryName": "Spain",
+   "name": "Galicia",
+   "nuts": "ES11",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "ES-ES12",
+   "country": "ES",
+   "countryName": "Spain",
+   "name": "Principado de Asturias",
+   "nuts": "ES12",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "ES-ES13",
+   "country": "ES",
+   "countryName": "Spain",
+   "name": "Cantabria",
+   "nuts": "ES13",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "ES-ES21",
+   "country": "ES",
+   "countryName": "Spain",
+   "name": "País Vasco",
+   "nuts": "ES21",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "ES-ES22",
+   "country": "ES",
+   "countryName": "Spain",
+   "name": "Comunidad Foral de Navarra",
+   "nuts": "ES22",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "ES-ES23",
+   "country": "ES",
+   "countryName": "Spain",
+   "name": "La Rioja",
+   "nuts": "ES23",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "ES-ES24",
+   "country": "ES",
+   "countryName": "Spain",
+   "name": "Aragón",
+   "nuts": "ES24",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "ES-ES30",
+   "country": "ES",
+   "countryName": "Spain",
+   "name": "Comunidad de Madrid",
+   "nuts": "ES30",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "ES-ES41",
+   "country": "ES",
+   "countryName": "Spain",
+   "name": "Castilla y León",
+   "nuts": "ES41",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "ES-ES42",
+   "country": "ES",
+   "countryName": "Spain",
+   "name": "Castilla-La Mancha",
+   "nuts": "ES42",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "ES-ES43",
+   "country": "ES",
+   "countryName": "Spain",
+   "name": "Extremadura",
+   "nuts": "ES43",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "ES-ES51",
+   "country": "ES",
+   "countryName": "Spain",
+   "name": "Cataluña",
+   "nuts": "ES51",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "ES-ES52",
+   "country": "ES",
+   "countryName": "Spain",
+   "name": "Comunitat Valenciana",
+   "nuts": "ES52",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "ES-ES53",
+   "country": "ES",
+   "countryName": "Spain",
+   "name": "Illes Balears",
+   "nuts": "ES53",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "ES-ES61",
+   "country": "ES",
+   "countryName": "Spain",
+   "name": "Andalucía",
+   "nuts": "ES61",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "ES-ES62",
+   "country": "ES",
+   "countryName": "Spain",
+   "name": "Región de Murcia",
+   "nuts": "ES62",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "ES-ES63",
+   "country": "ES",
+   "countryName": "Spain",
+   "name": "Ciudad de Ceuta",
+   "nuts": "ES63",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "ES-ES64",
+   "country": "ES",
+   "countryName": "Spain",
+   "name": "Ciudad de Melilla",
+   "nuts": "ES64",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "ES-ES70",
+   "country": "ES",
+   "countryName": "Spain",
+   "name": "Canarias",
+   "nuts": "ES70",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "FI-FI19",
+   "country": "FI",
+   "countryName": "Finland",
+   "name": "Länsi-Suomi",
+   "nuts": "FI19",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "FI-FI1B",
+   "country": "FI",
+   "countryName": "Finland",
+   "name": "Helsinki-Uusimaa",
+   "nuts": "FI1B",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "FI-FI1C",
+   "country": "FI",
+   "countryName": "Finland",
+   "name": "Etelä-Suomi",
+   "nuts": "FI1C",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "FI-FI1D",
+   "country": "FI",
+   "countryName": "Finland",
+   "name": "Pohjois- ja Itä-Suomi",
+   "nuts": "FI1D",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "FI-FI20",
+   "country": "FI",
+   "countryName": "Finland",
+   "name": "Åland",
+   "nuts": "FI20",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "GR-EL30",
+   "country": "GR",
+   "countryName": "Greece",
+   "name": "Attiki",
+   "nuts": "EL30",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "GR-EL41",
+   "country": "GR",
+   "countryName": "Greece",
+   "name": "Voreio Aigaio",
+   "nuts": "EL41",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "GR-EL42",
+   "country": "GR",
+   "countryName": "Greece",
+   "name": "Notio Aigaio",
+   "nuts": "EL42",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "GR-EL43",
+   "country": "GR",
+   "countryName": "Greece",
+   "name": "Kriti",
+   "nuts": "EL43",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "GR-EL51",
+   "country": "GR",
+   "countryName": "Greece",
+   "name": "Anatoliki Makedonia, Thraki",
+   "nuts": "EL51",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "GR-EL52",
+   "country": "GR",
+   "countryName": "Greece",
+   "name": "Kentriki Makedonia",
+   "nuts": "EL52",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "GR-EL53",
+   "country": "GR",
+   "countryName": "Greece",
+   "name": "Dytiki Makedonia",
+   "nuts": "EL53",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "GR-EL54",
+   "country": "GR",
+   "countryName": "Greece",
+   "name": "Ipeiros",
+   "nuts": "EL54",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "GR-EL61",
+   "country": "GR",
+   "countryName": "Greece",
+   "name": "Thessalia",
+   "nuts": "EL61",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "GR-EL62",
+   "country": "GR",
+   "countryName": "Greece",
+   "name": "Ionia Nisia",
+   "nuts": "EL62",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "GR-EL63",
+   "country": "GR",
+   "countryName": "Greece",
+   "name": "Dytiki Elláda",
+   "nuts": "EL63",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "GR-EL64",
+   "country": "GR",
+   "countryName": "Greece",
+   "name": "Sterea Elláda",
+   "nuts": "EL64",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "GR-EL65",
+   "country": "GR",
+   "countryName": "Greece",
+   "name": "Peloponnisos",
+   "nuts": "EL65",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "HR-HR02",
+   "country": "HR",
+   "countryName": "Croatia",
+   "name": "Panonska Hrvatska",
+   "nuts": "HR02",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "HR-HR03",
+   "country": "HR",
+   "countryName": "Croatia",
+   "name": "Jadranska Hrvatska",
+   "nuts": "HR03",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "HR-HR05",
+   "country": "HR",
+   "countryName": "Croatia",
+   "name": "Grad Zagreb",
+   "nuts": "HR05",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "HR-HR06",
+   "country": "HR",
+   "countryName": "Croatia",
+   "name": "Sjeverna Hrvatska",
+   "nuts": "HR06",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "HU-HU11",
+   "country": "HU",
+   "countryName": "Hungary",
+   "name": "Budapest",
+   "nuts": "HU11",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "HU-HU12",
+   "country": "HU",
+   "countryName": "Hungary",
+   "name": "Pest",
+   "nuts": "HU12",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "HU-HU21",
+   "country": "HU",
+   "countryName": "Hungary",
+   "name": "Közép-Dunántúl",
+   "nuts": "HU21",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "HU-HU22",
+   "country": "HU",
+   "countryName": "Hungary",
+   "name": "Nyugat-Dunántúl",
+   "nuts": "HU22",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "HU-HU23",
+   "country": "HU",
+   "countryName": "Hungary",
+   "name": "Dél-Dunántúl",
+   "nuts": "HU23",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "HU-HU31",
+   "country": "HU",
+   "countryName": "Hungary",
+   "name": "Észak-Magyarország",
+   "nuts": "HU31",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "HU-HU32",
+   "country": "HU",
+   "countryName": "Hungary",
+   "name": "Észak-Alföld",
+   "nuts": "HU32",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "HU-HU33",
+   "country": "HU",
+   "countryName": "Hungary",
+   "name": "Dél-Alföld",
+   "nuts": "HU33",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "IE-IE04",
+   "country": "IE",
+   "countryName": "Ireland",
+   "name": "Northern and Western",
+   "nuts": "IE04",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "IE-IE05",
+   "country": "IE",
+   "countryName": "Ireland",
+   "name": "Southern",
+   "nuts": "IE05",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "IE-IE06",
+   "country": "IE",
+   "countryName": "Ireland",
+   "name": "Eastern and Midland",
+   "nuts": "IE06",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "LT-LT01",
+   "country": "LT",
+   "countryName": "Lithuania",
+   "name": "Sostinės regionas",
+   "nuts": "LT01",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "LT-LT02",
+   "country": "LT",
+   "countryName": "Lithuania",
+   "name": "Vidurio ir vakarų Lietuvos regionas",
+   "nuts": "LT02",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "LU-LU00",
+   "country": "LU",
+   "countryName": "Luxembourg",
+   "name": "Luxembourg",
+   "nuts": "LU00",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "LV-LV00",
+   "country": "LV",
+   "countryName": "Latvia",
+   "name": "Latvija",
+   "nuts": "LV00",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "ME-ME00",
+   "country": "ME",
+   "countryName": "Montenegro",
+   "name": "Crna Gora",
+   "nuts": "ME00",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "MK-MK00",
+   "country": "MK",
+   "countryName": "North Macedonia",
+   "name": "Severna Makedonija",
+   "nuts": "MK00",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "MT-MT00",
+   "country": "MT",
+   "countryName": "Malta",
+   "name": "Malta",
+   "nuts": "MT00",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "NL-NL11",
+   "country": "NL",
+   "countryName": "Netherlands",
+   "name": "Groningen",
+   "nuts": "NL11",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "NL-NL12",
+   "country": "NL",
+   "countryName": "Netherlands",
+   "name": "Friesland (NL)",
+   "nuts": "NL12",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "NL-NL13",
+   "country": "NL",
+   "countryName": "Netherlands",
+   "name": "Drenthe",
+   "nuts": "NL13",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "NL-NL21",
+   "country": "NL",
+   "countryName": "Netherlands",
+   "name": "Overijssel",
+   "nuts": "NL21",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "NL-NL22",
+   "country": "NL",
+   "countryName": "Netherlands",
+   "name": "Gelderland",
+   "nuts": "NL22",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "NL-NL23",
+   "country": "NL",
+   "countryName": "Netherlands",
+   "name": "Flevoland",
+   "nuts": "NL23",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "NL-NL32",
+   "country": "NL",
+   "countryName": "Netherlands",
+   "name": "Noord-Holland",
+   "nuts": "NL32",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "NL-NL34",
+   "country": "NL",
+   "countryName": "Netherlands",
+   "name": "Zeeland",
+   "nuts": "NL34",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "NL-NL35",
+   "country": "NL",
+   "countryName": "Netherlands",
+   "name": "Utrecht",
+   "nuts": "NL35",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "NL-NL36",
+   "country": "NL",
+   "countryName": "Netherlands",
+   "name": "Zuid-Holland",
+   "nuts": "NL36",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "NL-NL41",
+   "country": "NL",
+   "countryName": "Netherlands",
+   "name": "Noord-Brabant",
+   "nuts": "NL41",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "NL-NL42",
+   "country": "NL",
+   "countryName": "Netherlands",
+   "name": "Limburg (NL)",
+   "nuts": "NL42",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "NO-NO02",
+   "country": "NO",
+   "countryName": "Norway",
+   "name": "Innlandet",
+   "nuts": "NO02",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "NO-NO06",
+   "country": "NO",
+   "countryName": "Norway",
+   "name": "Trøndelag",
+   "nuts": "NO06",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "NO-NO07",
+   "country": "NO",
+   "countryName": "Norway",
+   "name": "Nord-Norge",
+   "nuts": "NO07",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "NO-NO08",
+   "country": "NO",
+   "countryName": "Norway",
+   "name": "Oslo og Viken",
+   "nuts": "NO08",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "NO-NO09",
+   "country": "NO",
+   "countryName": "Norway",
+   "name": "Agder og Sør-Østlandet",
+   "nuts": "NO09",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "NO-NO0A",
+   "country": "NO",
+   "countryName": "Norway",
+   "name": "Vestlandet",
+   "nuts": "NO0A",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "NO-NO0B",
+   "country": "NO",
+   "countryName": "Norway",
+   "name": "Svalbard og Jan Mayen",
+   "nuts": "NO0B",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "PL-PL21",
+   "country": "PL",
+   "countryName": "Poland",
+   "name": "Małopolskie",
+   "nuts": "PL21",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "PL-PL22",
+   "country": "PL",
+   "countryName": "Poland",
+   "name": "Śląskie",
+   "nuts": "PL22",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "PL-PL41",
+   "country": "PL",
+   "countryName": "Poland",
+   "name": "Wielkopolskie",
+   "nuts": "PL41",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "PL-PL42",
+   "country": "PL",
+   "countryName": "Poland",
+   "name": "Zachodniopomorskie",
+   "nuts": "PL42",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "PL-PL43",
+   "country": "PL",
+   "countryName": "Poland",
+   "name": "Lubuskie",
+   "nuts": "PL43",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "PL-PL51",
+   "country": "PL",
+   "countryName": "Poland",
+   "name": "Dolnośląskie",
+   "nuts": "PL51",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "PL-PL52",
+   "country": "PL",
+   "countryName": "Poland",
+   "name": "Opolskie",
+   "nuts": "PL52",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "PL-PL61",
+   "country": "PL",
+   "countryName": "Poland",
+   "name": "Kujawsko-pomorskie",
+   "nuts": "PL61",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "PL-PL62",
+   "country": "PL",
+   "countryName": "Poland",
+   "name": "Warmińsko-mazurskie",
+   "nuts": "PL62",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "PL-PL63",
+   "country": "PL",
+   "countryName": "Poland",
+   "name": "Pomorskie",
+   "nuts": "PL63",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "PL-PL71",
+   "country": "PL",
+   "countryName": "Poland",
+   "name": "Łódzkie",
+   "nuts": "PL71",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "PL-PL72",
+   "country": "PL",
+   "countryName": "Poland",
+   "name": "Świętokrzyskie",
+   "nuts": "PL72",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "PL-PL81",
+   "country": "PL",
+   "countryName": "Poland",
+   "name": "Lubelskie",
+   "nuts": "PL81",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "PL-PL82",
+   "country": "PL",
+   "countryName": "Poland",
+   "name": "Podkarpackie",
+   "nuts": "PL82",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "PL-PL84",
+   "country": "PL",
+   "countryName": "Poland",
+   "name": "Podlaskie",
+   "nuts": "PL84",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "PL-PL91",
+   "country": "PL",
+   "countryName": "Poland",
+   "name": "Warszawski stołeczny",
+   "nuts": "PL91",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "PL-PL92",
+   "country": "PL",
+   "countryName": "Poland",
+   "name": "Mazowiecki regionalny",
+   "nuts": "PL92",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "PT-PT11",
+   "country": "PT",
+   "countryName": "Portugal",
+   "name": "Norte",
+   "nuts": "PT11",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "PT-PT15",
+   "country": "PT",
+   "countryName": "Portugal",
+   "name": "Algarve",
+   "nuts": "PT15",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "PT-PT19",
+   "country": "PT",
+   "countryName": "Portugal",
+   "name": "Centro (PT)",
+   "nuts": "PT19",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "PT-PT1A",
+   "country": "PT",
+   "countryName": "Portugal",
+   "name": "Grande Lisboa",
+   "nuts": "PT1A",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "PT-PT1B",
+   "country": "PT",
+   "countryName": "Portugal",
+   "name": "Península de Setúbal",
+   "nuts": "PT1B",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "PT-PT1C",
+   "country": "PT",
+   "countryName": "Portugal",
+   "name": "Alentejo",
+   "nuts": "PT1C",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "PT-PT1D",
+   "country": "PT",
+   "countryName": "Portugal",
+   "name": "Oeste e Vale do Tejo",
+   "nuts": "PT1D",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "PT-PT20",
+   "country": "PT",
+   "countryName": "Portugal",
+   "name": "Região Autónoma dos Açores",
+   "nuts": "PT20",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "PT-PT30",
+   "country": "PT",
+   "countryName": "Portugal",
+   "name": "Região Autónoma da Madeira",
+   "nuts": "PT30",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "RO-RO11",
+   "country": "RO",
+   "countryName": "Romania",
+   "name": "Nord-Vest",
+   "nuts": "RO11",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "RO-RO12",
+   "country": "RO",
+   "countryName": "Romania",
+   "name": "Centru",
+   "nuts": "RO12",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "RO-RO21",
+   "country": "RO",
+   "countryName": "Romania",
+   "name": "Nord-Est",
+   "nuts": "RO21",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "RO-RO22",
+   "country": "RO",
+   "countryName": "Romania",
+   "name": "Sud-Est",
+   "nuts": "RO22",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "RO-RO31",
+   "country": "RO",
+   "countryName": "Romania",
+   "name": "Sud-Muntenia",
+   "nuts": "RO31",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "RO-RO32",
+   "country": "RO",
+   "countryName": "Romania",
+   "name": "Bucureşti-Ilfov",
+   "nuts": "RO32",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "RO-RO41",
+   "country": "RO",
+   "countryName": "Romania",
+   "name": "Sud-Vest Oltenia",
+   "nuts": "RO41",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "RO-RO42",
+   "country": "RO",
+   "countryName": "Romania",
+   "name": "Vest",
+   "nuts": "RO42",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "RS-RS11",
+   "country": "RS",
+   "countryName": "Serbia",
+   "name": "Beogradski region",
+   "nuts": "RS11",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "RS-RS12",
+   "country": "RS",
+   "countryName": "Serbia",
+   "name": "Region Vojvodine",
+   "nuts": "RS12",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "RS-RS21",
+   "country": "RS",
+   "countryName": "Serbia",
+   "name": "Region Sumadije i Zapadne Srbije",
+   "nuts": "RS21",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "RS-RS22",
+   "country": "RS",
+   "countryName": "Serbia",
+   "name": "Region Juzne i Istocne Srbije",
+   "nuts": "RS22",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "SE-SE11",
+   "country": "SE",
+   "countryName": "Sweden",
+   "name": "Stockholm",
+   "nuts": "SE11",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "SE-SE12",
+   "country": "SE",
+   "countryName": "Sweden",
+   "name": "Östra Mellansverige",
+   "nuts": "SE12",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "SE-SE21",
+   "country": "SE",
+   "countryName": "Sweden",
+   "name": "Småland med öarna",
+   "nuts": "SE21",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "SE-SE22",
+   "country": "SE",
+   "countryName": "Sweden",
+   "name": "Sydsverige",
+   "nuts": "SE22",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "SE-SE23",
+   "country": "SE",
+   "countryName": "Sweden",
+   "name": "Västsverige",
+   "nuts": "SE23",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "SE-SE31",
+   "country": "SE",
+   "countryName": "Sweden",
+   "name": "Norra Mellansverige",
+   "nuts": "SE31",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "SE-SE32",
+   "country": "SE",
+   "countryName": "Sweden",
+   "name": "Mellersta Norrland",
+   "nuts": "SE32",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "SE-SE33",
+   "country": "SE",
+   "countryName": "Sweden",
+   "name": "Övre Norrland",
+   "nuts": "SE33",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "SI-SI03",
+   "country": "SI",
+   "countryName": "Slovenia",
+   "name": "Vzhodna Slovenija",
+   "nuts": "SI03",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "SI-SI04",
+   "country": "SI",
+   "countryName": "Slovenia",
+   "name": "Zahodna Slovenija",
+   "nuts": "SI04",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "SK-SK01",
+   "country": "SK",
+   "countryName": "Slovakia",
+   "name": "Bratislavský kraj",
+   "nuts": "SK01",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "SK-SK02",
+   "country": "SK",
+   "countryName": "Slovakia",
+   "name": "Západné Slovensko",
+   "nuts": "SK02",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "SK-SK03",
+   "country": "SK",
+   "countryName": "Slovakia",
+   "name": "Stredné Slovensko",
+   "nuts": "SK03",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "SK-SK04",
+   "country": "SK",
+   "countryName": "Slovakia",
+   "name": "Východné Slovensko",
+   "nuts": "SK04",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "TR-TR10",
+   "country": "TR",
+   "countryName": "Türkiye",
+   "name": "İstanbul",
+   "nuts": "TR10",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "TR-TR21",
+   "country": "TR",
+   "countryName": "Türkiye",
+   "name": "Tekirdağ, Edirne, Kırklareli",
+   "nuts": "TR21",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "TR-TR22",
+   "country": "TR",
+   "countryName": "Türkiye",
+   "name": "Balıkesir, Çanakkale",
+   "nuts": "TR22",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "TR-TR31",
+   "country": "TR",
+   "countryName": "Türkiye",
+   "name": "İzmir",
+   "nuts": "TR31",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "TR-TR32",
+   "country": "TR",
+   "countryName": "Türkiye",
+   "name": "Aydın, Denizli, Muğla",
+   "nuts": "TR32",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "TR-TR33",
+   "country": "TR",
+   "countryName": "Türkiye",
+   "name": "Manisa, Afyonkarahisar, Kütahya, Uşak",
+   "nuts": "TR33",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "TR-TR41",
+   "country": "TR",
+   "countryName": "Türkiye",
+   "name": "Bursa, Eskişehir, Bilecik",
+   "nuts": "TR41",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "TR-TR42",
+   "country": "TR",
+   "countryName": "Türkiye",
+   "name": "Kocaeli, Sakarya, Düzce, Bolu, Yalova",
+   "nuts": "TR42",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "TR-TR51",
+   "country": "TR",
+   "countryName": "Türkiye",
+   "name": "Ankara",
+   "nuts": "TR51",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "TR-TR52",
+   "country": "TR",
+   "countryName": "Türkiye",
+   "name": "Konya, Karaman",
+   "nuts": "TR52",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "TR-TR61",
+   "country": "TR",
+   "countryName": "Türkiye",
+   "name": "Antalya, Isparta, Burdur",
+   "nuts": "TR61",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "TR-TR62",
+   "country": "TR",
+   "countryName": "Türkiye",
+   "name": "Adana, Mersin",
+   "nuts": "TR62",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "TR-TR63",
+   "country": "TR",
+   "countryName": "Türkiye",
+   "name": "Hatay, Kahramanmaraş, Osmaniye",
+   "nuts": "TR63",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "TR-TR71",
+   "country": "TR",
+   "countryName": "Türkiye",
+   "name": "Kırıkkale, Aksaray, Niğde, Nevşehir, Kırşehir",
+   "nuts": "TR71",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "TR-TR72",
+   "country": "TR",
+   "countryName": "Türkiye",
+   "name": "Kayseri, Sivas, Yozgat",
+   "nuts": "TR72",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "TR-TR81",
+   "country": "TR",
+   "countryName": "Türkiye",
+   "name": "Zonguldak, Karabük, Bartın",
+   "nuts": "TR81",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "TR-TR82",
+   "country": "TR",
+   "countryName": "Türkiye",
+   "name": "Kastamonu, Çankırı, Sinop",
+   "nuts": "TR82",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "TR-TR83",
+   "country": "TR",
+   "countryName": "Türkiye",
+   "name": "Samsun, Tokat, Çorum, Amasya",
+   "nuts": "TR83",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "TR-TR90",
+   "country": "TR",
+   "countryName": "Türkiye",
+   "name": "Trabzon, Ordu, Giresun, Rize, Artvin, Gümüşhane",
+   "nuts": "TR90",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "TR-TRA1",
+   "country": "TR",
+   "countryName": "Türkiye",
+   "name": "Erzurum, Erzincan, Bayburt",
+   "nuts": "TRA1",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "TR-TRA2",
+   "country": "TR",
+   "countryName": "Türkiye",
+   "name": "Ağrı, Kars, Iğdır, Ardahan",
+   "nuts": "TRA2",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "TR-TRB1",
+   "country": "TR",
+   "countryName": "Türkiye",
+   "name": "Malatya, Elazığ, Bingöl, Tunceli",
+   "nuts": "TRB1",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "TR-TRB2",
+   "country": "TR",
+   "countryName": "Türkiye",
+   "name": "Van, Muş, Bitlis, Hakkari",
+   "nuts": "TRB2",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "TR-TRC1",
+   "country": "TR",
+   "countryName": "Türkiye",
+   "name": "Gaziantep, Adıyaman, Kilis",
+   "nuts": "TRC1",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "TR-TRC2",
+   "country": "TR",
+   "countryName": "Türkiye",
+   "name": "Şanlıurfa, Diyarbakır",
+   "nuts": "TRC2",
+   "layer": "eu-nuts2"
+  },
+  {
+   "id": "TR-TRC3",
+   "country": "TR",
+   "countryName": "Türkiye",
+   "name": "Mardin, Batman, Şırnak, Siirt",
+   "nuts": "TRC3",
+   "layer": "eu-nuts2"
+  }
+ ]
+}

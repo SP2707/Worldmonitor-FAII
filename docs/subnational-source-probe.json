@@ -1,0 +1,1853 @@
+{
+ "probedAt": "2026-10-12T14:29:54.399Z",
+ "rows": [
+  {
+   "category": "grp",
+   "scope": "EU",
+   "name": "Eurostat nama_10r_2gdp (GDP at NUTS 2)",
+   "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/nama_10r_2gdp?lang=en&unit=MIO_EUR&geo=DE21",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "grp",
+   "scope": "OECD",
+   "name": "OECD Regional Statistics (TL2 GDP, SDMX)",
+   "url": "https://sdmx.oecd.org/public/rest/dataflow/all",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "grp",
+   "scope": "GLOBAL",
+   "name": "DOSE global subnational economic output (Zenodo)",
+   "url": "https://zenodo.org/search?q=DOSE%20subnational%20economic%20output",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "grp",
+   "scope": "GLOBAL",
+   "name": "Kummu et al. gridded + admin-1 GDP/HDI (Dryad)",
+   "url": "https://datadryad.org/search?q=Kummu%20GDP%20HDI",
+   "status": 403,
+   "verdict": "answered-but-restricted"
+  },
+  {
+   "category": "grp",
+   "scope": "GLOBAL",
+   "name": "Wikidata (P2131 / P2132)",
+   "url": "https://query.wikidata.org/sparql",
+   "status": 0,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "grp",
+   "scope": "GLOBAL",
+   "name": "World Bank WDI (national GDP, for scaling)",
+   "url": "https://api.worldbank.org/v2/country/all/indicator/NY.GDP.MKTP.CD?format=json&per_page=1",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "grp",
+   "scope": "US",
+   "name": "BEA regional GDP via FRED (NGSP)",
+   "url": "https://api.stlouisfed.org/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "grp",
+   "scope": "CA",
+   "name": "Statistics Canada WDS (GDP by province, table 36-10-0222)",
+   "url": "https://www150.statcan.gc.ca/t1/wds/rest/getCubeMetadata",
+   "status": 405,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "grp",
+   "scope": "DE",
+   "name": "Statistikportal VGR der Länder",
+   "url": "https://www.statistikportal.de/de/vgrdl",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "grp",
+   "scope": "FR",
+   "name": "INSEE regional accounts (PIB régional)",
+   "url": "https://www.insee.fr/fr/statistiques",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "grp",
+   "scope": "GB",
+   "name": "ONS regional GDP (API)",
+   "url": "https://api.beta.ons.gov.uk/v1/datasets",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "grp",
+   "scope": "IT",
+   "name": "ISTAT dati (SDMX)",
+   "url": "https://esploradati.istat.it/SDMXWS/rest/dataflow/IT1",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "grp",
+   "scope": "JP",
+   "name": "Cabinet Office prefectural accounts (ESRI)",
+   "url": "https://www.esri.cao.go.jp/jp/sna/data/data_list/kenmin/files/kenmin_top.html",
+   "status": 404,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "grp",
+   "scope": "KR",
+   "name": "KOSIS regional GRDP",
+   "url": "https://kosis.kr/eng/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "grp",
+   "scope": "IN",
+   "name": "RBI Handbook of Statistics on Indian States",
+   "url": "https://www.rbi.org.in/Scripts/AnnualPublications.aspx?head=Handbook+of+Statistics+on+Indian+States",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "grp",
+   "scope": "CN",
+   "name": "NBS China (data.stats.gov.cn, provincial GDP)",
+   "url": "https://data.stats.gov.cn/english/",
+   "status": 404,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "grp",
+   "scope": "RU",
+   "name": "Rosstat regional statistics",
+   "url": "https://rosstat.gov.ru/statistics/accounts",
+   "status": 0,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "grp",
+   "scope": "UA",
+   "name": "State Statistics Service of Ukraine (GRP by region)",
+   "url": "https://www.ukrstat.gov.ua/",
+   "status": 0,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "grp",
+   "scope": "IL",
+   "name": "Israel CBS",
+   "url": "https://www.cbs.gov.il/en/Pages/default.aspx",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "grp",
+   "scope": "SA",
+   "name": "GASTAT national accounts",
+   "url": "https://www.stats.gov.sa/en",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "grp",
+   "scope": "AE",
+   "name": "Dubai Statistics Center / SCAD Abu Dhabi",
+   "url": "https://www.dsc.gov.ae/en-us/Pages/default.aspx",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "fiscal",
+   "scope": "GLOBAL",
+   "name": "World Bank WDI (national tax and revenue)",
+   "url": "https://api.worldbank.org/v2/country/all/indicator/GC.TAX.TOTL.GD.ZS?format=json&per_page=1",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "fiscal",
+   "scope": "GLOBAL",
+   "name": "IMF Government Finance Statistics (SDMX)",
+   "url": "https://dataservices.imf.org/REST/SDMX_JSON.svc/Dataflow",
+   "status": 0,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "fiscal",
+   "scope": "OECD",
+   "name": "OECD Revenue Statistics / fiscal decentralisation",
+   "url": "https://sdmx.oecd.org/public/rest/dataflow/all",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "fiscal",
+   "scope": "GLOBAL",
+   "name": "OECD-UCLG SNG-WOFI (sub-national finance)",
+   "url": "https://www.sng-wofi.org/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "fiscal",
+   "scope": "EU",
+   "name": "Eurostat government finance (gov_10a_main)",
+   "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/dataflow/ESTAT/all",
+   "status": 404,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "fiscal",
+   "scope": "GLOBAL",
+   "name": "Wikidata",
+   "url": "https://query.wikidata.org/sparql",
+   "status": 0,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "fiscal",
+   "scope": "US",
+   "name": "Census state tax collections via FRED (TOTLTAX, INCTAX)",
+   "url": "https://api.stlouisfed.org/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "fiscal",
+   "scope": "US",
+   "name": "Census State Government Finances",
+   "url": "https://www.census.gov/programs-surveys/state/data/tables.html",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "fiscal",
+   "scope": "CA",
+   "name": "Statistics Canada provincial government finance",
+   "url": "https://www150.statcan.gc.ca/t1/wds/rest/getCubeMetadata",
+   "status": 405,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "fiscal",
+   "scope": "DE",
+   "name": "Destatis / Statistikportal Länderfinanzen",
+   "url": "https://www.statistikportal.de/de",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "fiscal",
+   "scope": "FR",
+   "name": "OFGL local finance observatory",
+   "url": "https://www.ofgl.fr/",
+   "status": 0,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "fiscal",
+   "scope": "GB",
+   "name": "HM Treasury Country and Regional Analysis (PESA)",
+   "url": "https://www.gov.uk/government/collections/country-and-regional-analysis",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "fiscal",
+   "scope": "IT",
+   "name": "OpenBDAP / Conti Pubblici Territoriali",
+   "url": "https://www.contipubbliciterritoriali.it/",
+   "status": 0,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "fiscal",
+   "scope": "JP",
+   "name": "MIC local public finance statistics",
+   "url": "https://www.soumu.go.jp/iken/zaisei/index.html",
+   "status": 404,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "fiscal",
+   "scope": "KR",
+   "name": "LOFIN local finance integrated open system",
+   "url": "https://lofin365.go.kr/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "fiscal",
+   "scope": "IN",
+   "name": "RBI State Finances: A Study of Budgets",
+   "url": "https://www.rbi.org.in/Scripts/AnnualPublications.aspx?head=State+Finances+%3a+A+Study+of+Budgets",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "fiscal",
+   "scope": "CN",
+   "name": "Ministry of Finance / NBS provincial fiscal data",
+   "url": "https://data.stats.gov.cn/english/",
+   "status": 404,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "fiscal",
+   "scope": "RU",
+   "name": "Ministry of Finance Electronic Budget",
+   "url": "https://budget.gov.ru/",
+   "status": 0,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "fiscal",
+   "scope": "UA",
+   "name": "Open Budget Ukraine",
+   "url": "https://openbudget.gov.ua/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "fiscal",
+   "scope": "IL",
+   "name": "Ministry of Interior local authority finance (data.gov.il)",
+   "url": "https://data.gov.il/",
+   "status": 403,
+   "verdict": "answered-but-restricted"
+  },
+  {
+   "category": "fiscal",
+   "scope": "SA",
+   "name": "Ministry of Finance Saudi Arabia",
+   "url": "https://www.mof.gov.sa/en/Pages/default.aspx",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "fiscal",
+   "scope": "AE",
+   "name": "Dubai / Abu Dhabi finance departments",
+   "url": "https://www.dof.gov.ae/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "population",
+   "scope": "EU",
+   "name": "Eurostat demo_r_d2jan / demo_r_pjanaggr3",
+   "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/demo_r_d2jan?lang=en&sex=T&age=TOTAL&geo=DE21",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "population",
+   "scope": "GLOBAL",
+   "name": "WorldPop admin-level aggregates",
+   "url": "https://hub.worldpop.org/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "population",
+   "scope": "GLOBAL",
+   "name": "JRC Global Human Settlement Layer",
+   "url": "https://ghsl.jrc.ec.europa.eu/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "population",
+   "scope": "GLOBAL",
+   "name": "UN OCHA HDX population statistics (COD-PS)",
+   "url": "https://data.humdata.org/api/3/action/package_search?q=population%20statistics&rows=1",
+   "status": 406,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "population",
+   "scope": "OECD",
+   "name": "OECD Regional demography (TL2)",
+   "url": "https://sdmx.oecd.org/public/rest/dataflow/all",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "population",
+   "scope": "GLOBAL",
+   "name": "Wikidata (P1082)",
+   "url": "https://query.wikidata.org/sparql",
+   "status": 0,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "population",
+   "scope": "GLOBAL",
+   "name": "World Bank WDI (SP.POP.TOTL)",
+   "url": "https://api.worldbank.org/v2/country/all/indicator/SP.POP.TOTL?format=json&per_page=1",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "population",
+   "scope": "GLOBAL",
+   "name": "UN World Population Prospects",
+   "url": "https://population.un.org/dataportalapi/api/v1/",
+   "status": 404,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "population",
+   "scope": "US",
+   "name": "Census Bureau API (population estimates)",
+   "url": "https://api.census.gov/data.html",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "population",
+   "scope": "US",
+   "name": "FRED state population series",
+   "url": "https://api.stlouisfed.org/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "population",
+   "scope": "CA",
+   "name": "Statistics Canada population estimates",
+   "url": "https://www150.statcan.gc.ca/t1/wds/rest/getCubeMetadata",
+   "status": 405,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "population",
+   "scope": "DE",
+   "name": "Destatis GENESIS / Regionaldatenbank",
+   "url": "https://www-genesis.destatis.de/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "population",
+   "scope": "FR",
+   "name": "INSEE population légale",
+   "url": "https://www.insee.fr/fr/statistiques",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "population",
+   "scope": "GB",
+   "name": "ONS mid-year estimates",
+   "url": "https://api.beta.ons.gov.uk/v1/datasets",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "population",
+   "scope": "IT",
+   "name": "ISTAT demografia",
+   "url": "https://demo.istat.it/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "population",
+   "scope": "JP",
+   "name": "Statistics Bureau of Japan",
+   "url": "https://www.stat.go.jp/english/data/index.html",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "population",
+   "scope": "KR",
+   "name": "KOSIS resident registration population",
+   "url": "https://kosis.kr/eng/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "population",
+   "scope": "IN",
+   "name": "Census of India",
+   "url": "https://censusindia.gov.in/",
+   "status": 0,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "population",
+   "scope": "CN",
+   "name": "NBS population census / yearbook",
+   "url": "https://data.stats.gov.cn/english/",
+   "status": 404,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "population",
+   "scope": "RU",
+   "name": "Rosstat population",
+   "url": "https://rosstat.gov.ru/folder/12781",
+   "status": 0,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "population",
+   "scope": "UA",
+   "name": "Ukrstat population",
+   "url": "https://www.ukrstat.gov.ua/",
+   "status": 0,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "population",
+   "scope": "IL",
+   "name": "Israel CBS population",
+   "url": "https://www.cbs.gov.il/en/Pages/default.aspx",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "population",
+   "scope": "SA",
+   "name": "GASTAT population estimates",
+   "url": "https://www.stats.gov.sa/en",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "population",
+   "scope": "AE",
+   "name": "FCSC / Dubai Statistics Center",
+   "url": "https://fcsc.gov.ae/en-us",
+   "status": 403,
+   "verdict": "answered-but-restricted"
+  },
+  {
+   "category": "infrastructure",
+   "scope": "GLOBAL",
+   "name": "OpenStreetMap via Overpass API",
+   "url": "https://overpass-api.de/api/status",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "infrastructure",
+   "scope": "GLOBAL",
+   "name": "Geofabrik OSM regional extracts",
+   "url": "https://download.geofabrik.de/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "infrastructure",
+   "scope": "GLOBAL",
+   "name": "OurAirports",
+   "url": "https://davidmegginson.github.io/ourairports-data/airports.csv",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "infrastructure",
+   "scope": "GLOBAL",
+   "name": "Global Power Plant Database (WRI)",
+   "url": "https://datasets.wri.org/dataset/globalpowerplantdatabase",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "infrastructure",
+   "scope": "GLOBAL",
+   "name": "USGS earthquake feed",
+   "url": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "infrastructure",
+   "scope": "GLOBAL",
+   "name": "NASA FIRMS active fires",
+   "url": "https://firms.modaps.eosdis.nasa.gov/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "infrastructure",
+   "scope": "GLOBAL",
+   "name": "Natural Earth (ports, rail, roads, airports)",
+   "url": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "infrastructure",
+   "scope": "GLOBAL",
+   "name": "NGA World Port Index",
+   "url": "https://msi.nga.mil/Publications/WPI",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "infrastructure",
+   "scope": "GLOBAL",
+   "name": "Global Roads Inventory Project (GRIP)",
+   "url": "https://www.globio.info/download-grip-dataset",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "infrastructure",
+   "scope": "GLOBAL",
+   "name": "UN OCHA HDX infrastructure datasets",
+   "url": "https://data.humdata.org/api/3/action/package_search?q=infrastructure&rows=1",
+   "status": 406,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "infrastructure",
+   "scope": "GLOBAL",
+   "name": "World Bank WDI (national infrastructure indicators)",
+   "url": "https://api.worldbank.org/v2/country/all/indicator/IS.RRS.TOTL.KM?format=json&per_page=1",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "infrastructure",
+   "scope": "EU",
+   "name": "Eurostat regional transport (tran_r_*)",
+   "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/dataflow/ESTAT/all",
+   "status": 404,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "infrastructure",
+   "scope": "US",
+   "name": "BTS National Transportation Atlas Database",
+   "url": "https://geodata.bts.gov/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "infrastructure",
+   "scope": "US",
+   "name": "HIFLD open data (critical infrastructure)",
+   "url": "https://hifld-geoplatform.hub.arcgis.com/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "infrastructure",
+   "scope": "CA",
+   "name": "Open Government Canada geospatial",
+   "url": "https://open.canada.ca/data/en/dataset",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "infrastructure",
+   "scope": "DE",
+   "name": "BKG / GeoBasis-DE",
+   "url": "https://gdz.bkg.bund.de/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "infrastructure",
+   "scope": "FR",
+   "name": "data.gouv.fr (IGN BD TOPO)",
+   "url": "https://www.data.gouv.fr/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "infrastructure",
+   "scope": "GB",
+   "name": "DfT statistics + OS Open Roads",
+   "url": "https://www.gov.uk/government/organisations/department-for-transport/about/statistics",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "infrastructure",
+   "scope": "JP",
+   "name": "MLIT National Land Numerical Information",
+   "url": "https://nlftp.mlit.go.jp/ksj/index.html",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "infrastructure",
+   "scope": "UA",
+   "name": "Ukraine open data portal (CKAN)",
+   "url": "https://data.gov.ua/",
+   "status": 403,
+   "verdict": "answered-but-restricted"
+  },
+  {
+   "category": "infrastructure",
+   "scope": "IL",
+   "name": "Israel government data (CKAN)",
+   "url": "https://data.gov.il/",
+   "status": 403,
+   "verdict": "answered-but-restricted"
+  },
+  {
+   "category": "infrastructure",
+   "scope": "AE",
+   "name": "UAE Bayanat open data",
+   "url": "https://bayanat.ae/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "infrastructure",
+   "scope": "SA",
+   "name": "Saudi open data platform",
+   "url": "https://data.gov.sa/",
+   "status": 0,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "energy",
+   "scope": "GLOBAL",
+   "name": "Global Power Plant Database (WRI)",
+   "url": "https://datasets.wri.org/dataset/globalpowerplantdatabase",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "energy",
+   "scope": "GLOBAL",
+   "name": "OSM Overpass (power=plant/generator, oil, gas)",
+   "url": "https://overpass-api.de/api/status",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "energy",
+   "scope": "GLOBAL",
+   "name": "Global Energy Monitor trackers",
+   "url": "https://globalenergymonitor.org/projects/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "energy",
+   "scope": "GLOBAL",
+   "name": "Ember electricity data",
+   "url": "https://ember-energy.org/data/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "energy",
+   "scope": "GLOBAL",
+   "name": "Energy Institute Statistical Review",
+   "url": "https://www.energyinst.org/statistical-review",
+   "status": 403,
+   "verdict": "answered-but-restricted"
+  },
+  {
+   "category": "energy",
+   "scope": "GLOBAL",
+   "name": "IRENA PxWeb statistics",
+   "url": "https://pxweb.irena.org/pxweb/en",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "energy",
+   "scope": "GLOBAL",
+   "name": "Global Solar Atlas",
+   "url": "https://globalsolaratlas.info/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "energy",
+   "scope": "GLOBAL",
+   "name": "Global Wind Atlas",
+   "url": "https://globalwindatlas.info/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "energy",
+   "scope": "GLOBAL",
+   "name": "World Bank WDI energy",
+   "url": "https://api.worldbank.org/v2/country/all/indicator/EG.USE.PCAP.KG.OE?format=json&per_page=1",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "energy",
+   "scope": "EU",
+   "name": "Eurostat energy (nrg_*)",
+   "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/dataflow/ESTAT/all",
+   "status": 404,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "energy",
+   "scope": "US",
+   "name": "EIA State Energy Data System",
+   "url": "https://www.eia.gov/state/seds/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "energy",
+   "scope": "CA",
+   "name": "Statistics Canada energy supply and demand",
+   "url": "https://www150.statcan.gc.ca/t1/wds/rest/getCubeMetadata",
+   "status": 405,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "energy",
+   "scope": "DE",
+   "name": "Marktstammdatenregister (plant register)",
+   "url": "https://www.marktstammdatenregister.de/MaStR",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "energy",
+   "scope": "FR",
+   "name": "RTE / ODRE registre des installations",
+   "url": "https://odre.opendatasoft.com/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "energy",
+   "scope": "GB",
+   "name": "DESNZ sub-national energy statistics",
+   "url": "https://www.gov.uk/government/collections/sub-national-electricity-and-gas-consumption-statistics",
+   "status": 404,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "energy",
+   "scope": "IT",
+   "name": "Terna open data",
+   "url": "https://www.terna.it/en/electric-system/transparency-report",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "energy",
+   "scope": "JP",
+   "name": "ANRE energy statistics",
+   "url": "https://www.enecho.meti.go.jp/en/",
+   "status": 403,
+   "verdict": "answered-but-restricted"
+  },
+  {
+   "category": "energy",
+   "scope": "IN",
+   "name": "Central Electricity Authority",
+   "url": "https://cea.nic.in/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "energy",
+   "scope": "CN",
+   "name": "National Energy Administration",
+   "url": "https://www.nea.gov.cn/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "energy",
+   "scope": "UA",
+   "name": "Ukrenergo",
+   "url": "https://ua.energy/en/",
+   "status": 403,
+   "verdict": "answered-but-restricted"
+  },
+  {
+   "category": "energy",
+   "scope": "IL",
+   "name": "Israel Ministry of Energy",
+   "url": "https://www.gov.il/en/departments/ministry_of_energy",
+   "status": 403,
+   "verdict": "answered-but-restricted"
+  },
+  {
+   "category": "energy",
+   "scope": "SA",
+   "name": "ECRA Saudi electricity regulator",
+   "url": "https://www.ecra.gov.sa/en-us/Pages/default.aspx",
+   "status": 0,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "hdi",
+   "scope": "GLOBAL",
+   "name": "Global Data Lab Subnational HDI",
+   "url": "https://globaldatalab.org/shdi/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "hdi",
+   "scope": "GLOBAL",
+   "name": "UNDP Human Development Report (national)",
+   "url": "https://hdr.undp.org/data-center",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "hdi",
+   "scope": "GLOBAL",
+   "name": "Kummu et al. subnational HDI (Dryad)",
+   "url": "https://datadryad.org/search?q=Kummu%20GDP%20HDI",
+   "status": 403,
+   "verdict": "answered-but-restricted"
+  },
+  {
+   "category": "hdi",
+   "scope": "GLOBAL",
+   "name": "DHS Program API (subnational health/education)",
+   "url": "https://api.dhsprogram.com/rest/dhs/data?f=json&perpage=1",
+   "status": 400,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "hdi",
+   "scope": "OECD",
+   "name": "OECD Regional Well-Being (TL2)",
+   "url": "https://sdmx.oecd.org/public/rest/dataflow/all",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "hdi",
+   "scope": "EU",
+   "name": "Eurostat regional life expectancy, education, unemployment",
+   "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/demo_r_mlifexp?lang=en&sex=T&age=Y_LT1&geo=DE21",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "hdi",
+   "scope": "GLOBAL",
+   "name": "World Bank WDI (national)",
+   "url": "https://api.worldbank.org/v2/country/all/indicator/SP.DYN.LE00.IN?format=json&per_page=1",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "hdi",
+   "scope": "GLOBAL",
+   "name": "WHO Global Health Observatory",
+   "url": "https://ghoapi.azureedge.net/api/Indicator?$top=1",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "hdi",
+   "scope": "GLOBAL",
+   "name": "IHME GBD results tool",
+   "url": "https://vizhub.healthdata.org/gbd-results/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "hdi",
+   "scope": "GLOBAL",
+   "name": "Wikidata (P1081)",
+   "url": "https://query.wikidata.org/sparql",
+   "status": 0,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "hdi",
+   "scope": "US",
+   "name": "FRED/BEA/Census income, poverty, education series",
+   "url": "https://api.stlouisfed.org/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "hdi",
+   "scope": "CA",
+   "name": "Statistics Canada health and income tables",
+   "url": "https://www150.statcan.gc.ca/t1/wds/rest/getCubeMetadata",
+   "status": 405,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "hdi",
+   "scope": "DE",
+   "name": "Destatis life tables by Land",
+   "url": "https://www.destatis.de/EN/Themes/Society-Environment/Population/Deaths-Life-Expectancy/_node.html",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "hdi",
+   "scope": "FR",
+   "name": "INSEE life expectancy by department",
+   "url": "https://www.insee.fr/fr/statistiques",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "hdi",
+   "scope": "GB",
+   "name": "ONS life expectancy and deprivation",
+   "url": "https://api.beta.ons.gov.uk/v1/datasets",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "hdi",
+   "scope": "IT",
+   "name": "ISTAT BES / well-being by region",
+   "url": "https://www.istat.it/en/well-being-and-sustainability",
+   "status": 404,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "hdi",
+   "scope": "JP",
+   "name": "MHLW prefectural life tables",
+   "url": "https://www.mhlw.go.jp/english/database/db-hw/index.html",
+   "status": 404,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "hdi",
+   "scope": "KR",
+   "name": "KOSIS life tables by region",
+   "url": "https://kosis.kr/eng/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "hdi",
+   "scope": "IN",
+   "name": "NFHS (National Family Health Survey) state fact sheets",
+   "url": "https://rchiips.org/nfhs/",
+   "status": 0,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "hdi",
+   "scope": "IN",
+   "name": "NITI Aayog Multidimensional Poverty Index",
+   "url": "https://niti.gov.in/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "hdi",
+   "scope": "CN",
+   "name": "NBS provincial indicators",
+   "url": "https://data.stats.gov.cn/english/",
+   "status": 404,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "hdi",
+   "scope": "RU",
+   "name": "Rosstat regional social indicators",
+   "url": "https://rosstat.gov.ru/folder/210/document/13204",
+   "status": 0,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "hdi",
+   "scope": "UA",
+   "name": "Ukrstat social indicators",
+   "url": "https://www.ukrstat.gov.ua/",
+   "status": 0,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "patents",
+   "scope": "EU",
+   "name": "Eurostat pat_ep_rtot / pat_ep_rtec (EPO by region)",
+   "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/pat_ep_rtot?lang=en&unit=NR&geo=DE21",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "patents",
+   "scope": "EU",
+   "name": "Eurostat rd_e_gerdreg (regional R&D intensity)",
+   "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/rd_e_gerdreg?lang=en&geo=DE21",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "patents",
+   "scope": "OECD",
+   "name": "OECD REGPAT / regional innovation statistics",
+   "url": "https://sdmx.oecd.org/public/rest/dataflow/all",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "patents",
+   "scope": "GLOBAL",
+   "name": "WIPO IP Statistics Data Center",
+   "url": "https://www3.wipo.int/ipstats/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "patents",
+   "scope": "GLOBAL",
+   "name": "WIPO Global Innovation Index (science and tech clusters)",
+   "url": "https://www.wipo.int/global_innovation_index/en/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "patents",
+   "scope": "GLOBAL",
+   "name": "EPO Open Patent Services / Espacenet",
+   "url": "https://www.epo.org/en/searching-for-patents/data/web-services/ops",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "patents",
+   "scope": "GLOBAL",
+   "name": "WIPO PATENTSCOPE",
+   "url": "https://patentscope.wipo.int/search/en/search.jsf",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "patents",
+   "scope": "GLOBAL",
+   "name": "World Bank WDI patent indicators",
+   "url": "https://api.worldbank.org/v2/country/all/indicator/IP.PAT.RESD?format=json&per_page=1",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "patents",
+   "scope": "GLOBAL",
+   "name": "Wikidata",
+   "url": "https://query.wikidata.org/sparql",
+   "status": 0,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "patents",
+   "scope": "US",
+   "name": "USPTO PatentsView",
+   "url": "https://patentsview.org/apis/purpose",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "patents",
+   "scope": "CA",
+   "name": "CIPO open patent data",
+   "url": "https://ised-isde.canada.ca/site/canadian-intellectual-property-office/en/canadian-intellectual-property-statistics",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "patents",
+   "scope": "DE",
+   "name": "DPMA statistics by Land",
+   "url": "https://www.dpma.de/english/service/statistics/index.html",
+   "status": 404,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "patents",
+   "scope": "FR",
+   "name": "INPI data",
+   "url": "https://data.inpi.fr/",
+   "status": 403,
+   "verdict": "answered-but-restricted"
+  },
+  {
+   "category": "patents",
+   "scope": "GB",
+   "name": "UK IPO statistics",
+   "url": "https://www.gov.uk/government/organisations/intellectual-property-office/about/statistics",
+   "status": 404,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "patents",
+   "scope": "IT",
+   "name": "UIBM / MIMIT statistics",
+   "url": "https://uibm.mise.gov.it/index.php/en/",
+   "status": 0,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "patents",
+   "scope": "JP",
+   "name": "JPO statistics",
+   "url": "https://www.jpo.go.jp/e/resources/statistics/index.html",
+   "status": 403,
+   "verdict": "answered-but-restricted"
+  },
+  {
+   "category": "patents",
+   "scope": "KR",
+   "name": "KIPO KIPRIS",
+   "url": "https://www.kipris.or.kr/enghome/main.do",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "patents",
+   "scope": "IN",
+   "name": "IP India annual reports",
+   "url": "https://ipindia.gov.in/annual-reports.htm",
+   "status": 404,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "patents",
+   "scope": "CN",
+   "name": "CNIPA statistics",
+   "url": "https://english.cnipa.gov.cn/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "patents",
+   "scope": "RU",
+   "name": "Rospatent annual reports",
+   "url": "https://rospatent.gov.ru/en",
+   "status": 0,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "patents",
+   "scope": "UA",
+   "name": "Ukrainian Intellectual Property Institute",
+   "url": "https://ukrpatent.org/en",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "patents",
+   "scope": "IL",
+   "name": "Israel Patent Office (data.gov.il)",
+   "url": "https://data.gov.il/",
+   "status": 403,
+   "verdict": "answered-but-restricted"
+  },
+  {
+   "category": "patents",
+   "scope": "SA",
+   "name": "SAIP",
+   "url": "https://www.saip.gov.sa/en/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "rule-of-law",
+   "scope": "EU",
+   "name": "Eurostat crim_gen_reg (police-recorded crime by region)",
+   "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/crim_gen_reg?lang=en&unit=P_HTHAB&iccs=ICCS0101&geo=DE2",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "rule-of-law",
+   "scope": "EU",
+   "name": "EU Quality of Government Index (Gothenburg)",
+   "url": "https://www.gu.se/en/quality-government/qog-data/data-downloads/european-quality-of-government-index",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "rule-of-law",
+   "scope": "GLOBAL",
+   "name": "UCDP Georeferenced Event Dataset",
+   "url": "https://ucdpapi.pcr.uu.se/api/gedevents/24.1?pagesize=1",
+   "status": 401,
+   "verdict": "answered-but-restricted"
+  },
+  {
+   "category": "rule-of-law",
+   "scope": "GLOBAL",
+   "name": "ACLED",
+   "url": "https://acleddata.com/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "rule-of-law",
+   "scope": "GLOBAL",
+   "name": "GDELT Project",
+   "url": "https://api.gdeltproject.org/api/v2/doc/doc?query=protest&mode=artlist&format=json&maxrecords=1",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "rule-of-law",
+   "scope": "GLOBAL",
+   "name": "UNODC data portal",
+   "url": "https://dataunodc.un.org/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "rule-of-law",
+   "scope": "GLOBAL",
+   "name": "World Bank Worldwide Governance Indicators",
+   "url": "https://api.worldbank.org/v2/country/all/indicator/RL.EST?format=json&per_page=1",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "rule-of-law",
+   "scope": "GLOBAL",
+   "name": "World Justice Project Rule of Law Index",
+   "url": "https://worldjusticeproject.org/rule-of-law-index/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "rule-of-law",
+   "scope": "GLOBAL",
+   "name": "Transparency International CPI",
+   "url": "https://www.transparency.org/en/cpi",
+   "status": 403,
+   "verdict": "answered-but-restricted"
+  },
+  {
+   "category": "rule-of-law",
+   "scope": "GLOBAL",
+   "name": "START Global Terrorism Database",
+   "url": "https://www.start.umd.edu/gtd/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "rule-of-law",
+   "scope": "OECD",
+   "name": "OECD Regional Well-Being: safety (homicide rate)",
+   "url": "https://sdmx.oecd.org/public/rest/dataflow/all",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "rule-of-law",
+   "scope": "US",
+   "name": "FBI Crime Data Explorer API",
+   "url": "https://cde.ucr.cjis.gov/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "rule-of-law",
+   "scope": "CA",
+   "name": "Statistics Canada crime (Juristat)",
+   "url": "https://www150.statcan.gc.ca/t1/wds/rest/getCubeMetadata",
+   "status": 405,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "rule-of-law",
+   "scope": "DE",
+   "name": "BKA Polizeiliche Kriminalstatistik (Länder)",
+   "url": "https://www.bka.de/DE/AktuelleInformationen/StatistikenLagebilder/PolizeilicheKriminalstatistik/pks_node.html",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "rule-of-law",
+   "scope": "FR",
+   "name": "SSMSI crimes et délits par département (data.gouv.fr)",
+   "url": "https://www.data.gouv.fr/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "rule-of-law",
+   "scope": "GB",
+   "name": "ONS / Home Office police force area crime",
+   "url": "https://api.beta.ons.gov.uk/v1/datasets",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "rule-of-law",
+   "scope": "IT",
+   "name": "ISTAT / Ministry of Interior crime statistics",
+   "url": "https://www.istat.it/en/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "rule-of-law",
+   "scope": "JP",
+   "name": "National Police Agency crime statistics",
+   "url": "https://www.npa.go.jp/english/index.html",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "rule-of-law",
+   "scope": "KR",
+   "name": "KOSIS crime statistics",
+   "url": "https://kosis.kr/eng/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "rule-of-law",
+   "scope": "IN",
+   "name": "NCRB Crime in India (state-wise)",
+   "url": "https://ncrb.gov.in/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "rule-of-law",
+   "scope": "RU",
+   "name": "Prosecutor General crime statistics",
+   "url": "https://crimestat.ru/",
+   "status": 0,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "rule-of-law",
+   "scope": "UA",
+   "name": "Office of the Prosecutor General registers",
+   "url": "https://gp.gov.ua/",
+   "status": 403,
+   "verdict": "answered-but-restricted"
+  },
+  {
+   "category": "fdi",
+   "scope": "GLOBAL",
+   "name": "UNCTAD FDI statistics",
+   "url": "https://unctadstat.unctad.org/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "fdi",
+   "scope": "GLOBAL",
+   "name": "IMF Coordinated Direct Investment Survey",
+   "url": "https://data.imf.org/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "fdi",
+   "scope": "OECD",
+   "name": "OECD FDI statistics",
+   "url": "https://sdmx.oecd.org/public/rest/dataflow/all",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "fdi",
+   "scope": "GLOBAL",
+   "name": "World Bank WDI FDI net inflows",
+   "url": "https://api.worldbank.org/v2/country/all/indicator/BX.KLT.DINV.CD.WD?format=json&per_page=1",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "fdi",
+   "scope": "GLOBAL",
+   "name": "UN Comtrade (trade, a proxy not FDI)",
+   "url": "https://comtradeplus.un.org/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "fdi",
+   "scope": "US",
+   "name": "BEA New FDI in the US / FDIUS by state",
+   "url": "https://www.bea.gov/data/intl-trade-investment/foreign-direct-investment-united-states",
+   "status": 404,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "fdi",
+   "scope": "US",
+   "name": "USAspending (federal awards to foreign-owned firms; proxy)",
+   "url": "https://api.usaspending.gov/api/v2/references/toptier_agencies/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "fdi",
+   "scope": "CA",
+   "name": "Statistics Canada FDI by province",
+   "url": "https://www150.statcan.gc.ca/t1/wds/rest/getCubeMetadata",
+   "status": 405,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "fdi",
+   "scope": "DE",
+   "name": "Bundesbank direct investment statistics",
+   "url": "https://www.bundesbank.de/en/statistics",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "fdi",
+   "scope": "FR",
+   "name": "Business France investment report",
+   "url": "https://www.businessfrance.fr/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "fdi",
+   "scope": "GB",
+   "name": "DBT inward investment results",
+   "url": "https://www.gov.uk/government/collections/inward-investment-results",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "fdi",
+   "scope": "IT",
+   "name": "ISTAT / ICE foreign-controlled firms by region",
+   "url": "https://www.istat.it/en/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "fdi",
+   "scope": "JP",
+   "name": "JETRO FDI statistics",
+   "url": "https://www.jetro.go.jp/en/invest/investment_environment/ijre.html",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "fdi",
+   "scope": "KR",
+   "name": "MOTIE/KOTRA FDI statistics",
+   "url": "https://www.investkorea.org/ik-en/index.do",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "fdi",
+   "scope": "IN",
+   "name": "DPIIT FDI equity inflows, state-wise fact sheet",
+   "url": "https://dpiit.gov.in/publications/fdi-statistics",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "fdi",
+   "scope": "CN",
+   "name": "MOFCOM actual use of FDI by region",
+   "url": "https://data.mofcom.gov.cn/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "fdi",
+   "scope": "RU",
+   "name": "Rosstat foreign investment by region",
+   "url": "https://rosstat.gov.ru/investment_nonfinancial",
+   "status": 0,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "fdi",
+   "scope": "UA",
+   "name": "Ukrstat foreign direct investment by region",
+   "url": "https://www.ukrstat.gov.ua/",
+   "status": 0,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "fdi",
+   "scope": "IL",
+   "name": "CBS / Bank of Israel FDI",
+   "url": "https://www.cbs.gov.il/en/Pages/default.aspx",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "fdi",
+   "scope": "SA",
+   "name": "MISA Saudi investment",
+   "url": "https://misa.gov.sa/en",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "fdi",
+   "scope": "AE",
+   "name": "Dubai FDI Monitor / FCSC",
+   "url": "https://fcsc.gov.ae/en-us",
+   "status": 403,
+   "verdict": "answered-but-restricted"
+  },
+  {
+   "category": "military",
+   "scope": "GLOBAL",
+   "name": "UCDP Georeferenced Event Dataset",
+   "url": "https://ucdpapi.pcr.uu.se/api/gedevents/24.1?pagesize=1",
+   "status": 401,
+   "verdict": "answered-but-restricted"
+  },
+  {
+   "category": "military",
+   "scope": "GLOBAL",
+   "name": "ACLED",
+   "url": "https://acleddata.com/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "military",
+   "scope": "GLOBAL",
+   "name": "GDELT Project",
+   "url": "https://api.gdeltproject.org/api/v2/doc/doc?query=military&mode=artlist&format=json&maxrecords=1",
+   "status": 429,
+   "verdict": "answered-but-restricted"
+  },
+  {
+   "category": "military",
+   "scope": "GLOBAL",
+   "name": "OSM Overpass (landuse=military, military=*)",
+   "url": "https://overpass-api.de/api/status",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "military",
+   "scope": "GLOBAL",
+   "name": "OurAirports (military airfields by name)",
+   "url": "https://davidmegginson.github.io/ourairports-data/airports.csv",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "military",
+   "scope": "GLOBAL",
+   "name": "NASA FIRMS thermal anomalies",
+   "url": "https://firms.modaps.eosdis.nasa.gov/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "military",
+   "scope": "GLOBAL",
+   "name": "SIPRI Military Expenditure Database",
+   "url": "https://www.sipri.org/databases/milex",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "military",
+   "scope": "GLOBAL",
+   "name": "World Bank WDI military expenditure",
+   "url": "https://api.worldbank.org/v2/country/all/indicator/MS.MIL.XPND.GD.ZS?format=json&per_page=1",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "military",
+   "scope": "GLOBAL",
+   "name": "UNHCR operational data (displacement)",
+   "url": "https://api.unhcr.org/population/v1/population/?limit=1",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "military",
+   "scope": "GLOBAL",
+   "name": "IOM Displacement Tracking Matrix",
+   "url": "https://dtm.iom.int/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "military",
+   "scope": "GLOBAL",
+   "name": "UN OCHA HDX conflict datasets",
+   "url": "https://data.humdata.org/api/3/action/package_search?q=conflict&rows=1",
+   "status": 406,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "military",
+   "scope": "GLOBAL",
+   "name": "ReliefWeb API",
+   "url": "https://api.reliefweb.int/v1/reports?appname=probe&limit=1",
+   "status": 406,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "military",
+   "scope": "GLOBAL",
+   "name": "Wikidata (military bases, P31)",
+   "url": "https://query.wikidata.org/sparql",
+   "status": 0,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "military",
+   "scope": "GLOBAL",
+   "name": "ISW assessments (Ukraine, Russia)",
+   "url": "https://understandingwar.org/",
+   "status": 403,
+   "verdict": "answered-but-restricted"
+  },
+  {
+   "category": "military",
+   "scope": "US",
+   "name": "DoD Base Structure Report / DMDC workforce by state",
+   "url": "https://dwp.dmdc.osd.mil/dwp/app/dod-data-reports/workforce-reports",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "military",
+   "scope": "US",
+   "name": "USAspending defence contracts by state",
+   "url": "https://api.usaspending.gov/api/v2/references/toptier_agencies/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "military",
+   "scope": "GB",
+   "name": "MoD Armed Forces personnel statistics",
+   "url": "https://www.gov.uk/government/collections/uk-armed-forces-quarterly-service-personnel-statistics",
+   "status": 404,
+   "verdict": "unreachable"
+  },
+  {
+   "category": "military",
+   "scope": "DE",
+   "name": "Bundeswehr Standorte",
+   "url": "https://www.bundeswehr.de/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "military",
+   "scope": "FR",
+   "name": "Ministère des Armées open data",
+   "url": "https://www.data.gouv.fr/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "military",
+   "scope": "JP",
+   "name": "MOD Defense of Japan (US forces facilities by prefecture)",
+   "url": "https://www.mod.go.jp/en/publ/w_paper/index.html",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "military",
+   "scope": "KR",
+   "name": "USFK / MND installations",
+   "url": "https://www.usfk.mil/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "military",
+   "scope": "RU",
+   "name": "Conflict Intelligence Team / ISW",
+   "url": "https://citeam.org/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "population",
+   "scope": "GLOBAL",
+   "name": "World Bank Subnational Population (DataBank)",
+   "url": "https://databank.worldbank.org/source/subnational-population",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "population",
+   "scope": "IN",
+   "name": "Open Government Data Platform India (data.gov.in)",
+   "url": "https://www.data.gov.in/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "grp",
+   "scope": "US",
+   "name": "BEA GDP by state (and personal income by state)",
+   "url": "https://www.bea.gov/data/gdp/gdp-state",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "grp",
+   "scope": "JP",
+   "name": "Statistics Bureau of Japan / e-Stat prefectural accounts",
+   "url": "https://www.e-stat.go.jp/en",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "grp",
+   "scope": "IN",
+   "name": "India state domestic product (MoSPI / state directorates of economics & statistics)",
+   "url": "https://mospi.gov.in/",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "hdi",
+   "scope": "US",
+   "name": "BEA disposable personal income by state (table SA51)",
+   "url": "https://www.bea.gov/data/income-saving/personal-income-by-state",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "hdi",
+   "scope": "OECD+",
+   "name": "OECD Regional Database, regional economy / income / labour / social datasets (TL2)",
+   "url": "https://sdmx.oecd.org/public/rest/dataflow/all",
+   "status": 200,
+   "verdict": "reachable"
+  },
+  {
+   "category": "patents",
+   "scope": "OECD+",
+   "name": "OECD Regional innovation (patents by TL2/TL3, R&D) per 2015 metadata",
+   "url": "https://sdmx.oecd.org/public/rest/dataflow/all",
+   "status": 200,
+   "verdict": "reachable"
+  }
+ ]
+}

@@ -105,19 +105,32 @@ shell's Rust code (`src-tauri/src`, `Cargo.toml`, etc.) — only
 `src-tauri/sidecar/local-api-server.mjs` is kept, since that's the actual
 server.
 
-## Known gaps / not yet verified
+## News verification
 
-- Only smoke-tested a handful of endpoints (`/api/health`,
-  `/api/seismology/v1/list-earthquakes`, `/api/mcp` tools/list). The other
-  ~150 routes compiled cleanly (0 build failures) but weren't individually
-  exercised.
-- No TypeScript `tsc --noEmit` typecheck was run, only the esbuild bundle
-  step (which is more permissive about type errors than `tsc`).
-- `api/mcp/billing-denial.ts` is just an error-classifier for billing-verification
-  codes coming back from `server/gateway.ts` — spot-checked it, and since
-  gateway.ts's entitlement checks are already neutralized to always pass
-  (see the parent project's de-SaaS-ification work), it has nothing to
-  classify in practice. `api/mcp/free-account-allowance.ts` (quota bookkeeping
-  for anonymous callers) has NOT been individually audited — only `tools/list`
-  was tested end-to-end, not an actual `tools/call`, so a quota check on a
-  real tool invocation is unverified.
+`scripts/seed-news-verification.mjs` runs an LLM claim check on top stories.
+When a search backend is configured (`WEB_SEARCH_URL` for a self-hosted
+SearXNG, or `BRAVE_API_KEYS`), it first retrieves independent snippets (the
+claim's own outlet excluded) and the verdict is grounded in them. Without
+search, the verdict comes from model knowledge alone: confidence is capped at
+0.6 and `claimVerification.evidenceBased` is `false`. Treat those as weak.
+
+## Recommended tools for Alfred
+
+See [docs/ALFRED_RECON_TOOLS.md](docs/ALFRED_RECON_TOOLS.md).
+
+## Known gaps
+
+- Only a handful of endpoints have been exercised end to end; most of the
+  ~150 routes compile but are not individually tested.
+- `tsc --noEmit -p tsconfig.api.json` is the CI gate. The full `npm run test:data`
+  suite still includes tests for the removed frontend and is not yet triaged,
+  so CI runs a focused headless subset (see `.github/workflows/ci.yml`).
+- `api/mcp/billing-denial.ts` and `api/mcp/free-account-allowance.ts` are
+  effectively dead in local mode: a request authenticated by the sidecar
+  token resolves to an `env_key` context (`api/mcp/auth.ts`), which is not
+  metered, and the allowance code is only reached for `pro`/`user_key`
+  contexts. They are left in place, not removed.
+- The verifier is a second signal, not ground truth. A full Alfred
+  `tools/call` acceptance run against a seeded instance has not been done.
+- A local OpenAI-compatible LLM (`OLLAMA_API_URL` + `OLLAMA_MODEL`) is needed
+  for verification and insights; none is bundled.

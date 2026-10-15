@@ -507,6 +507,13 @@
       "_meta": {
         "worldmonitor/access": "free"
       }
+    },
+    {
+      "name": "render_map",
+      "description": "Draw a world map with chosen intelligence layers (conflict zones, bases, cables, pipelines, nuclear sites, earthquakes, fires, sanctions, exchanges and more; 58 layer keys, `layers` or a `preset`). Returns a compact scene that an MCP-Apps host shows inline in the conversation, or an SVG/HTML string with output=svg|html. Static layers are bundled datasets; live layers draw only when their seeder has run, and every layer that could not be drawn is listed with the reason. Fully offline: no tile servers, no third-party requests. Keep selections small for the model context: the default overview is ~60 KB, all static layers ~190 KB.",
+      "_meta": {
+        "worldmonitor/access": "subscription"
+      }
     }
   ],
   "toolCategories": [

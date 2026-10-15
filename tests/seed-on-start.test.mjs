@@ -8,7 +8,7 @@ const dir = mkdtempSync(path.join(tmpdir(), 'sos-'));
 process.env.LOCAL_REDIS_DATA_FILE = path.join(dir, 'redis.json');
 delete process.env.LOCAL_REDIS_TOKEN;
 const { server, store } = await import('../scripts/local-redis-rest.mjs');
-const { classify, selectEntries, parseTiers, missingRequiredEnv, createRunner, SKIP_RE } = await import('../scripts/seed-on-start.mjs');
+const { classify, selectEntries, parseTiers, missingRequiredEnv, createRunner, SKIP_RE, backoffMs } = await import('../scripts/seed-on-start.mjs');
 
 let redisUrl;
 before(async () => {
@@ -32,7 +32,7 @@ test('classify uses the run-seeders.sh skip heuristic and order', () => {
 });
 
 test('parseTiers / selectEntries / missingRequiredEnv', () => {
-  assert.deepEqual(parseTiers(undefined), ['1', '2']);
+  assert.deepEqual(parseTiers(undefined), ['1', '2', '3', '4']);
   assert.deepEqual(parseTiers('1, 3,x'), ['1', '3']);
   const cfg = { excluded: { b: 'no' }, tiers: { 1: [{ script: 'a' }, { script: 'b' }], 3: [{ script: 'c' }] } };
   assert.deepEqual(selectEntries(cfg, ['1']).map((e) => e.name), ['a']);
@@ -72,7 +72,7 @@ test('tiers, concurrency cap, failure isolation, timeout kill, env gating, fresh
   };
   const statusFile = path.join(dir, 'status.json');
   const env = { ...process.env, UPSTASH_REDIS_REST_URL: redisUrl, UPSTASH_REDIS_REST_TOKEN: 't', SEED_REFRESH_MINUTES: '0' };
-  delete env.NO_SUCH_KEY; delete env.SEED_TIERS; delete env.SEED_TIMEOUT_SECONDS;
+  delete env.NO_SUCH_KEY; env.SEED_TIERS = '1,2'; delete env.SEED_TIMEOUT_SECONDS;
   const quiet = () => {};
 
   const r1 = createRunner({ config, scriptsDir, statusFile, env, log: quiet });
@@ -85,7 +85,7 @@ test('tiers, concurrency cap, failure isolation, timeout kill, env gating, fresh
   assert.equal(s.skipper.result, 'SKIP');
   assert.equal(s.hang.result, 'TIMEOUT');
   assert.equal(s.gated.result, 'SKIP'); assert.match(s.gated.lastLine, /NO_SUCH_KEY/);
-  assert.equal(s.heavy, undefined, 'tier 3 is off by default');
+  assert.equal(s.heavy, undefined, 'a tier left out of SEED_TIERS is not run');
   assert.deepEqual({ OK: st.counts.OK, SKIP: st.counts.SKIP, FAIL: st.counts.FAIL, TIMEOUT: st.counts.TIMEOUT }, { OK: 3, SKIP: 2, FAIL: 1, TIMEOUT: 1 });
   // never more than 2 tracked seeders in flight
   let cur = 0, max = 0;
@@ -123,4 +123,85 @@ test('unreachable Redis: pass ends with an error, does not throw or hang', async
   const st = await r.pass();
   assert.equal(st.state, 'done');
   assert.equal(st.error, 'redis-unreachable');
+});
+
+test('silent exit-0 is NOOP; requiresEnv needs every variable; backoff doubles up to a cap', () => {
+  assert.equal(classify({ timedOut: false, code: 0, lastLine: '' }), 'NOOP');
+  assert.equal(missingRequiredEnv({ requiresEnv: ['A', 'B'] }, { A: 'x' })[0], 'B');
+  assert.equal(missingRequiredEnv({ requiresEnv: ['A', 'B'] }, { A: 'x', B: 'y' }), null);
+  assert.equal(backoffMs(1), 15 * 60_000);
+  assert.equal(backoffMs(3), 60 * 60_000);
+  assert.equal(backoffMs(30), 24 * 3_600_000);
+});
+
+test('failing and silent seeders back off, then retry and recover', async () => {
+  const flag = path.join(dir, 'flaky.flag');
+  const scriptsDir = makeScripts({
+    bad: "console.error('boom'); process.exit(3)",
+    silent: 'void 0',
+    flaky: `import fs from 'node:fs';if(fs.existsSync(${JSON.stringify(flag)})){console.log('recovered')}else{fs.writeFileSync(${JSON.stringify(flag)},'1');console.error('first try fails');process.exit(1)}`,
+  });
+  const config = { defaults: { timeoutSec: 5, freshMinutes: 60, concurrency: 2 }, tiers: { 1: [{ script: 'bad' }, { script: 'silent' }, { script: 'flaky' }] } };
+  const statusFile = path.join(dir, 'backoff.json');
+  const env = { ...process.env, UPSTASH_REDIS_REST_URL: redisUrl, UPSTASH_REDIS_REST_TOKEN: 't', SEED_REFRESH_MINUTES: '0' };
+  delete env.SEED_TIERS; delete env.SEED_TIMEOUT_SECONDS;
+  const quiet = () => {};
+
+  const st1 = await createRunner({ config, scriptsDir, statusFile, env, log: quiet }).pass();
+  assert.deepEqual([st1.seeders.bad.result, st1.seeders.silent.result, st1.seeders.flaky.result], ['FAIL', 'NOOP', 'FAIL']);
+  assert.deepEqual([st1.seeders.bad.fails, st1.seeders.silent.fails, st1.seeders.flaky.fails], [1, 1, 1]);
+
+  // immediately again: all three are inside their 15-minute backoff and are not re-run
+  const st2 = await createRunner({ config, scriptsDir, statusFile, env, log: quiet }).pass();
+  assert.equal(st2.counts.BACKOFF, 3);
+  assert.equal(st2.seeders.bad.fails, 1);
+
+  // 20 minutes later they are retried: persistent failures count up, the flaky one recovers
+  const later = () => Date.now() + 20 * 60_000;
+  const st3 = await createRunner({ config, scriptsDir, statusFile, env, log: quiet, now: later }).pass();
+  assert.equal(st3.counts.BACKOFF, 0);
+  assert.equal(st3.seeders.bad.fails, 2);
+  assert.equal(st3.seeders.silent.fails, 2);
+  assert.equal(st3.seeders.flaky.result, 'OK');
+  assert.equal(st3.seeders.flaky.fails, undefined);
+});
+
+test('RAM guard: no seeder starts above the limit, the next pass runs normally', async () => {
+  const scriptsDir = makeScripts({ a: "console.log('ran a')", b: "console.log('ran b')" });
+  const config = { defaults: { timeoutSec: 5, freshMinutes: 60, concurrency: 2 }, tiers: { 1: [{ script: 'a' }, { script: 'b' }] } };
+  const statusFile = path.join(dir, 'ram.json');
+  const env = { ...process.env, UPSTASH_REDIS_REST_URL: redisUrl, UPSTASH_REDIS_REST_TOKEN: 't', SEED_REFRESH_MINUTES: '0' };
+  delete env.SEED_TIERS; delete env.SEED_TIMEOUT_SECONDS; delete env.SEED_MAX_RAM_FRACTION;
+  const st1 = await createRunner({ config, scriptsDir, statusFile, env, log: () => {}, memUsedFraction: () => 0.95, memWaitMs: 20 }).pass();
+  assert.equal(st1.error, 'memory-pressure');
+  assert.deepEqual(Object.keys(st1.seeders), []);
+  const st2 = await createRunner({ config, scriptsDir, statusFile, env, log: () => {}, memUsedFraction: () => 0.5 }).pass();
+  assert.equal(st2.error, undefined);
+  assert.equal(st2.counts.OK, 2);
+  const frac = (await import('../scripts/seed-on-start.mjs')).systemMemUsedFraction();
+  assert.ok(frac > 0 && frac < 1, `fraction ${frac}`);
+});
+
+test('least recently run seeders go first, so a RAM-cut pass cannot starve the same ones', async () => {
+  const logFile = path.join(dir, 'order.log');
+  const mk = (n) => `import fs from 'node:fs';fs.appendFileSync(${JSON.stringify(logFile)},'${n}\\n');console.log('ran ${n}')`;
+  const scriptsDir = makeScripts({ a: mk('a'), b: mk('b'), c: mk('c') });
+  const config = { defaults: { timeoutSec: 5, freshMinutes: 60, concurrency: 1 }, tiers: { 1: [{ script: 'a' }, { script: 'b' }, { script: 'c' }] } };
+  const statusFile = path.join(dir, 'order.json');
+  const ago = (h) => new Date(Date.now() - h * 3_600_000).toISOString();
+  const env = { ...process.env, UPSTASH_REDIS_REST_URL: redisUrl, UPSTASH_REDIS_REST_TOKEN: 't', SEED_REFRESH_MINUTES: '0', SEED_CONCURRENCY: '1' };
+  delete env.SEED_TIERS; delete env.SEED_TIMEOUT_SECONDS;
+  // marker must match Redis or prior results are distrusted; the order logic does not depend on trust
+  writeFileSync(statusFile, JSON.stringify({ seeders: { a: { tier: 1, result: 'OK', finishedAt: ago(5) }, b: { tier: 1, result: 'OK', finishedAt: ago(3) } } }));
+  await createRunner({ config, scriptsDir, statusFile, env, log: () => {} }).pass();
+  assert.deepEqual(readFileSync(logFile, 'utf8').trim().split('\n'), ['c', 'a', 'b']);
+});
+
+test('nodeFlagsFor adds --experimental-sqlite only for history-snapshot on Node 22.5-22.12', async () => {
+  const { nodeFlagsFor } = await import('../scripts/seed-on-start.mjs');
+  assert.deepEqual(nodeFlagsFor('/x/scripts/history-snapshot.mjs', '22.11.0'), ['--experimental-sqlite']);
+  assert.deepEqual(nodeFlagsFor('/x/scripts/history-snapshot.mjs', '22.13.0'), []);
+  assert.deepEqual(nodeFlagsFor('/x/scripts/history-snapshot.mjs', '24.1.0'), []);
+  assert.deepEqual(nodeFlagsFor('/x/scripts/history-snapshot.mjs', '20.10.0'), []);
+  assert.deepEqual(nodeFlagsFor('/x/scripts/seed-earthquakes.mjs', '22.11.0'), []);
 });
