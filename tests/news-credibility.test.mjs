@@ -183,40 +183,10 @@ describe('digest wiring (source-textual)', () => {
   });
 });
 
-describe('UI, API, and methodology surfaces', () => {
-  const panelSrc = readSrc('src/components/NewsPanel.ts');
-  const credDoc = readSrc('docs/methodology/news-credibility.mdx');
-  const digestDoc = readSrc('docs/methodology/news-digest-and-briefing.mdx');
-  const openApiYaml = readSrc('docs/api/NewsService.openapi.yaml');
+// The NewsPanel, methodology docs and OpenAPI assertions were removed with the frontend; only the MCP surface exists in this headless fork.
+describe('MCP surfaces', () => {
   const mcpCacheSrc = readSrc('api/mcp/registry/cache-tools.ts');
   const mcpNlpSrc = readSrc('api/mcp/registry/nlp-tools.ts');
-
-  it('NewsPanel renders CRED badges and still sorts by importanceScore', () => {
-    assert.match(panelSrc, /renderCredibilityBadge\(item\.source, item\)/);
-    assert.match(panelSrc, /renderCredibilityBadge\(cluster\.primarySource/);
-    assert.match(panelSrc, /a\.importanceScore \?\? 0/);
-    assert.doesNotMatch(panelSrc, /sort\(\s*\(a, b\).*credibilityScore/s);
-  });
-
-  it('methodology page documents weights, high-risk cap, and distinctness', () => {
-    assert.match(credDoc, /Propaganda risk \| `0\.50`/);
-    assert.match(credDoc, /Source tier \| `0\.30`/);
-    assert.match(credDoc, /Independent corroboration \| `0\.20`/);
-    assert.match(credDoc, /capped at `40`/);
-    assert.match(credDoc, /substituted for newsworthiness/);
-    assert.match(digestDoc, /## Credibility Score/);
-    assert.match(digestDoc, /Propaganda risk \| `0\.50`/);
-    assert.match(digestDoc, /capped at `40`/);
-  });
-
-  it('OpenAPI NewsItem.credibilityScore is distinct from importanceScore', () => {
-    assert.match(openApiYaml, /credibilityScore:\n\s+type: integer/s);
-    assert.match(openApiYaml, /distinct from importance_score/);
-    assert.match(openApiYaml, /capped at 40/);
-    assert.match(openApiYaml, /source tier × 30%/);
-    assert.match(openApiYaml, /propaganda risk × 50%/);
-    assert.match(openApiYaml, /independent\n\s+corroboration × 20%/s);
-  });
 
   it('MCP get_news_intelligence and get_news_clusters expose credibilityScore', () => {
     assert.match(mcpCacheSrc, /credibilityScore: \{ type: 'number'/);
