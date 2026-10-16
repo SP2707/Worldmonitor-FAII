@@ -2,11 +2,15 @@
 // because "Adygea" is listed twice), plus the NUTS 2 regions of 31 further Eurostat-covered countries, plus Mongolia and
 // Malaysia (layer 'asia-official', ISO 3166-2 ids), plus the 10 analytic categories.
 
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const here = dirname(fileURLToPath(import.meta.url));
+// When the MCP server's esbuild bundle inlines this module (api/mcp.js), import.meta.url points at the bundle, so the
+// JSON files are looked up under the repo root too (WORLDMONITOR_ROOT, or the working directory the server starts from).
+const own = dirname(fileURLToPath(import.meta.url));
+const here = [own, process.env.WORLDMONITOR_ROOT && join(process.env.WORLDMONITOR_ROOT, 'scripts', 'subnational'), join(process.cwd(), 'scripts', 'subnational')]
+  .filter(Boolean).find((d) => existsSync(join(d, 'divisions.json'))) ?? own;
 const raw = JSON.parse(readFileSync(join(here, 'divisions.json'), 'utf8'));
 // NUTS 2 regions of the other Eurostat-covered countries (layer 'eu-nuts2'); built by scripts/build-eu-nuts2-divisions.mjs.
 const eu = JSON.parse(readFileSync(join(here, 'divisions-eu-nuts2.json'), 'utf8'));

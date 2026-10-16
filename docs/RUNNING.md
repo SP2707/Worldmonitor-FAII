@@ -26,3 +26,12 @@ pm2 start ecosystem.config.cjs                headless with automatic restart (n
 * `WORLDMONITOR_SEED_REFRESH_KEY` (any long random string you generate) plus `API_BASE_URL=http://127.0.0.1:46123` for resilience scores.
 * ACLED credentials are optional for protests; without them only GDELT events are used.
 * `OLLAMA_API_URL` / `OLLAMA_MODEL` (or a provider key) for `seed-insights`, which feeds `seed-news-verification`.
+
+## Checking that Alfred (or any MCP client) can read the data
+With the server running and `LOCAL_API_TOKEN` set in the same PowerShell window:
+```
+node scripts/mcp-smoke.mjs        initialize, tools/list, then real tools/call on the 3 data tools; exit 1 on any failure
+```
+Tools: `get_subnational_coverage` (what is filled), `get_subnational_data` (country or division, 10 categories, every value with unit/year/source/scope),
+`get_national_indicators` (38 national indicators). They read the seeded Redis keys only; `missingCategories` in a result means "not seeded yet", not "no data exists".
+Seeded data lives in `.local-redis-data.json` (written 200 ms after each change) and is reloaded on start, so a restart does not re-run the slow seeders.
